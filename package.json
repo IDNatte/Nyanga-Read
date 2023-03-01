@@ -1,0 +1,20 @@
+{
+  "name": "mang-redr",
+  "packageManager": "yarn@3.3.1",
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^23.1.1",
+    "prettier": "^2.8.0",
+    "prettierrc": "^0.0.0-5"
+  },
+  "scripts": {
+    "electron:dev": "APP_DEV=true electron .",
+    "electron:build": "echo no script runner defined yet..!!",
+    "electron:format": "prettier --write .",
+    "electron:test": "cd ./layout/ && yarn run build && cd .. && electron .",
+    "app:build": "cd layout && yarn run layout:build"
+  },
+  "dependencies": {
+    "electron-serve": "^1.1.0"
+  }
+}
