@@ -1,3 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log('Renderer ready...!!!')
-})
+document.addEventListener('DOMContentLoaded', () => {
+	console.log('Renderer ready...!!!');
+});

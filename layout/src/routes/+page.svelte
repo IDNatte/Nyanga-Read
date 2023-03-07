@@ -1,59 +1,51 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+	import type { PageData } from './$types';
+	import {invalidateAll} from '$app/navigation'
+	import RefreshComponent from '$lib/components/refresh/RefreshComponent.svelte';
+
+	export let data: PageData;
+
+	async function refresh() {
+		await invalidateAll()
+	}
 </script>
 
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
+<div>
+	<div class="refresher">
+		<RefreshComponent on:page-refresh={refresh} />
+	</div>
+	<ul>
+		{#each data.cover as { mangaId, mangaTitle, coverUrl, mangaAltTitles }}
+			<li>
+				<a href="/read/{mangaId}">
+					<div>
+						<span>{mangaTitle.en}</span>
+						({#each mangaAltTitles as title}
+							{#if title.ja}
+								<span>{title.ja}</span>,
+							{/if}
+							{#if title.en}
+							<span>{title.en}</span>,
+						{/if}
+						{/each})</div>
+					<img class="cover-img" src={coverUrl} alt="" srcset="" />
+				</a>
+			</li>
+		{/each}
+	</ul>
+</div>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
 
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
+	.cover-img {
 		width: 100%;
 	}
 
-	.welcome {
+	.refresher {
 		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+		position: fixed;
+		bottom: 2em;
+		right: 2em;
 	}
 </style>
