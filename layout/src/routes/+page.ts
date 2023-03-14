@@ -2,12 +2,12 @@ import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch }) => {
 	const getMangaDetail = async () => {
-		const getManga = await fetch("https://api.mangadex.org/manga?originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30").then((response) =>
-			response.json()
-		);
+		const getManga = await fetch(
+			'https://api.mangadex.org/manga?originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30'
+		).then((response) => response.json());
 		const manga = getManga.data;
 
-		console.log(manga)
+		console.log(manga);
 
 		const mangaDetail = manga.map((manga: any) => {
 			const mangaCover = manga.relationships
@@ -38,7 +38,7 @@ export const load: PageLoad = async ({ fetch }) => {
 					`https://api.mangadex.org/cover/${coverID.mangaCover}`
 				).then((response) => response.json());
 
-				console.log(coverID)
+				console.log(coverID);
 				return {
 					mangaId: coverID.id,
 					mangaTitle: coverID.title,

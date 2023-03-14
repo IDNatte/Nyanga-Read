@@ -1,36 +1,18 @@
 <script>
-  import {createEventDispatcher} from 'svelte'
+	import { createEventDispatcher } from 'svelte';
 
-  const dispatch = createEventDispatcher()
+	const dispatch = createEventDispatcher();
 
-  function refresh() {
-    dispatch('page-refresh')
-  }
+	function refresh() {
+		dispatch('page-refresh');
+	}
 </script>
 
 <a href="#!" on:click|preventDefault={refresh}>
-  <svg width="1.4em" height="1.4em" viewBox="0 0 8 8"
-  ><path
-    fill="currentColor"
-    d="M4 0C1.8 0 0 1.8 0 4s1.8 4 4 4c1.1 0 2.12-.43 2.84-1.16l-.72-.72c-.54.54-1.29.88-2.13.88c-1.66 0-3-1.34-3-3s1.34-3 3-3c.83 0 1.55.36 2.09.91L4.99 3h3V0L6.8 1.19C6.08.47 5.09 0 3.99 0z"
-  /></svg
->
+	<svg width="1.4em" height="1.4em" viewBox="0 0 8 8"
+		><path
+			fill="currentColor"
+			d="M4 0C1.8 0 0 1.8 0 4s1.8 4 4 4c1.1 0 2.12-.43 2.84-1.16l-.72-.72c-.54.54-1.29.88-2.13.88c-1.66 0-3-1.34-3-3s1.34-3 3-3c.83 0 1.55.36 2.09.91L4.99 3h3V0L6.8 1.19C6.08.47 5.09 0 3.99 0z"
+		/></svg
+	>
 </a>
-
-<style>
-  a {
-    background-color: rgba(79,216,187, 0.7);
-    text-decoration: none;
-    color: #313131;
-    transition-duration: .3s;
-    border-radius: 2px;
-    padding: 20px 15px;
-    display: flex;
-    border: none;
-  }
-
-  a:hover {
-    background-color: rgba(79,216,187, 1.0);
-  }
-
-</style>

@@ -1,32 +1,34 @@
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ params, fetch }) => {
-  const getChapter = await fetch(`https://api.mangadex.org/manga/${params.mangaId}/aggregate`);
+	const getChapter = await fetch(
+		`https://api.mangadex.org/manga/${params.mangaId}/aggregate?translatedLanguage[]=en`
+	);
 
-  const volumeContent = await getChapter.json();
+	const volumeContent = await getChapter.json();
 
-  console.log(volumeContent)
+	console.log(volumeContent);
 
-  const volume = [];
+	const volume = [];
 
-  for (const data in volumeContent.volumes) {
-    const chapter = [];
+	for (const data in volumeContent.volumes) {
+		const chapter = [];
 
-    for (const chapterData in volumeContent.volumes[data].chapters) {
-      chapter.push({
-        chapterName: volumeContent.volumes[data].chapters[chapterData].chapter,
-        chapterId: volumeContent.volumes[data].chapters[chapterData].id
-      });
-    }
+		for (const chapterData in volumeContent.volumes[data].chapters) {
+			chapter.push({
+				chapterName: volumeContent.volumes[data].chapters[chapterData].chapter,
+				chapterId: volumeContent.volumes[data].chapters[chapterData].id
+			});
+		}
 
-    volume.push({
-      volume: data,
-      chapter
-    });
-  }
+		volume.push({
+			volume: data,
+			chapter
+		});
+	}
 
-  return {
-    volume,
-    mangaId: params.mangaId
-  };
+	return {
+		volume,
+		mangaId: params.mangaId
+	};
 };
