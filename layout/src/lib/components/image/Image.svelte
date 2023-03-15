@@ -3,7 +3,7 @@
 
 	export let src: string;
 	export let alt: string;
-	export let className: string
+	export let className: string;
 
 	let loaded: boolean = false;
 	let thisImage: HTMLImageElement;
@@ -15,14 +15,7 @@
 	});
 </script>
 
-<img
-	{src}
-	{alt}
-	class:loaded
-	class={className}
-	bind:this={thisImage}
-	loading="lazy"
-/>
+<img {src} {alt} class:loaded class={className} bind:this={thisImage} loading="lazy" />
 
 <style>
 	img {

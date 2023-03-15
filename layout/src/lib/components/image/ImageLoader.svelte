@@ -5,7 +5,7 @@
 
 	export let src: string;
 	export let alt: string;
-	export let className: string = 'w-full h-auto rounded-t'
+	export let className: string = 'w-full h-auto rounded-t';
 
 	let nativeLoading = false;
 

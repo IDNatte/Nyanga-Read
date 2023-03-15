@@ -6,15 +6,14 @@
 
 	function arrowButton(event: KeyboardEvent) {
 		if (event.key === 'ArrowRight') {
-			console.log('arrow right')
+			console.log('arrow right');
 		}
 
 		if (event.key === 'ArrowLeft') {
-			console.log('arrow left')
+			console.log('arrow left');
 		}
 	}
 </script>
-
 
 <svelte:window on:keydown={arrowButton} />
 
@@ -23,6 +22,5 @@
 		<li>
 			<ImageLoader src={url} alt={chapterTitle} />
 		</li>
-
 	{/each}
 </ul>

@@ -4,7 +4,7 @@
 	let previousPage: string = '/';
 
 	afterNavigate(({ from }) => {
-		let previous = from?.url.pathname.split('/')
+		let previous = from?.url.pathname.split('/');
 		if (previous?.length === 3) {
 			previousPage = from?.url.pathname || previousPage;
 		}

@@ -1,4 +1,4 @@
 export type AccordionType = {
-  accordionOpen: 'open' | 'close' | null,
-  accordionId?: string | null,
-}
+	accordionOpen: 'open' | 'close' | null;
+	accordionId?: string | null;
+};

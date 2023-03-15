@@ -19,7 +19,7 @@
 	}
 </script>
 
-<div transition:fade={{duration: 200}} class="content w-full h-screen pt-8">
+<div transition:fade={{ duration: 200 }} class="content w-full h-screen pt-8">
 	<div class="daily-manga py-5">
 		<div class="slider">
 			<swiper-container
@@ -40,11 +40,11 @@
 									<div class="w-full">{mangaTitle.en}</div>
 									<div class="w-full">
 										{#if mangaAltTitles.length > 1}
-										({#each mangaAltTitles as title}
-											{#if title.ja}
-												<span>{title.ja}</span>
-											{/if}
-										{/each})
+											({#each mangaAltTitles as title}
+												{#if title.ja}
+													<span>{title.ja}</span>
+												{/if}
+											{/each})
 										{/if}
 									</div>
 								</div>
@@ -54,10 +54,13 @@
 				{/each}
 			</swiper-container>
 		</div>
-	
+
 		<div class="w-full flex justify-center">
 			<!-- <span>more</span> -->
-			<a class="text-blue-300 underline underline-offset-4 font-light text-lg py-2" href="/list/daily">See More</a>
+			<a
+				class="text-blue-300 underline underline-offset-4 font-light text-lg py-2"
+				href="/list/daily">See More</a
+			>
 		</div>
 	</div>
 </div>
