@@ -204,16 +204,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^23.1.1":
-  version: 23.1.1
-  resolution: "electron@npm:23.1.1"
+"electron@npm:^23.1.3":
+  version: 23.1.3
+  resolution: "electron@npm:23.1.3"
   dependencies:
     "@electron/get": ^2.0.0
     "@types/node": ^16.11.26
     extract-zip: ^2.0.1
   bin:
     electron: cli.js
-  checksum: 8f1ade0518957f40f399d2e47dfeea690ff5cea81201e4f9cfaa1ad768d14699168c37c1376586a9f21bca2dc9f7fde01885967a88f39af6667df25d574452fa
+  checksum: 091a7acd2379c8b8e9df76244ca2e0f5f2aa9e4a94da9c08f56fdc4762f27f5fd7f3505a027c00601f64c5beeb27e5c707a2061ff37654ded55e21cedeb0b926
   languageName: node
   linkType: hard
 
@@ -471,7 +471,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "mang-redr@workspace:."
   dependencies:
-    electron: ^23.1.1
+    electron: ^23.1.3
     electron-serve: ^1.1.0
     prettier: ^2.8.0
     prettierrc: ^0.0.0-5
