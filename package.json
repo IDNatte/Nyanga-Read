@@ -12,6 +12,7 @@
     "electron:build": "echo no script runner defined yet..!!",
     "electron:format": "prettier --write .",
     "electron:test": "cd ./layout/ && yarn run build && cd .. && electron .",
+    "electron:nobuildtest": "electron .",
     "app:build": "cd layout && yarn run layout:build"
   },
   "dependencies": {
