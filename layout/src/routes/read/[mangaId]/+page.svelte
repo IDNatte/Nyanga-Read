@@ -31,16 +31,3 @@
 		</CardComponent>
 	{/each}
 </div>
-
-<!-- <ul>
-	{#each data.volume as { volume, chapter }}
-		<li>
-			<div>Volume {volume}</div>
-			<ul>
-				{#each chapter as { chapterId, chapterName }}
-					<li><a href="/read/{data.mangaId}/{chapterId}">Chapter {chapterName}</a></li>
-				{/each}
-			</ul>
-		</li>
-	{/each}
-</ul> -->
