@@ -7,8 +7,6 @@ export const load: PageLoad = async ({ fetch }) => {
 		).then((response) => response.json());
 		const manga = getManga.data;
 
-		console.log(manga);
-
 		const mangaDetail = manga.map((manga: any) => {
 			const mangaCover = manga.relationships
 				.filter((rel: any) => {
@@ -38,7 +36,6 @@ export const load: PageLoad = async ({ fetch }) => {
 					`https://api.mangadex.org/cover/${coverID.mangaCover}`
 				).then((response) => response.json());
 
-				console.log(coverID);
 				return {
 					mangaId: coverID.id,
 					mangaTitle: coverID.title,

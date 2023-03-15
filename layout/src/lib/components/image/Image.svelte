@@ -3,6 +3,7 @@
 
 	export let src: string;
 	export let alt: string;
+	export let className: string
 
 	let loaded: boolean = false;
 	let thisImage: HTMLImageElement;
@@ -18,7 +19,7 @@
 	{src}
 	{alt}
 	class:loaded
-	class="w-full h-auto rounded-t"
+	class={className}
 	bind:this={thisImage}
 	loading="lazy"
 />

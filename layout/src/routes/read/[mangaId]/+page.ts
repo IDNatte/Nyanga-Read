@@ -7,8 +7,6 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 	const volumeContent = await getChapter.json();
 
-	console.log(volumeContent);
-
 	const volume = [];
 
 	for (const data in volumeContent.volumes) {

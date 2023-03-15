@@ -5,6 +5,7 @@
 
 	export let src: string;
 	export let alt: string;
+	export let className: string = 'w-full h-auto rounded-t'
 
 	let nativeLoading = false;
 
@@ -17,6 +18,6 @@
 
 <LazyloadComponent single={true} let:intersect={intersecting}>
 	{#if intersecting || nativeLoading}
-		<Image {alt} {src} />
+		<Image {className} {alt} {src} />
 	{/if}
 </LazyloadComponent>

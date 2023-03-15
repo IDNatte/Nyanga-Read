@@ -9,7 +9,8 @@ export const load: PageLoad = async ({ fetch, params }) => {
 
 		for (const chapterImg in chapter.chapter.data) {
 			chapterData.push({
-				url: `${chapter.baseUrl}/data/${chapter.chapter.hash}/${chapter.chapter.data[chapterImg]}`
+				url: `${chapter.baseUrl}/data/${chapter.chapter.hash}/${chapter.chapter.data[chapterImg]}`,
+				chapterTitle: `${chapter.chapter.data[chapterImg].split('-')[0]}`
 			});
 		}
 
