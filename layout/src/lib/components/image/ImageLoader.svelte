@@ -16,7 +16,7 @@
 	});
 </script>
 
-<LazyloadComponent single={true} let:intersect={intersecting}>
+<LazyloadComponent {className} single={true} let:intersect={intersecting}>
 	{#if intersecting || nativeLoading}
 		<Image {className} {alt} {src} />
 	{/if}

@@ -6,6 +6,7 @@
 	export let bottom: number = 0;
 	export let left: number = 0;
 	export let right: number = 0;
+	export let className: string = '';
 
 	let intersect: boolean = false;
 	let container: HTMLElement;
@@ -49,6 +50,6 @@
 	});
 </script>
 
-<div class="w-full h-full" bind:this={container}>
+<div class="w-full h-full {className}" bind:this={container}>
 	<slot {intersect} />
 </div>
