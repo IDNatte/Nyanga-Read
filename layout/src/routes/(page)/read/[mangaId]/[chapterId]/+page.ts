@@ -1,9 +1,12 @@
 import type { PageLoad } from './$types';
+import navigationStore from '$lib/store/navigation.store';
 
 export const load: PageLoad = async ({ fetch, params }) => {
 	const getChapterMeta = async () => {
 		const chapterMeta = await fetch(`https://api.mangadex.org/at-home/server/${params.chapterId}`);
 		const chapter = await chapterMeta.json();
+
+		navigationStore.set('loaded')
 
 		const chapterData = [];
 

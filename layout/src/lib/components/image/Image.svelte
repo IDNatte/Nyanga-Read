@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import navigationStore from '$lib/store/navigation.store';
 
 	export let src: string;
 	export let alt: string;
@@ -11,6 +12,8 @@
 	onMount(() => {
 		thisImage.onload = () => {
 			loaded = true;
+			navigationStore.set('loaded')
+
 		};
 	});
 </script>

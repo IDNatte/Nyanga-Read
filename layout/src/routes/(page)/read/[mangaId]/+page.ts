@@ -21,12 +21,12 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 		volume.push({
 			volume: data,
-			chapter
+			chapter: chapter.sort((a, b) => Number(b.chapterName) - Number(a.chapterName))
 		});
 	}
 
 	return {
-		volume,
+		volume: volume.sort((a, b) => Number(b.volume) - Number(a.volume)),
 		mangaId: params.mangaId
 	};
 };

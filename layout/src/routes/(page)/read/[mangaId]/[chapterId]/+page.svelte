@@ -7,44 +7,63 @@
 	export let data: PageData;
 
 	let imageSrc: string;
-	let viewerWrapper: HTMLDivElement;
+	let imageAlt: string;
 
 	function getArrayIndex(idxof: string): number {
-		let index = data.chapter.findIndex(value => value.url == idxof)
-		return index
+		let index = data.chapter.findIndex((value) => value.url == idxof);
+		return index;
 	}
 
 	function arrowButton(event: KeyboardEvent) {
 		if (event.key === 'ArrowRight') {
 			// next image
-			viewerWrapper.scrollTop = 0
-			let image = getArrayIndex(imageSrc)
-			image += 1
-			if (image >= data.chapter.length - 1) image = data.chapter.length - 1
-			
-			imageSrc = data.chapter[image].url
+			let image = getArrayIndex(imageSrc);
+			image += 1;
+			if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
 
+			imageSrc = data.chapter[image].url;
+			imageAlt = data.chapter[image].chapterTitle
 		}
 
 		if (event.key === 'ArrowLeft') {
 			// preview image
-			viewerWrapper.scrollTop = 0
-			let image = getArrayIndex(imageSrc)
-			image -= 1
-			if (image <= 0) image = 0
+			let image = getArrayIndex(imageSrc);
+			image -= 1;
+			if (image <= 0) image = 0;
 
-			imageSrc = data.chapter[image].url
-
+			imageSrc = data.chapter[image].url;
+			imageAlt = data.chapter[image].chapterTitle
 		}
 	}
 
+	document.addEventListener('viewer-change:next', () => {
+		let image = getArrayIndex(imageSrc);
+		image += 1;
+		if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
+
+		imageSrc = data.chapter[image].url;
+		imageAlt = data.chapter[image].chapterTitle
+
+	});
+
+	document.addEventListener('viewer-change:prev', () => {
+		let image = getArrayIndex(imageSrc);
+		image -= 1;
+		if (image <= 0) image = 0;
+
+		imageSrc = data.chapter[image].url;
+		imageAlt = data.chapter[image].chapterTitle
+
+	});
+
 	onMount(() => {
-		imageSrc = data.chapter[0].url
-	})
+		imageSrc = data.chapter[0].url;
+		imageAlt = data.chapter[0].chapterTitle
+	});
 </script>
 
 <svelte:window on:keydown={arrowButton} />
 
-<div class="flex justify-center items-center" bind:this={viewerWrapper}>
-	<ImageLoader src={imageSrc} alt={"testing"} className="rounded-none flex justify-center"/>
+<div class="flex justify-center items-center">
+	<ImageLoader src={imageSrc} alt={`Chapter ${imageAlt}`} className="rounded-none flex justify-center" />
 </div>

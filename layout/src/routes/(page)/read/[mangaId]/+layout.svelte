@@ -1,39 +1,33 @@
 <script lang="ts">
 	import { goto, afterNavigate } from '$app/navigation';
 
+	import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
+
 	let previousPage: string = '/';
 
 	afterNavigate(({ from }) => {
-		let previous = from?.url.pathname.split('/');
-		if (previous?.length === 3) {
-			previousPage = from?.url.pathname || previousPage;
-		}
-		if (previous?.length === 4) {
-			previousPage = '/';
-		}
+		let previous = previousPage;
+		if (!from) previous = previousPage;
+		if (previous?.length === 3) previousPage = from?.url.pathname || previousPage;
+		if (previous?.length === 4) previousPage = '/';
 	});
 </script>
 
 <div>
-	<div class="read-navbar">
-		<a href="#!" on:click|preventDefault={() => goto(previousPage)}>back</a>
-	</div>
-
-	<div class="content">
+	<div class="content pt-2">
 		<slot />
 	</div>
 
+	<div
+		class="rounded-full fixed bottom-12 right-12 bg-pink-200 shadow-md px-4 py-4 flex items-center justify-center"
+	>
+		<a
+			href="#!"
+			class="flex flex-col items-center"
+			on:click|preventDefault={() => goto(previousPage)}
+		>
+			<!-- <ReturnIcon /> -->
+			<HomeIcon />
+		</a>
+	</div>
 </div>
-
-<style>
-	.read-navbar {
-		background-color: teal;
-		position: fixed;
-		display: flex;
-		width: 100%;
-	}
-
-	.content {
-		padding-top: 2em;
-	}
-</style>
