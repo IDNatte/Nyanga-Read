@@ -10,14 +10,14 @@
 	let previousPage: string = '/';
 	const triggerViewerChangeNext = new Event('viewer-change:next');
 	const triggerViewerChangePrev = new Event('viewer-change:prev');
-	const triggerSave = new Event('manga-action:saveLocal')
+	const triggerSave = new Event('manga-action:saveLocal');
 
 	function next() {
 		document.dispatchEvent(triggerViewerChangeNext);
 	}
 
 	function saveManga() {
-		document.dispatchEvent(triggerSave)
+		document.dispatchEvent(triggerSave);
 	}
 
 	function prev() {
@@ -43,11 +43,7 @@
 	<ViewerNavigationComponent>
 		<div class="flex divide-x items-center">
 			<div class="px-4">
-				<a
-					href="#!"
-					class="flex flex-col items-center"
-					on:click|preventDefault={saveManga}
-				>
+				<a href="#!" class="flex flex-col items-center" on:click|preventDefault={saveManga}>
 					<BookmarkIcon />
 					<span class="font-thin text-[.8em] pt-1 capitalize">save</span>
 				</a>

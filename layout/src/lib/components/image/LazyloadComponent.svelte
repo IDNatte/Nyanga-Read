@@ -50,6 +50,6 @@
 	});
 </script>
 
-<div class="w-full h-full {className}" bind:this={container}>
+<div class="{className}" bind:this={container}>
 	<slot {intersect} />
 </div>

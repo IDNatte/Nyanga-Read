@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	document.addEventListener('manga-action:saveLocal', () => {
 		// window.backendAPI.triggerSave()
-		console.log('implement after done @ front-end')
+		console.log('implement after done @ front-end ');
 	});
 });
