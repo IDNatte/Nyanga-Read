@@ -5,9 +5,7 @@
 	import navigationStore from '$lib/store/navigation.store';
 	import PageLoaderComponent from '$lib/components/loader/PageLoaderComponent.svelte';
 	import '../app.css';
-
 </script>
-
 
 {#if $navigationStore === 'loading'}
 	<div out:fade={{ delay: 500 }}>

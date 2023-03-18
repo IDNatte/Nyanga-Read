@@ -6,7 +6,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
 		const chapterMeta = await fetch(`https://api.mangadex.org/at-home/server/${params.chapterId}`);
 		const chapter = await chapterMeta.json();
 
-		navigationStore.set('loaded')
+		navigationStore.set('loaded');
 
 		const chapterData = [];
 

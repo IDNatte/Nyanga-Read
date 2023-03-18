@@ -2,6 +2,7 @@
 	import { goto, afterNavigate } from '$app/navigation';
 
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
+	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
@@ -9,8 +10,14 @@
 	let previousPage: string = '/';
 	const triggerViewerChangeNext = new Event('viewer-change:next');
 	const triggerViewerChangePrev = new Event('viewer-change:prev');
+	const triggerSave = new Event('manga-action:saveLocal')
+
 	function next() {
 		document.dispatchEvent(triggerViewerChangeNext);
+	}
+
+	function saveManga() {
+		document.dispatchEvent(triggerSave)
 	}
 
 	function prev() {
@@ -35,6 +42,16 @@
 
 	<ViewerNavigationComponent>
 		<div class="flex divide-x items-center">
+			<div class="px-4">
+				<a
+					href="#!"
+					class="flex flex-col items-center"
+					on:click|preventDefault={saveManga}
+				>
+					<BookmarkIcon />
+					<span class="font-thin text-[.8em] pt-1 capitalize">save</span>
+				</a>
+			</div>
 			<div class="px-4">
 				<a
 					href="#!"

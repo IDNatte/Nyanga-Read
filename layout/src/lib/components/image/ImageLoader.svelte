@@ -14,7 +14,7 @@
 	onMount(() => {
 		if ('loading' in HTMLImageElement.prototype) {
 			nativeLoading = true;
-			navigationStore.set('loading')
+			navigationStore.set('loading');
 		}
 	});
 </script>

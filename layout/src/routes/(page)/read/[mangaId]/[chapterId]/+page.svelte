@@ -22,7 +22,7 @@
 			if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
 
 			imageSrc = data.chapter[image].url;
-			imageAlt = data.chapter[image].chapterTitle
+			imageAlt = data.chapter[image].chapterTitle;
 		}
 
 		if (event.key === 'ArrowLeft') {
@@ -32,7 +32,7 @@
 			if (image <= 0) image = 0;
 
 			imageSrc = data.chapter[image].url;
-			imageAlt = data.chapter[image].chapterTitle
+			imageAlt = data.chapter[image].chapterTitle;
 		}
 	}
 
@@ -42,8 +42,7 @@
 		if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
 
 		imageSrc = data.chapter[image].url;
-		imageAlt = data.chapter[image].chapterTitle
-
+		imageAlt = data.chapter[image].chapterTitle;
 	});
 
 	document.addEventListener('viewer-change:prev', () => {
@@ -52,18 +51,21 @@
 		if (image <= 0) image = 0;
 
 		imageSrc = data.chapter[image].url;
-		imageAlt = data.chapter[image].chapterTitle
-
+		imageAlt = data.chapter[image].chapterTitle;
 	});
 
 	onMount(() => {
 		imageSrc = data.chapter[0].url;
-		imageAlt = data.chapter[0].chapterTitle
+		imageAlt = data.chapter[0].chapterTitle;
 	});
 </script>
 
 <svelte:window on:keydown={arrowButton} />
 
 <div class="flex justify-center items-center">
-	<ImageLoader src={imageSrc} alt={`Chapter ${imageAlt}`} className="rounded-none flex justify-center" />
+	<ImageLoader
+		src={imageSrc}
+		alt={`Chapter ${imageAlt}`}
+		className="rounded-none flex justify-center"
+	/>
 </div>

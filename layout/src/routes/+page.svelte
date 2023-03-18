@@ -59,7 +59,7 @@
 					{/each}
 				</swiper-container>
 			</div>
-		
+
 			<div class="w-full flex justify-center">
 				<!-- <span>more</span> -->
 				<a
@@ -69,5 +69,4 @@
 			</div>
 		</div>
 	</div>
-		
 </div>

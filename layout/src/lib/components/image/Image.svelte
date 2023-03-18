@@ -12,8 +12,7 @@
 	onMount(() => {
 		thisImage.onload = () => {
 			loaded = true;
-			navigationStore.set('loaded')
-
+			navigationStore.set('loaded');
 		};
 	});
 </script>

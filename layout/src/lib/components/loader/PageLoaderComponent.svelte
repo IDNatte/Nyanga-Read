@@ -3,9 +3,9 @@
 	import { cubicOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
 
-  import navigationStore from '$lib/store/navigation.store';
+	import navigationStore from '$lib/store/navigation.store';
 
-  const progress = tweened(0, {
+	const progress = tweened(0, {
 		duration: 3500,
 		easing: cubicOut
 	});

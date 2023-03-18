@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require("electron")
+const { app, BrowserWindow, ipcMain } = require("electron")
 const serve = require("electron-serve")
+const path = require("path")
 
 const loadURL = serve({ directory: "layout/build" })
 
@@ -22,7 +23,10 @@ const createWindow = () => {
     width: 1024,
     minWidth: 1024,
     height: 700,
-    minHeight: 700
+    minHeight: 700,
+    webPreferences: {
+      preload: path.join(__dirname, "modules/preload/preload.js")
+    }
   })
 
   if (process.env.APP_DEV) {
@@ -50,5 +54,8 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
+  ipcMain.handle("save:manga", () => {
+    console.log("saving manga to local...!!")
+  })
   createWindow()
 })
