@@ -5,6 +5,11 @@
 	import Image from '$lib/components/image/Image.svelte';
 	import LazyloadComponent from '$lib/components/image/LazyloadComponent.svelte';
 
+	type Cover = {
+		cover: boolean;
+		coverArt: string | null;
+	};
+
 	export let src: string;
 	export let alt: string;
 	export let className: string = 'w-full h-auto rounded-t';

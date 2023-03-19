@@ -5,8 +5,15 @@ export const load: PageLoad = async ({ params, fetch }) => {
 		`https://api.mangadex.org/manga/${params.mangaId}/aggregate?translatedLanguage[]=en`
 	);
 
-	const volumeContent = await getChapter.json();
+	const getManga = await fetch(
+		`https://api.mangadex.org/manga/${params.mangaId}?includes[]=cover_art`
+	);
 
+	const volumeContent = await getChapter.json();
+	const manga = await getManga.json();
+
+	const coverArt = manga.data.relationships;
+	const title = manga.data.attributes.title.en || manga.data.attributes.title.ja;
 	const volume = [];
 
 	for (const data in volumeContent.volumes) {
@@ -27,6 +34,8 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 	return {
 		volume: volume.sort((a, b) => Number(b.volume) - Number(a.volume)),
-		mangaId: params.mangaId
+		mangaId: params.mangaId,
+		cover: coverArt,
+		title
 	};
 };
