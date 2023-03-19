@@ -5,6 +5,7 @@
   "main": "main.js",
   "devDependencies": {
     "electron": "^23.1.4",
+    "electron-builder": "^23.6.0",
     "prettier": "^2.8.0",
     "prettierrc": "^0.0.0-5"
   },
@@ -43,10 +44,10 @@
     },
     "files": [
       "**/*",
-      "layout/build/*"
+      "./layout/build/*"
     ],
     "nsis": {
-      "installerIcon": "build/icon/image/logo.ico"
+      "installerIcon": "build/icon/image/logo-ico.ico"
     }
   }
 }
