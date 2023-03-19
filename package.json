@@ -1,6 +1,7 @@
 {
   "name": "mang-redr",
   "packageManager": "yarn@3.3.1",
+  "version": "1.0.0-beta.1",
   "main": "main.js",
   "devDependencies": {
     "electron": "^23.1.4",
@@ -9,13 +10,43 @@
   },
   "scripts": {
     "electron:dev": "APP_DEV=true electron .",
-    "electron:build": "echo no script runner defined yet..!!",
     "electron:format": "prettier --write .",
     "electron:test": "cd ./layout/ && yarn run build && cd .. && electron .",
     "electron:nobuildtest": "electron .",
-    "app:build": "cd layout && yarn run layout:build"
+    "electron:build": "electron-builder",
+    "electron:pack": "electron-builder --dir",
+    "electron:publish:win": "electron-builder --win -p always",
+    "electron:publish:linux": "electron-builder --linux -p always",
+    "app:build": "cd layout && yarn run build && cd .. && yarn run electron:build"
   },
   "dependencies": {
     "electron-serve": "^1.1.0"
+  },
+  "build": {
+    "appId": "com.IDNatte.readnyanga",
+    "productName": "Read Nyanga 😸",
+    "publish": [
+      {
+        "provider": "github",
+        "repo": "mang-redr",
+        "owner": "IDNatte"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon/image/logo.png"
+    },
+    "linux": {
+      "target": "appImage",
+      "icon": "build/icon/image/logo.png",
+      "category": "Utility"
+    },
+    "files": [
+      "**/*",
+      "layout/build/*"
+    ],
+    "nsis": {
+      "installerIcon": "build/icon/image/logo.ico"
+    }
   }
 }

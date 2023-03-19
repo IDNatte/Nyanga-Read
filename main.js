@@ -24,6 +24,7 @@ const createWindow = () => {
     minWidth: 1024,
     height: 700,
     minHeight: 700,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, "modules/preload/preload.js")
     }
@@ -51,6 +52,8 @@ const createWindow = () => {
       responseHeaders
     })
   })
+
+  win.setTitle("Read Nyanga 😸")
 }
 
 app.whenReady().then(() => {
