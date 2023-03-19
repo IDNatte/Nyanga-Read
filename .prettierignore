@@ -1,2 +1,5 @@
 layout
 ./yarnrc.yml
+build
+dist
+gh_token.txt
