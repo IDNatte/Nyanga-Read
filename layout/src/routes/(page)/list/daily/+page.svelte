@@ -3,39 +3,41 @@
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
-	let limit = 3;
+	let initLimit = 9
 	let perPage = 3;
-	let max = 99;
+	let limit = 3;
+	let offset = 0
+	// let max = 99;
 
-	// let initData: Array<any> = []
-	$: newData = []
+	let data: Array<any> = []
   $: data = [];
 
 	let endObserver: HTMLDivElement;
 
 	const observer = new IntersectionObserver(
 		(event) => {
-			if (event[0].intersectionRatio === 1) {
-				if (limit == max) {
-					limit = max;
-					console.log('over limit');
+			if (event[0].intersectionRatio > 0.2) {
+				limit = perPage
+
+				if (data.length <= 9) {
+					offset = limit + initLimit
 				} else {
-					limit = limit + perPage;
-					getManga(limit)
-					console.log(data)
-					// console.log(`limit: ${limit} per-page: ${perPage}`);
+					offset = offset + perPage
 				}
+
+				getManga(offset, limit)
+				console.log(`offset: ${offset} limit: ${limit}`)
 			}
 		},
 		{
 			root: null,
 			rootMargin: '0px',
-			threshold: 1
+			threshold: 0.2
 		}
 	);
 
   async function getInitManga() {
-    let mangaData = await fetch('https://api.mangadex.org/manga?limit=9&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art')
+    let mangaData = await fetch('https://api.mangadex.org/manga?limit=9&offset=0&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art')
     if (mangaData.status === 200) {
 			let manga = await mangaData.json(); 
       data = manga.data
@@ -44,15 +46,14 @@
 		}
   }
 
-	async function getManga(limit: number) {
+	async function getManga(offset: number, limit: number) {
 		let mangaData = await fetch(
-			`https://api.mangadex.org/manga?limit=${limit}&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art`
+			`https://api.mangadex.org/manga?limit=${limit}&offset=${offset}&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art`
 		);
 
 		if (mangaData.status === 200) {
 			let manga = await mangaData.json();
-			let newData = manga.data
-			data = [...data, ...newData]
+			data = [...data, ...manga.data]
 		} else {
 			throw new Error('Something went wrong :/');
 		}
@@ -201,5 +202,7 @@
       {/each}
     {/await} -->
 	</div>
-	<div class="loader w-full h-2 bg-pink-700" bind:this={endObserver} />
+	<div class="loader w-full h-8 bg-pink-700 text-white flex items-center justify-center" bind:this={endObserver}>
+		<span>Loading Data</span>
+	</div>
 </div>
