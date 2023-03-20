@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 
 	window.backendAPI.onMangaLoad((e, data) => {
-		console.log(data)
-		// let mangaLoad = new CustomEvent('manga-action:load', {detail:})
+		let mangaLoad = new CustomEvent('manga-action:load', {detail:{data}})
+		document.dispatchEvent(mangaLoad)
 	})
 
 });
