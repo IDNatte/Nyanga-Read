@@ -3,9 +3,16 @@
 
 	import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
+	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import NavigationComponent from '$lib/components/navigation/NavigationComponent.svelte';
 
+
 	let previousPage: string = '/';
+	const triggerSave = new Event('manga-action:saveLocal');
+
+	function saveManga() {
+		document.dispatchEvent(triggerSave);
+	}
 
 	afterNavigate(({ from }) => {
 		let previous = from?.url.pathname;
@@ -23,6 +30,11 @@
 
 	<NavigationComponent>
 		<div class="divide-x flex flex-row">
+			<div class="px-4 py-[0.255em]">
+				<a href="#!" class="flex flex-col items-center" on:click|preventDefault={saveManga}>
+					<BookmarkIcon />
+				</a>
+			</div>
 			<div class="px-4 py-[0.255em]">
 				<a href="#!" class="flex flex-col items-center" on:click|preventDefault={() => goto('/')}>
 					<HomeIcon />

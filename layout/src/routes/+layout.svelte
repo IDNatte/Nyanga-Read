@@ -1,6 +1,5 @@
 <script>
 	import { fade } from 'svelte/transition';
-	// import { afterNavigate, beforeNavigate } from '$app/navigation';
 
 	import navigationStore from '$lib/store/navigation.store';
 	import PageLoaderComponent from '$lib/components/loader/PageLoaderComponent.svelte';
