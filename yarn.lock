@@ -1701,6 +1701,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lokijs@npm:^1.5.12":
+  version: 1.5.12
+  resolution: "lokijs@npm:1.5.12"
+  checksum: 5cd45facb890048e83977de1451a7b70e1f9e4cfe41c40d2212dfc160df7919b821072f95b10d692f6932c1080193e0715e8fe18dee332f04da4fda0f08984b6
+  languageName: node
+  linkType: hard
+
 "lowercase-keys@npm:^2.0.0":
   version: 2.0.0
   resolution: "lowercase-keys@npm:2.0.0"
@@ -1755,6 +1762,7 @@ __metadata:
     electron: ^23.1.4
     electron-builder: ^23.6.0
     electron-serve: ^1.1.0
+    lokijs: ^1.5.12
     prettier: ^2.8.0
     prettierrc: ^0.0.0-5
   languageName: unknown

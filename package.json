@@ -23,7 +23,8 @@
     "apprelease:linux": "cd layout && yarn run build && cd .. && yarn run electron:publish:linux"
   },
   "dependencies": {
-    "electron-serve": "^1.1.0"
+    "electron-serve": "^1.1.0",
+    "lokijs": "^1.5.12"
   },
   "build": {
     "appId": "com.IDNatte.readnyanga",

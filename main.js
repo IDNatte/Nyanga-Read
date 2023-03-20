@@ -1,6 +1,8 @@
-const { app, BrowserWindow, ipcMain } = require("electron")
+const { app, BrowserWindow } = require("electron")
 const serve = require("electron-serve")
 const path = require("path")
+
+const eventHandle = require("./modules/event/main.event")
 
 const loadURL = serve({ directory: "layout/build" })
 
@@ -53,12 +55,10 @@ const createWindow = () => {
     })
   })
 
-  win.setTitle("Read Nyanga 😸")
+  win.setTitle("Read Nyanga")
 }
 
 app.whenReady().then(() => {
-  ipcMain.handle("save:manga", () => {
-    console.log("saving manga to local...!!")
-  })
+  eventHandle()
   createWindow()
 })

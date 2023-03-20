@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto, afterNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
@@ -8,7 +9,11 @@
 
 
 	let previousPage: string = '/';
-	const triggerSave = new Event('manga-action:saveLocal');
+	const triggerSave = new CustomEvent('manga-action:saveLocal', {
+		detail: {
+			mangaId: $page.params.mangaId
+		}
+	});
 
 	function saveManga() {
 		document.dispatchEvent(triggerSave);

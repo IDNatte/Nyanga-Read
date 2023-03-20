@@ -7,16 +7,22 @@
 
 	import RefreshComponent from '$lib/components/refresh/RefreshComponent.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
 
 	register();
 
+	const triggerMangaLoad = new CustomEvent('request:manga-load')
 	const spaceBetween = 10;
 
 	async function refresh() {
 		await invalidateAll();
 	}
+
+	onMount(() => {
+		document.dispatchEvent(triggerMangaLoad)
+	})
 </script>
 
 <div transition:fade={{ duration: 200 }} class="content w-full h-screen">
