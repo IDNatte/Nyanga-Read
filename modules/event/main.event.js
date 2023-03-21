@@ -1,6 +1,7 @@
 const { ipcMain, app } = require("electron")
 const { autoUpdater } = require("electron-updater")
 const { readFile } = require("fs")
+const path = require("path")
 
 const Database = require("../database/database")
 
@@ -68,16 +69,20 @@ function rendererEventModule() {
   })
 
   ipcMain.on("load:app-about", (event) => {
-    readFile("./modules/other/docs/about.md", "utf-8", (err, data) => {
-      if (err) {
-        event.sender.send("local:app-about", err)
-      }
+    readFile(
+      path.join(__dirname, "modules/other/docs/about.md"),
+      "utf-8",
+      (err, data) => {
+        if (err) {
+          event.sender.send("local:app-about", err)
+        }
 
-      event.sender.send("local:app-about", {
-        about: JSON.stringify(data),
-        appVersion: app.getVersion()
-      })
-    })
+        event.sender.send("local:app-about", {
+          about: JSON.stringify(data),
+          appVersion: app.getVersion()
+        })
+      }
+    )
   })
 
   ipcMain.on("load:manga-all", (event) => {
