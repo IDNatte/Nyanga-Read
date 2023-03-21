@@ -1,5 +1,5 @@
 {
-  "name": "mang-redr",
+  "name": "read-nyanga",
   "packageManager": "yarn@3.3.1",
   "version": "1.0.0-beta.3",
   "main": "main.js",
@@ -28,7 +28,7 @@
   },
   "build": {
     "appId": "com.IDNatte.readnyanga",
-    "productName": "Read Nyanga 😸",
+    "productName": "Read Nyanga",
     "publish": [
       {
         "provider": "github",
