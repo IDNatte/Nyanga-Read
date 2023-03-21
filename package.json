@@ -1,8 +1,14 @@
 {
   "name": "read-nyanga",
   "packageManager": "yarn@3.3.1",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.3-1",
   "main": "main.js",
+  "author": {
+    "email": "idnatte@gmail.com",
+    "name": "IDNatte",
+    "url": "https://github.com/IDNatt"
+  },
+  "description": "Nyanga Reader 😸",
   "devDependencies": {
     "electron": "^23.1.4",
     "electron-builder": "^23.6.0",
