@@ -15,7 +15,7 @@ contextBridge.exposeInMainWorld("backendAPI", {
 
   // end of manga save
 
-  // end of manga load
+  // manga load
   triggerMangaLoad: () => {
     ipcRenderer.send("load:manga")
   },
@@ -30,6 +30,28 @@ contextBridge.exposeInMainWorld("backendAPI", {
 
   onMangaLoad: (callback) => {
     ipcRenderer.on("local:manga-load", callback)
-  }
+  },
   // end of manga load
+
+  // application related
+  triggerAppAbout: () => {
+    ipcRenderer.send("load:app-about")
+  },
+
+  onAppAbout: (callback) => {
+    ipcRenderer.on("local:app-about", callback)
+  },
+
+  triggerAppUpdate: () => {
+    ipcRenderer.send("run:app-update")
+  },
+
+  triggerAppApplyUpdate: () => {
+    ipcRenderer.send("run:app-apply-update")
+  },
+
+  onAppUpdate: (callback) => {
+    ipcRenderer.on("app:app-update", callback)
+  }
+  // end of application related
 })

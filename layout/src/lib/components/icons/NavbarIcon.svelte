@@ -1,14 +1,14 @@
 <script lang="ts">
-  export let width: string = 'w-auto'
-  export let height: string = 'h-auto'
-  export let className: string = ''
+	export let width: string = 'w-auto';
+	export let height: string = 'h-auto';
+	export let className: string = '';
 </script>
 
 <svg
 	viewBox="0 0 700 132"
 	version="1.1"
 	id="SVGRoot"
-  class="{className} {width} {height}"
+	class="{className} {width} {height}"
 	xmlns="http://www.w3.org/2000/svg"
 >
 	<defs id="defs11127" />

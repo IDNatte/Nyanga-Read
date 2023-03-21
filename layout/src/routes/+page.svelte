@@ -4,22 +4,41 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { invalidateAll } from '$app/navigation';
-	import mangaStore from '$lib/store/manga.store';
 
 	import { register } from 'swiper/element/bundle';
+
+	import mangaStore from '$lib/store/manga.store';
+	import modalStore from '$lib/store/modal.store';
+	import menuStore from '$lib/store/menu.store';
 
 	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 
-	import RefreshComponent from '$lib/components/refresh/RefreshComponent.svelte';
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
+	import MenuComponent from '$lib/components/menu/MenuComponent.svelte';
+
+	import MagniglassIcon from '$lib/components/icons/MagniglassIcon.svelte';
+	import UpdateAppIcon from '$lib/components/icons/UpdateAppIcon.svelte';
+	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
+	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
+
 
 	export let data: PageData;
 
 	register();
 
 	const triggerMangaLoad = new CustomEvent('request:manga-load');
+	const triggerAppUpdate = new CustomEvent('request:app-update')
 	const spaceBetween = 10;
+
+	function openAbout(modal: string) {
+		modalStore.set({ modal: modal, open: true });
+	}
+
+	function openUpdate(modal:string) {
+		document.dispatchEvent(triggerAppUpdate)
+		modalStore.set({ modal: modal, open: true });
+	}
 
 	async function refresh() {
 		await invalidateAll();
@@ -44,8 +63,62 @@
 
 <div in:fade={{ duration: 200 }} class="content w-full h-screen">
 	<div class="w-full flex fixed z-40 bg-pink-300 h-14 items-center justify-between px-3">
-		<NavbarIcon width='w-[200px]' />
-		<RefreshComponent on:page-refresh={refresh} />
+		<NavbarIcon width="w-[200px]" />
+		<MenuComponent>
+			<div class="divide-y font-thin text-sm">
+				<!-- common menu -->
+				<div class="common">
+					<a href="#!" class="text-gray-700 px-4 py-2 flex items-center">
+						<div class="logo pl-1 pr-3">
+							<MagniglassIcon
+								width="w-5"
+								height="h-auto"
+								className="flex items-center justify-center"
+							/>
+						</div>
+						<span>Search</span>
+					</a>
+					<a
+						href="#!"
+						on:click|preventDefault={() => {menuStore.set(false);refresh()}}
+						class="text-gray-700 px-4 py-2 flex items-center"
+					>
+						<div class="logo pl-1 pr-3">
+							<RefreshIcon
+								width="w-5"
+								height="h-auto"
+								className="flex items-center justify-center"
+							/>
+						</div>
+						<span>Reload Page</span>
+					</a>
+				</div>
+
+				<!-- About menu -->
+				<div class="common">
+					<a
+						href="#!"
+						on:click|preventDefault={() => {menuStore.set(false);openAbout('about-modal')}}
+						class="text-gray-700 px-4 py-2 flex items-center"
+					>
+						<div class="logo pl-1 pr-3">
+							<InfoIcon width="w-5" height="h-auto" className="flex items-center justify-center" />
+						</div>
+						<span>About</span>
+					</a>
+					<a href="#!" on:click|preventDefault={() => {menuStore.set(false);openUpdate('update-modal')}} class="text-gray-700 px-4 py-2 flex items-center">
+						<div class="logo pl-1 pr-3">
+							<UpdateAppIcon
+								width="w-5"
+								height="h-auto"
+								className="flex items-center justify-center"
+							/>
+						</div>
+						<span>Check Update</span>
+					</a>
+				</div>
+			</div>
+		</MenuComponent>
 	</div>
 
 	<div class="main-content pt-12">
