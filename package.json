@@ -8,6 +8,10 @@
     "name": "IDNatte",
     "url": "https://github.com/IDNatt"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IDNatte/mang-redr.git"
+  },
   "description": "Nyanga Reader 😸",
   "devDependencies": {
     "electron": "^23.1.4",
@@ -54,7 +58,8 @@
     },
     "files": [
       "**/*",
-      "./layout/build/*"
+      "./layout/build/*",
+      "./modules/other/*"
     ],
     "nsis": {
       "installerIcon": "build/icon/image/logo-ico.ico"

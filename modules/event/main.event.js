@@ -70,10 +70,11 @@ function rendererEventModule() {
 
   ipcMain.on("load:app-about", (event) => {
     readFile(
-      path.join(__dirname, "modules/other/docs/about.md"),
+      path.join(__dirname, "../other/docs/about.md"),
       "utf-8",
       (err, data) => {
         if (err) {
+          console.log(err)
           event.sender.send("local:app-about", err)
         }
 
