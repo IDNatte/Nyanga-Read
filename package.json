@@ -1,7 +1,7 @@
 {
   "name": "mang-redr",
   "packageManager": "yarn@3.3.1",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.3",
   "main": "main.js",
   "devDependencies": {
     "electron": "^23.1.4",
