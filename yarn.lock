@@ -1755,19 +1755,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mang-redr@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "mang-redr@workspace:."
-  dependencies:
-    electron: ^23.1.4
-    electron-builder: ^23.6.0
-    electron-serve: ^1.1.0
-    lokijs: ^1.5.12
-    prettier: ^2.8.5
-    prettierrc: ^0.0.0-5
-  languageName: unknown
-  linkType: soft
-
 "matcher@npm:^3.0.0":
   version: 3.0.0
   resolution: "matcher@npm:3.0.0"
@@ -2191,6 +2178,19 @@ __metadata:
   checksum: 51e30db82244b8ceea19143207a52c5210fa17f5282ec43e9485cf7da87ac4ee3a0fb961cccc5c7af319b06d004baa0154349e09ca8ca7235ae7e5ac7c14c3f3
   languageName: node
   linkType: hard
+
+"read-nyanga@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "read-nyanga@workspace:."
+  dependencies:
+    electron: ^23.1.4
+    electron-builder: ^23.6.0
+    electron-serve: ^1.1.0
+    lokijs: ^1.5.12
+    prettier: ^2.8.5
+    prettierrc: ^0.0.0-5
+  languageName: unknown
+  linkType: soft
 
 "readable-stream@npm:^3.6.0":
   version: 3.6.2
