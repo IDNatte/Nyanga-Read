@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import { fade } from 'svelte/transition';
 
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 
@@ -62,7 +63,7 @@
 
 <svelte:window on:keydown={arrowButton} />
 
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center" in:fade={{ duration: 200 }}>
 	<ImageLoader
 		src={imageSrc}
 		alt={`Chapter ${imageAlt}`}

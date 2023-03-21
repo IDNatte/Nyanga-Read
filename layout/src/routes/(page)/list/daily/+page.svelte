@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
-	import { onDestroy, onMount } from 'svelte';
 
 	let initLimit = 9;
 	let perPage = 3;
@@ -69,7 +71,7 @@
 	});
 </script>
 
-<div>
+<div in:fade={{ duration: 200 }}>
 	<div class="content grid grid-cols-3">
 		{#each data as { id, attributes, relationships }}
 			<CardComponent>

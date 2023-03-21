@@ -7,9 +7,9 @@ type MangaListArrayType = [
 ];
 
 type MangaListType = {
-	manga: MangaListArrayType,
-	page?: boolean
-}
+	manga: MangaListArrayType;
+	page?: boolean;
+};
 
 export type MangaStoreType = MangaListType;
 

@@ -64,8 +64,6 @@ const createWindow = () => {
   database.createCollection("mangaCollection")
 }
 
-app.on("ready", () => {})
-
 app.whenReady().then(() => {
   eventHandle()
   createWindow()

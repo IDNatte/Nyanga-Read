@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	document.addEventListener('request:manga-load-all', () => {
-		window.backendAPI.triggerMangaLoadAll()
-	})
+		window.backendAPI.triggerMangaLoadAll();
+	});
 
 	window.backendAPI.onMangaSave((e, data) => {
 		let mangaAction = new CustomEvent('manga-action:info', { detail: { info: data } });
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	window.backendAPI.onMangaLoadAll((e, data) => {
-		let mangaLoadAll = new CustomEvent('manga-action:load-all', {detail: {data}})
-		document.dispatchEvent(mangaLoadAll)
-	})
+		let mangaLoadAll = new CustomEvent('manga-action:load-all', { detail: { data } });
+		document.dispatchEvent(mangaLoadAll);
+	});
 });

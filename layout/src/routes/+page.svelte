@@ -8,8 +8,10 @@
 
 	import { register } from 'swiper/element/bundle';
 
-	import RefreshComponent from '$lib/components/refresh/RefreshComponent.svelte';
+	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
+
+	import RefreshComponent from '$lib/components/refresh/RefreshComponent.svelte';
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 
 	export let data: PageData;
@@ -40,9 +42,9 @@
 	});
 </script>
 
-<div transition:fade={{ duration: 200 }} class="content w-full h-screen">
-	<div class="w-full flex fixed z-40 bg-pink-200 h-14 items-center justify-between px-3">
-		<span>placeholder</span>
+<div in:fade={{ duration: 200 }} class="content w-full h-screen">
+	<div class="w-full flex fixed z-40 bg-pink-300 h-14 items-center justify-between px-3">
+		<NavbarIcon width='w-[200px]' />
 		<RefreshComponent on:page-refresh={refresh} />
 	</div>
 
@@ -148,6 +150,4 @@
 			{/if}
 		</div>
 	{/if}
-
-
 </div>

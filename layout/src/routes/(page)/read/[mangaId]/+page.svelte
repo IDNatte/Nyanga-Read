@@ -15,7 +15,7 @@
 	});
 </script>
 
-<div transition:fade={{ duration: 200 }}>
+<div in:fade={{ duration: 200 }}>
 	{#each data.cover as { type, attributes }}
 		{#if type === 'cover_art'}
 			<div class="w-full h-auto relative block">

@@ -5,14 +5,12 @@ let database = new Database(".nyanga")
 
 function rendererEventModule() {
   ipcMain.on("load:manga-all", (event) => {
-    console.log("request to load all manga")
     let mangaCollection = database.getCollection("mangaCollection")
-    data = {
+    let data = {
       manga: mangaCollection.chain().data({ removeMeta: true }).reverse()
     }
 
-    console.log(data)
-    event.sender.send("local:manga-load-all", "pong")
+    event.sender.send("local:manga-load-all", data)
   })
 
   ipcMain.on("load:manga", (event) => {
