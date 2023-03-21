@@ -7,7 +7,6 @@
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import NavigationComponent from '$lib/components/navigation/NavigationComponent.svelte';
 
-
 	let previousPage: string = '/';
 	const triggerSave = new CustomEvent('manga-action:saveLocal', {
 		detail: {
