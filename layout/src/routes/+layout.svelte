@@ -3,10 +3,12 @@
 	import { onMount } from 'svelte';
 
 	import toast, { Toaster } from 'svelte-french-toast';
+
+	import mangaStore from '$lib/store/manga.store';
 	import navigationStore from '$lib/store/navigation.store';
 	import PageLoaderComponent from '$lib/components/loader/PageLoaderComponent.svelte';
+
 	import '../app.css';
-	import mangaStore from '$lib/store/manga.store';
 
 	onMount(() => {
 		document.addEventListener('manga-action:info', (event: any) => {

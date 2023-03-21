@@ -20,6 +20,14 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("load:manga")
   },
 
+  triggerMangaLoadAll: () => {
+    ipcRenderer.send("load:manga-all")
+  },
+
+  onMangaLoadAll: (callback) => {
+    ipcRenderer.on("local:manga-load-all", callback)
+  },
+
   onMangaLoad: (callback) => {
     ipcRenderer.on("local:manga-load", callback)
   }
