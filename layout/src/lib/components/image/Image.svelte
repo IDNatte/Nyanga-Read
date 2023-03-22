@@ -16,8 +16,6 @@
 				image: src
 			});
 
-			console.log(src)
-
 			loaded = true;
 			navigationStore.set('loaded');
 		};
