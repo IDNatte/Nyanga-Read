@@ -18,12 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	document.addEventListener('request:app-update', () => {
-		window.backendAPI.triggerAppUpdate()
-	})
+		window.backendAPI.triggerAppUpdate();
+	});
 
 	document.addEventListener('request:app-instal-update', () => {
-		window.backendAPI.triggerAppApplyUpdate()
-	})
+		window.backendAPI.triggerAppApplyUpdate();
+	});
 
 	window.backendAPI.onMangaSave((e, data) => {
 		let mangaAction = new CustomEvent('manga-action:info', { detail: { info: data } });
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	window.backendAPI.onAppUpdate((e, data) => {
-		let appUpdate = new CustomEvent('app-action:update', {detail: {data}})
-		document.dispatchEvent(appUpdate)
-	})
+		let appUpdate = new CustomEvent('app-action:update', { detail: { data } });
+		document.dispatchEvent(appUpdate);
+	});
 });

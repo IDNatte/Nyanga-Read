@@ -5,7 +5,7 @@
 	import { marked } from 'marked';
 	import toast, { Toaster } from 'svelte-french-toast';
 
-	import mangaStore from '$lib/store/manga.store';
+	import bookmarkStore from '$lib/store/bookmark.store';
 	import navigationStore from '$lib/store/navigation.store';
 	import PageLoaderComponent from '$lib/components/loader/PageLoaderComponent.svelte';
 	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
@@ -15,40 +15,41 @@
 	import '../app.css';
 
 	const triggerAppAbout = new CustomEvent('request:app-about');
-	const triggerInstallUpdate = new CustomEvent('request:app-instal-update')
+	const triggerInstallUpdate = new CustomEvent('request:app-instal-update');
 	const markedOptions = {
-		sanitize: true,
 		smartLists: true,
 		smartypants: true,
 		gfm: true,
 		breaks: false
 	};
 
+	console.log(document.documentElement.lang);
+
 	function installUpdate() {
-		document.dispatchEvent(triggerInstallUpdate)
+		document.dispatchEvent(triggerInstallUpdate);
 	}
 
 	onMount(() => {
-		document.dispatchEvent(triggerAppAbout)
+		document.dispatchEvent(triggerAppAbout);
 
 		document.addEventListener('manga-action:info', (event: any) => {
 			toast(event.detail.info, { icon: '😸', position: 'top-right' });
 		});
 
 		document.addEventListener('manga-action:load', (event: any) => {
-			mangaStore.set(event.detail.data);
+			bookmarkStore.set(event.detail.data);
 		});
 
 		document.addEventListener('app-action:about', (event: any) => {
 			let appInfo = JSON.parse(event.detail.data.about);
 			let mdxConvert = marked.parse(appInfo, markedOptions);
-			$appStore.about = mdxConvert
-			$appStore.appVersion = event.detail.data.appVersion
+			$appStore.about = mdxConvert;
+			$appStore.appVersion = event.detail.data.appVersion;
 		});
 
 		document.addEventListener('app-action:update', (event: any) => {
-			$appStore.update = event.detail.data
-		})
+			$appStore.update = event.detail.data;
+		});
 	});
 </script>
 
@@ -70,7 +71,7 @@
 
 <ModalComponent modal="update-modal" title="Update Nyanga 😸">
 	<div class="flex items-center justify-center flex-col">
-		<div class="icon py-4 {$appStore.update?.checking ? 'animate-bounce': ''}">
+		<div class="icon py-4 {$appStore.update?.checking ? 'animate-bounce' : ''}">
 			<span class="text-9xl">😸</span>
 		</div>
 		<div class="app-info py-3 flex flex-col justify-center items-center">

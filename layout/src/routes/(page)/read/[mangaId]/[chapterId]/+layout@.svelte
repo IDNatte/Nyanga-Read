@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { goto, afterNavigate } from '$app/navigation';
 
+	import viewerStore from '$lib/store/viewer.store';
+
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
-	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
+	import ViewerChapterComponent from '$lib/components/navigation/ViewerChapterComponent.svelte';
 
 	let previousPage: string = '/';
 	const triggerViewerChangeNext = new Event('viewer-change:next');
@@ -31,6 +33,14 @@
 </script>
 
 <div>
+	<ViewerChapterComponent>
+		<div class="px-4 flex items-center">
+			<span class="font-thin text-[.8em] capitalize"
+				>Page {$viewerStore.currentPage} / {$viewerStore.totalPage}</span
+			>
+		</div>
+	</ViewerChapterComponent>
+
 	<div class="content">
 		<slot />
 	</div>
@@ -47,6 +57,7 @@
 					<span class="font-thin text-[.8em] pt-1 capitalize">back</span>
 				</a>
 			</div>
+
 			<div class="px-4">
 				<a href="#!" class="flex flex-col items-center" on:click|preventDefault={prev}>
 					<ChevronLeftIcon />

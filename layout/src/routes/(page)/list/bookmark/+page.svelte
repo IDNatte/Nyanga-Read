@@ -4,7 +4,7 @@
 
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
-	import mangaStore from '$lib/store/manga.store';
+	import bookmarkStore from '$lib/store/bookmark.store';
 
 	const triggerLoadAllBookmark = new CustomEvent('request:manga-load-all');
 
@@ -24,15 +24,14 @@
 		document.dispatchEvent(triggerLoadAllBookmark);
 
 		document.addEventListener('manga-action:load-all', (event: any) => {
-			mangaStore.set(event.detail.data);
-			// console.log(event.detail.data)
+			bookmarkStore.set(event.detail.data);
 		});
 	});
 </script>
 
 <div in:fade={{ duration: 200 }}>
 	<div class="bookmark-list grid grid-cols-3">
-		{#each $mangaStore.manga as { mangaId }}
+		{#each $bookmarkStore.manga as { mangaId }}
 			{#await getManga(mangaId) then data}
 				<CardComponent>
 					<a href="/read/{mangaId}">

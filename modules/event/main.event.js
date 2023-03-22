@@ -106,14 +106,12 @@ function rendererEventModule() {
       let count = mangaCollection.count()
       let data
 
-      // debug manga count
       if (count > 3) {
+        let manga = mangaCollection.chain().data({ removeMeta: true }).reverse()
+        let mangaData = manga.slice(0, 3)
+
         data = {
-          manga: mangaCollection
-            .chain()
-            .limit(3)
-            .data({ removeMeta: true })
-            .reverse(),
+          manga: mangaData,
           page: true
         }
       } else {

@@ -14,6 +14,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 	const coverArt = manga.data.relationships;
 	const title = manga.data.attributes.title.en || manga.data.attributes.title.ja;
+	const description = manga.data.attributes.description.en || manga.data.attributes.description.ja;
 	const volume = [];
 
 	for (const data in volumeContent.volumes) {
@@ -36,6 +37,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
 		volume: volume.sort((a, b) => Number(b.volume) - Number(a.volume)),
 		mangaId: params.mangaId,
 		cover: coverArt,
-		title
+		title,
+		description
 	};
 };

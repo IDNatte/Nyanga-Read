@@ -7,12 +7,12 @@
 
 	import { register } from 'swiper/element/bundle';
 
-	import mangaStore from '$lib/store/manga.store';
+	import bookmarkStore from '$lib/store/bookmark.store';
 	import modalStore from '$lib/store/modal.store';
 	import menuStore from '$lib/store/menu.store';
 
-	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
+	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
 
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import MenuComponent from '$lib/components/menu/MenuComponent.svelte';
@@ -22,21 +22,20 @@
 	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 
-
 	export let data: PageData;
 
 	register();
 
 	const triggerMangaLoad = new CustomEvent('request:manga-load');
-	const triggerAppUpdate = new CustomEvent('request:app-update')
+	const triggerAppUpdate = new CustomEvent('request:app-update');
 	const spaceBetween = 10;
 
 	function openAbout(modal: string) {
 		modalStore.set({ modal: modal, open: true });
 	}
 
-	function openUpdate(modal:string) {
-		document.dispatchEvent(triggerAppUpdate)
+	function openUpdate(modal: string) {
+		document.dispatchEvent(triggerAppUpdate);
 		modalStore.set({ modal: modal, open: true });
 	}
 
@@ -68,7 +67,11 @@
 			<div class="divide-y font-thin text-sm">
 				<!-- common menu -->
 				<div class="common">
-					<a href="#!" class="text-gray-700 px-4 py-2 flex items-center">
+					<a
+						href="/search"
+						on:click={() => menuStore.set(false)}
+						class="text-gray-700 px-4 py-2 flex items-center"
+					>
 						<div class="logo pl-1 pr-3">
 							<MagniglassIcon
 								width="w-5"
@@ -80,7 +83,10 @@
 					</a>
 					<a
 						href="#!"
-						on:click|preventDefault={() => {menuStore.set(false);refresh()}}
+						on:click|preventDefault={() => {
+							menuStore.set(false);
+							refresh();
+						}}
 						class="text-gray-700 px-4 py-2 flex items-center"
 					>
 						<div class="logo pl-1 pr-3">
@@ -98,7 +104,10 @@
 				<div class="common">
 					<a
 						href="#!"
-						on:click|preventDefault={() => {menuStore.set(false);openAbout('about-modal')}}
+						on:click|preventDefault={() => {
+							menuStore.set(false);
+							openAbout('about-modal');
+						}}
 						class="text-gray-700 px-4 py-2 flex items-center"
 					>
 						<div class="logo pl-1 pr-3">
@@ -106,7 +115,14 @@
 						</div>
 						<span>About</span>
 					</a>
-					<a href="#!" on:click|preventDefault={() => {menuStore.set(false);openUpdate('update-modal')}} class="text-gray-700 px-4 py-2 flex items-center">
+					<a
+						href="#!"
+						on:click|preventDefault={() => {
+							menuStore.set(false);
+							openUpdate('update-modal');
+						}}
+						class="text-gray-700 px-4 py-2 flex items-center"
+					>
 						<div class="logo pl-1 pr-3">
 							<UpdateAppIcon
 								width="w-5"
@@ -144,7 +160,7 @@
 								<a href="/read/{mangaId}">
 									<ImageLoader src={coverUrl} alt={mangaTitle.en} />
 									<div class="title text-center text-sm p-2">
-										<div class="w-full">{mangaTitle.en}</div>
+										<div class="w-full">{mangaTitle.en || mangaTitle.ja}</div>
 										<div class="w-full">
 											{#if mangaAltTitles.length > 1}
 												({#each mangaAltTitles as title}
@@ -173,7 +189,7 @@
 		</div>
 	</div>
 
-	{#if $mangaStore.manga.length > 0}
+	{#if $bookmarkStore.manga.length > 0}
 		<div class="saved-manga">
 			<div class="pb-2 pt-8 px-4 flex items-center justify-start">
 				<span class="text-pink-300 text-xl uppercase underline underline-offset-4 font-light"
@@ -181,7 +197,7 @@
 				>
 			</div>
 			<div class="grid grid-cols-3">
-				{#each $mangaStore.manga as { mangaId }}
+				{#each $bookmarkStore.manga as { mangaId }}
 					<CardComponent>
 						{#await getMangaFromList(mangaId) then data}
 							<a href="/read/{mangaId}">
@@ -211,7 +227,7 @@
 				{/each}
 			</div>
 
-			{#if $mangaStore.page}
+			{#if $bookmarkStore.page}
 				<div class="w-full flex justify-center py-4">
 					<a
 						class="text-pink-300 underline underline-offset-4 font-light text-lg py-2"

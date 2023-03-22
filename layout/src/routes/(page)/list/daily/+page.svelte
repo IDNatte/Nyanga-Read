@@ -25,7 +25,6 @@
 				} else {
 					offset = offset + perPage;
 				}
-
 				getManga(offset, limit);
 			}
 		},

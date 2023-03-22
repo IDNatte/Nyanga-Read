@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
+	import viewerStore from '$lib/store/viewer.store';
 
 	export let data: PageData;
 
 	let imageSrc: string;
 	let imageAlt: string;
+
+	$viewerStore.totalPage = data.chapter.length;
 
 	function getArrayIndex(idxof: string): number {
 		let index = data.chapter.findIndex((value) => value.url == idxof);
@@ -19,8 +22,15 @@
 		if (event.key === 'ArrowRight') {
 			// next image
 			let image = getArrayIndex(imageSrc);
+			let page = $viewerStore.currentPage + 1;
 			image += 1;
-			if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
+
+			if (image >= data.chapter.length - 1) {
+				image = data.chapter.length - 1;
+				page = data.chapter.length - 1;
+			}
+
+			$viewerStore.currentPage = page;
 
 			imageSrc = data.chapter[image].url;
 			imageAlt = data.chapter[image].chapterTitle;
@@ -29,8 +39,15 @@
 		if (event.key === 'ArrowLeft') {
 			// preview image
 			let image = getArrayIndex(imageSrc);
+			let page = $viewerStore.currentPage - 1;
+
 			image -= 1;
-			if (image <= 0) image = 0;
+			if (image <= 0) {
+				image = 0;
+				page = 1;
+			}
+
+			$viewerStore.currentPage = page;
 
 			imageSrc = data.chapter[image].url;
 			imageAlt = data.chapter[image].chapterTitle;
@@ -39,8 +56,14 @@
 
 	document.addEventListener('viewer-change:next', () => {
 		let image = getArrayIndex(imageSrc);
+		let page = $viewerStore.currentPage + 1;
 		image += 1;
-		if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
+		if (image >= data.chapter.length - 1) {
+			image = data.chapter.length - 1;
+			page = data.chapter.length - 1;
+		}
+
+		$viewerStore.currentPage = page;
 
 		imageSrc = data.chapter[image].url;
 		imageAlt = data.chapter[image].chapterTitle;
@@ -48,8 +71,15 @@
 
 	document.addEventListener('viewer-change:prev', () => {
 		let image = getArrayIndex(imageSrc);
+		let page = $viewerStore.currentPage - 1;
+
 		image -= 1;
-		if (image <= 0) image = 0;
+		if (image <= 0) {
+			image = 0;
+			page = 1;
+		}
+
+		$viewerStore.currentPage = page;
 
 		imageSrc = data.chapter[image].url;
 		imageAlt = data.chapter[image].chapterTitle;
@@ -58,6 +88,7 @@
 	onMount(() => {
 		imageSrc = data.chapter[0].url;
 		imageAlt = data.chapter[0].chapterTitle;
+		$viewerStore.currentPage = 1;
 	});
 </script>
 

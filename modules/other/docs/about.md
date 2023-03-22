@@ -15,6 +15,7 @@
     - [@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin)
     - [marked](https://marked.js.org/)
     - [swiper](https://swiperjs.com/)
+    - [lodash debounce](https://lodash.com/docs/#debounce)
   - System
     - [electron](https://www.electronjs.org/)
     - [lokijs](https://techfort.github.io/LokiJS/)
