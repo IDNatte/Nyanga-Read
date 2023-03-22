@@ -12,7 +12,6 @@
 
 	let imageSrc: string;
 	let imageAlt: string;
-	let navigation: string;
 
 	function getArrayIndex(idxof: string): number {
 		let index = data.chapter.findIndex((value) => value.url == idxof);
@@ -23,16 +22,9 @@
 		if (event.key === 'ArrowRight') {
 			// next image
 			let image = getArrayIndex(imageSrc);
-			// let page = $viewerStore.currentPage + 1;
-			navigation = 'next';
 			image += 1;
 
-			if (image >= data.chapter.length - 1) {
-				image = data.chapter.length - 1;
-				// page = data.chapter.length ;
-			}
-
-			// $viewerStore.currentPage = page;
+			if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
 
 			imageSrc = data.chapter[image].url;
 			imageAlt = data.chapter[image].chapterTitle;
@@ -41,68 +33,38 @@
 		if (event.key === 'ArrowLeft') {
 			// preview image
 			let image = getArrayIndex(imageSrc);
-			// let page = $viewerStore.currentPage - 1;
-			navigation = 'prev';
 
 			image -= 1;
-			if (image <= 0) {
-				image = 0;
-				// page = 1;
-			}
-
-			// $viewerStore.currentPage = page;
+			if (image <= 0) image = 0;
 
 			imageSrc = data.chapter[image].url;
 			imageAlt = data.chapter[image].chapterTitle;
 		}
 	}
 
-	function viewerImageLoad() {
-		let currentPage = $viewerStore.currentPage;
-		if (navigation === 'prev') {
-			if ($viewerStore.currentPage === 1) {
-				$viewerStore.currentPage = 1;
-			} else {
-				$viewerStore.currentPage = currentPage - 1;
-			}
-		} else if (navigation === 'next') {
-			if ($viewerStore.currentPage === $viewerStore.totalPage) {
-				$viewerStore.currentPage = $viewerStore.totalPage + 1;
-			} else {
-				$viewerStore.currentPage = currentPage + 1;
-			}
-		}
+	function viewerImageLoad(event: any) {
+		$viewerStore.currentPage = event.detail.image.split('/')[5].split('-')[0]
 	}
 
 	document.addEventListener('viewer-change:next', () => {
 		let image = getArrayIndex(imageSrc);
-		let page = $viewerStore.currentPage + 1;
 		image += 1;
-		if (image >= data.chapter.length - 1) {
-			image = data.chapter.length - 1;
-			page = data.chapter.length;
-		}
 
-		$viewerStore.currentPage = page;
+		if (image >= data.chapter.length - 1) image = data.chapter.length - 1;
 
 		imageSrc = data.chapter[image].url;
 		imageAlt = data.chapter[image].chapterTitle;
+
 	});
 
 	document.addEventListener('viewer-change:prev', () => {
 		let image = getArrayIndex(imageSrc);
-		let page = $viewerStore.currentPage - 1;
-
 		image -= 1;
-		if (image <= 0) {
-			image = 0;
-			page = 1;
-		}
-
-		$viewerStore.currentPage = page;
+		if (image <= 0) image = 0;
 
 		imageSrc = data.chapter[image].url;
 		imageAlt = data.chapter[image].chapterTitle;
+
 	});
 
 	onMount(() => {
@@ -123,6 +85,6 @@
 		src={imageSrc}
 		alt={`Chapter ${imageAlt}`}
 		className="rounded-none flex justify-center"
-		on:imgloaded={viewerImageLoad}
+		on:viewerimgloaded={viewerImageLoad}
 	/>
 </div>

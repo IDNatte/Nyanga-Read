@@ -12,8 +12,13 @@
 
 	onMount(() => {
 		thisImage.onload = () => {
+			dispatch('viewerimgloaded', {
+				image: src
+			});
+
+			console.log(src)
+
 			loaded = true;
-			dispatch('imgloaded');
 			navigationStore.set('loaded');
 		};
 	});
