@@ -1,19 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 
 	import navigationStore from '$lib/store/navigation.store';
 	import Image from '$lib/components/image/Image.svelte';
 	import LazyloadComponent from '$lib/components/image/LazyloadComponent.svelte';
 
-	type Cover = {
-		cover: boolean;
-		coverArt: string | null;
-	};
-
 	export let src: string;
 	export let alt: string;
 	export let className: string = 'w-full h-auto rounded-t';
 
+	const dispatch: any = createEventDispatcher()
 	let nativeLoading = false;
 
 	onMount(() => {
@@ -26,6 +22,6 @@
 
 <LazyloadComponent {className} single={true} let:intersect={intersecting}>
 	{#if intersecting || nativeLoading}
-		<Image {className} {alt} {src} />
+		<Image on:imgloaded={() => dispatch('imgloaded')} {className} {alt} {src} />
 	{/if}
 </LazyloadComponent>

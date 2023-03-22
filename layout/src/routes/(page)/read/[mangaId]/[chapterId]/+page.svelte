@@ -8,10 +8,11 @@
 
 	export let data: PageData;
 
+	$viewerStore.totalPage = data.chapter.length;
+
 	let imageSrc: string;
 	let imageAlt: string;
-
-	$viewerStore.totalPage = data.chapter.length;
+	let navigation: string;
 
 	function getArrayIndex(idxof: string): number {
 		let index = data.chapter.findIndex((value) => value.url == idxof);
@@ -22,15 +23,16 @@
 		if (event.key === 'ArrowRight') {
 			// next image
 			let image = getArrayIndex(imageSrc);
-			let page = $viewerStore.currentPage + 1;
+			// let page = $viewerStore.currentPage + 1;
+			navigation = 'next'
 			image += 1;
 
 			if (image >= data.chapter.length - 1) {
 				image = data.chapter.length - 1;
-				page = data.chapter.length - 1;
+				// page = data.chapter.length ;
 			}
 
-			$viewerStore.currentPage = page;
+			// $viewerStore.currentPage = page;
 
 			imageSrc = data.chapter[image].url;
 			imageAlt = data.chapter[image].chapterTitle;
@@ -39,18 +41,36 @@
 		if (event.key === 'ArrowLeft') {
 			// preview image
 			let image = getArrayIndex(imageSrc);
-			let page = $viewerStore.currentPage - 1;
+			// let page = $viewerStore.currentPage - 1;
+			navigation = 'prev'
 
 			image -= 1;
 			if (image <= 0) {
 				image = 0;
-				page = 1;
+				// page = 1;
 			}
 
-			$viewerStore.currentPage = page;
+			// $viewerStore.currentPage = page;
 
 			imageSrc = data.chapter[image].url;
 			imageAlt = data.chapter[image].chapterTitle;
+		}
+	}
+
+	function viewerImageLoad() {
+		let currentPage = $viewerStore.currentPage
+		if (navigation === 'prev') {
+			if ($viewerStore.currentPage === 1) {
+				$viewerStore.currentPage = 1
+			} else {
+				$viewerStore.currentPage = currentPage - 1
+			}
+		} else if (navigation === 'next') {
+			if ($viewerStore.currentPage === $viewerStore.totalPage) {
+				$viewerStore.currentPage = $viewerStore.totalPage + 1
+			} else {
+				$viewerStore.currentPage = currentPage + 1
+			}
 		}
 	}
 
@@ -60,7 +80,7 @@
 		image += 1;
 		if (image >= data.chapter.length - 1) {
 			image = data.chapter.length - 1;
-			page = data.chapter.length - 1;
+			page = data.chapter.length;
 		}
 
 		$viewerStore.currentPage = page;
@@ -92,7 +112,7 @@
 	});
 
 	onDestroy(() =>{
-		viewerStore.set({currentPage: 0, totalPage: 0})
+		viewerStore.set({currentPage: 1, totalPage: 0})
 	})
 </script>
 
@@ -103,5 +123,6 @@
 		src={imageSrc}
 		alt={`Chapter ${imageAlt}`}
 		className="rounded-none flex justify-center"
+		on:imgloaded={viewerImageLoad}
 	/>
 </div>

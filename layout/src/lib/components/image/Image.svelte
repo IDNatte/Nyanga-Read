@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 	import navigationStore from '$lib/store/navigation.store';
 
 	export let src: string;
 	export let alt: string;
 	export let className: string;
 
+	const dispatch: any = createEventDispatcher()
 	let loaded: boolean = false;
 	let thisImage: HTMLImageElement;
 
 	onMount(() => {
 		thisImage.onload = () => {
 			loaded = true;
+			dispatch('imgloaded')
 			navigationStore.set('loaded');
 		};
 	});
