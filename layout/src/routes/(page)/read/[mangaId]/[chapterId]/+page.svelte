@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
@@ -90,6 +90,10 @@
 		imageAlt = data.chapter[0].chapterTitle;
 		$viewerStore.currentPage = 1;
 	});
+
+	onDestroy(() =>{
+		viewerStore.set({currentPage: 0, totalPage: 0})
+	})
 </script>
 
 <svelte:window on:keydown={arrowButton} />
