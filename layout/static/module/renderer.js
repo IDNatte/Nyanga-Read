@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
 	document.addEventListener('manga-action:saveLocal', (event) => {
 		window.backendAPI.triggerSave(event.detail.mangaId);
 	});

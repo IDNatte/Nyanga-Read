@@ -9,7 +9,7 @@
 	export let alt: string;
 	export let className: string = 'w-full h-auto rounded-t';
 
-	const dispatch: any = createEventDispatcher()
+	const dispatch: any = createEventDispatcher();
 	let nativeLoading = false;
 
 	onMount(() => {

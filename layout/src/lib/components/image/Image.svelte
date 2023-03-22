@@ -6,14 +6,14 @@
 	export let alt: string;
 	export let className: string;
 
-	const dispatch: any = createEventDispatcher()
+	const dispatch: any = createEventDispatcher();
 	let loaded: boolean = false;
 	let thisImage: HTMLImageElement;
 
 	onMount(() => {
 		thisImage.onload = () => {
 			loaded = true;
-			dispatch('imgloaded')
+			dispatch('imgloaded');
 			navigationStore.set('loaded');
 		};
 	});

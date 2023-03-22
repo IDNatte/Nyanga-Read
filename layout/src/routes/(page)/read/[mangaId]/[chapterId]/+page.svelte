@@ -24,7 +24,7 @@
 			// next image
 			let image = getArrayIndex(imageSrc);
 			// let page = $viewerStore.currentPage + 1;
-			navigation = 'next'
+			navigation = 'next';
 			image += 1;
 
 			if (image >= data.chapter.length - 1) {
@@ -42,7 +42,7 @@
 			// preview image
 			let image = getArrayIndex(imageSrc);
 			// let page = $viewerStore.currentPage - 1;
-			navigation = 'prev'
+			navigation = 'prev';
 
 			image -= 1;
 			if (image <= 0) {
@@ -58,18 +58,18 @@
 	}
 
 	function viewerImageLoad() {
-		let currentPage = $viewerStore.currentPage
+		let currentPage = $viewerStore.currentPage;
 		if (navigation === 'prev') {
 			if ($viewerStore.currentPage === 1) {
-				$viewerStore.currentPage = 1
+				$viewerStore.currentPage = 1;
 			} else {
-				$viewerStore.currentPage = currentPage - 1
+				$viewerStore.currentPage = currentPage - 1;
 			}
 		} else if (navigation === 'next') {
 			if ($viewerStore.currentPage === $viewerStore.totalPage) {
-				$viewerStore.currentPage = $viewerStore.totalPage + 1
+				$viewerStore.currentPage = $viewerStore.totalPage + 1;
 			} else {
-				$viewerStore.currentPage = currentPage + 1
+				$viewerStore.currentPage = currentPage + 1;
 			}
 		}
 	}
@@ -111,9 +111,9 @@
 		$viewerStore.currentPage = 1;
 	});
 
-	onDestroy(() =>{
-		viewerStore.set({currentPage: 1, totalPage: 0})
-	})
+	onDestroy(() => {
+		viewerStore.set({ currentPage: 1, totalPage: 0 });
+	});
 </script>
 
 <svelte:window on:keydown={arrowButton} />
