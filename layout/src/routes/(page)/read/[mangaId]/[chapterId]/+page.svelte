@@ -43,7 +43,7 @@
 	}
 
 	function viewerImageLoad(event: any) {
-		$viewerStore.currentPage = event.detail.image.split('/')[5].split('-')[0]
+		$viewerStore.currentPage = event.detail.image.split('/')[5].split('-')[0];
 	}
 
 	document.addEventListener('viewer-change:next', () => {
@@ -54,7 +54,6 @@
 
 		imageSrc = data.chapter[image].url;
 		imageAlt = data.chapter[image].chapterTitle;
-
 	});
 
 	document.addEventListener('viewer-change:prev', () => {
@@ -64,7 +63,6 @@
 
 		imageSrc = data.chapter[image].url;
 		imageAlt = data.chapter[image].chapterTitle;
-
 	});
 
 	onMount(() => {
