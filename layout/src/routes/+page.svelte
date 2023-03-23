@@ -61,7 +61,9 @@
 </script>
 
 <div in:fade={{ duration: 200 }} class="content w-full h-screen">
-	<div class="w-full flex fixed z-40 bg-pink-300 h-14 items-center justify-between px-3">
+	<div
+		class="w-full flex fixed z-30 bg-pink-300 h-14 shadow items-center justify-between px-3 top-[2.2rem]"
+	>
 		<NavbarIcon width="w-[200px]" />
 		<MenuComponent>
 			<div class="divide-y font-thin text-sm">
@@ -137,7 +139,7 @@
 		</MenuComponent>
 	</div>
 
-	<div class="main-content pt-12">
+	<div class="main-content pt-24">
 		<div class="pb-2 pt-8 px-4 flex items-center justify-start">
 			<span class="text-pink-300 text-xl uppercase underline underline-offset-4 font-light"
 				>new upload</span

@@ -78,7 +78,7 @@
 
 <svelte:window on:keydown={arrowButton} />
 
-<div class="flex justify-center items-center" in:fade={{ duration: 200 }}>
+<div class="flex justify-center items-center pt-[2.2rem] px-6 pb-28" in:fade={{ duration: 200 }}>
 	<ImageLoader
 		src={imageSrc}
 		alt={`Chapter ${imageAlt}`}

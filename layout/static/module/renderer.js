@@ -23,6 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
 		window.backendAPI.triggerAppApplyUpdate();
 	});
 
+	document.addEventListener('request:win-minimize', () => {
+		window.backendAPI.triggreWinMinimize()
+	})
+
+	document.addEventListener('request:win-resize', () => {
+		window.backendAPI.triggerWinResize()
+	})
+
+	document.addEventListener('request:win-close', () => {
+		window.backendAPI.triggreWinClose()
+	})
+
 	window.backendAPI.onMangaSave((e, data) => {
 		let mangaAction = new CustomEvent('manga-action:info', { detail: { info: data } });
 		document.dispatchEvent(mangaAction);

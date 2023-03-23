@@ -34,7 +34,7 @@
 
 <div>
 	<ViewerChapterComponent>
-		<div class="px-4 flex items-center">
+		<div class="flex items-center">
 			<span class="font-thin text-[.8em] capitalize"
 				>Page {$viewerStore.currentPage} / {$viewerStore.totalPage}</span
 			>

@@ -13,6 +13,7 @@
 	import appStore from '$lib/store/app.store';
 
 	import '../app.css';
+	import WindowFrameComponent from '$lib/components/frame/WindowFrameComponent.svelte';
 
 	const triggerAppAbout = new CustomEvent('request:app-about');
 	const triggerInstallUpdate = new CustomEvent('request:app-instal-update');
@@ -52,6 +53,8 @@
 		});
 	});
 </script>
+
+<WindowFrameComponent />
 
 {#if $navigationStore === 'loading'}
 	<div out:fade={{ delay: 500 }}>

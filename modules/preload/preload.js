@@ -52,6 +52,19 @@ contextBridge.exposeInMainWorld("backendAPI", {
 
   onAppUpdate: (callback) => {
     ipcRenderer.on("app:app-update", callback)
+  },
+
+  triggreWinMinimize: () => {
+    ipcRenderer.send("win:minimize")
+  },
+
+  triggreWinClose: () => {
+    ipcRenderer.send("win:close")
+  },
+
+  triggerWinResize: () => {
+    ipcRenderer.send("win:resize")
   }
+
   // end of application related
 })

@@ -28,6 +28,7 @@ const createWindow = () => {
     height: 700,
     minHeight: 700,
     autoHideMenuBar: true,
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, "modules/preload/preload.js")
     }
@@ -62,9 +63,11 @@ const createWindow = () => {
 
   let database = new Database(".nyanga")
   database.createCollection("mangaCollection")
+
+  // window event handler
+  eventHandle(win)
 }
 
 app.whenReady().then(() => {
-  eventHandle()
   createWindow()
 })

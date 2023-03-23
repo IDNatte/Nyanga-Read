@@ -61,7 +61,7 @@
 	});
 </script>
 
-<div in:fade={{ duration: 200 }} class="search-page">
+<div in:fade={{ duration: 200 }} class="search-page pt-[2.12rem]">
 	<div class="search-content flex w-full fixed p-5 bg-pink-300 z-40 shadow">
 		<input
 			type="text"

@@ -7,7 +7,25 @@ const Database = require("../database/database")
 
 let database = new Database(".nyanga")
 
-function rendererEventModule() {
+function rendererEventModule(win) {
+  ipcMain.on("win:minimize", () => {
+    if (!win.isMinimized()) {
+      win.minimize()
+    }
+  })
+
+  ipcMain.on("win:resize", () => {
+    if (win.isMaximized()) {
+      win.unmaximize()
+    } else {
+      win.maximize()
+    }
+  })
+
+  ipcMain.on("win:close", () => {
+    win.close()
+  })
+
   ipcMain.on("run:app-apply-update", (event) => {
     autoUpdater.quitAndInstall()
   })
