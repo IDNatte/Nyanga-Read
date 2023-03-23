@@ -43,11 +43,13 @@
 		{/each}
 	</div>
 
-	<div class="description pt-8 pb-4 w-full px-5 prose flex">
-		<span class="border-l-[2px] border-pink-400 block pl-3 italic font-thin"
-			>{@html marked(data.description, markedOptions)}</span
-		>
-	</div>
+	{#if data.description}
+		<div class="description pt-8 pb-4 w-full px-5 prose flex">
+			<span class="border-l-[2px] border-pink-400 block pl-3 italic font-thin">
+				{@html marked(data.description, markedOptions)}
+			</span>
+		</div>
+	{/if}
 
 	<div class="volume py-5">
 		{#each data.volume as { volume, chapter }}

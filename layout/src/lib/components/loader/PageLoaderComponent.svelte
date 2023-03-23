@@ -25,21 +25,13 @@
 	});
 </script>
 
-<div class="progress-bar">
-	<div class="progress-slider bg-pink-500" style={`--width: ${$progress * 100}%`} />
+<div class="progress-bar z-40 bg-pink-200 fixed top-[2.274rem] left-0 right-0 h-[0.2em]">
+	<div class="progress-slider bg-pink-400" style={`--width: ${$progress * 100}%`} />
 </div>
 
 <style>
-	.progress-bar {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 0.2em;
-	}
 	.progress-slider {
 		width: var(--width);
-		/* background-color: #616161; */
 		height: 100%;
 	}
 </style>

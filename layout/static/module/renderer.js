@@ -24,16 +24,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	document.addEventListener('request:win-minimize', () => {
-		window.backendAPI.triggreWinMinimize()
-	})
+		window.backendAPI.triggreWinMinimize();
+	});
 
 	document.addEventListener('request:win-resize', () => {
-		window.backendAPI.triggerWinResize()
-	})
+		window.backendAPI.triggerWinResize();
+	});
 
 	document.addEventListener('request:win-close', () => {
-		window.backendAPI.triggreWinClose()
-	})
+		window.backendAPI.triggreWinClose();
+	});
 
 	window.backendAPI.onMangaSave((e, data) => {
 		let mangaAction = new CustomEvent('manga-action:info', { detail: { info: data } });
