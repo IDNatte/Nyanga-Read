@@ -57,9 +57,25 @@
       "category": "Utility"
     },
     "files": [
-      "**/*",
-      "./layout/build/*",
-      "./modules/other/*"
+      "*/**",
+      "main.js",
+      "!.editorconfig",
+      "!*.yml",
+      "!gh_token.*",
+      "!*.lock",
+      "!.prettierrc",
+      "!.prettierignore",
+      "!.gitignore",
+      "!.github",
+      "!build/*",
+      "!**/dist/*",
+      "!**/github/*",
+      "!**/layout/{.*,*.json,*.ts,*.cjs,*.js}",
+      "!**/layout/.svelte-kit/*",
+      "!**/layout/.yarn/*",
+      "!**/layout/static/*",
+      "!**/layout/src/*",
+      "!**/layout/node_modules/*"
     ],
     "nsis": {
       "installerIcon": "build/icon/image/logo-ico.ico"
