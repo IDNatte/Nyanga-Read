@@ -30,7 +30,7 @@
 </script>
 
 <div in:fade={{ duration: 200 }}>
-	<div class="bookmark-list grid grid-cols-3">
+	<div class="bookmark-list grid grid-cols-3 pt-[2.2rem]">
 		{#each $bookmarkStore.manga as { mangaId }}
 			{#await getManga(mangaId) then data}
 				<CardComponent>

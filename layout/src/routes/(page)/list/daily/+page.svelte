@@ -6,13 +6,13 @@
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 	import dailyEphemeralStore from '$lib/store/daily.ephemeral.store';
 
-
 	let initLimit: number = 9;
 	let perPage: number = 3;
 	let offset: number = 0;
 	let limit: number = 3;
 
 	let endObserver: HTMLDivElement;
+	let scrollTarget: HTMLDivElement;
 
 	const observer = new IntersectionObserver(
 		(event) => {
@@ -40,8 +40,11 @@
 
 
 	function scrollEphemeral() {
-		let lastScrollPosition = window.scrollY
-		$dailyEphemeralStore.scrollPos = lastScrollPosition
+		// console.log($dailyEphemeralStore.scrollPos)
+		console.log(window.scrollY)
+
+		let lastScrollPosition = window.scrollY;
+		$dailyEphemeralStore.scrollPos = lastScrollPosition;
 	}
 
 	async function getInitManga() {
@@ -78,13 +81,11 @@
 		}
 
 		setTimeout(() => {
-			window.scrollTo({top: scrollPos, left: 0, behavior: 'smooth'});
-		}, 2500)
+			window.scrollTo({ top: scrollPos, left: 0, behavior: 'smooth' });
+		}, 1500);
 
 		observer.observe(endObserver);
 	});
-
-
 
 	onDestroy(() => {
 		observer.unobserve(endObserver);
@@ -94,7 +95,7 @@
 <svelte:window on:scroll={scrollEphemeral} />
 
 <div in:fade={{ duration: 200 }}>
-	<div class="content grid grid-cols-3">
+	<div class="content grid grid-cols-3 pt-[2.2rem]" on:scroll={scrollEphemeral}>
 		{#each $dailyEphemeralStore.data as { id, attributes, relationships }}
 			<CardComponent>
 				<a href="/read/{id}">

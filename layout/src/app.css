@@ -9,7 +9,3 @@
 *::-webkit-scrollbar-thumb {
 	@apply bg-pink-800 rounded;
 }
-
-body {
-	@apply overflow-hidden;
-}

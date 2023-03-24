@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ params, fetch }) => {
 	const getChapter = await fetch(
-		`https://api.mangadex.org/manga/${params.mangaId}/aggregate?translatedLanguage[]=en`
+		`https://api.mangadex.org/manga/${params.mangaId}/aggregate?translatedLanguage[]=${document.documentElement.lang}`
 	);
 
 	const getManga = await fetch(

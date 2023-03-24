@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-
+	
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { invalidateAll } from '$app/navigation';
 
 	import { register } from 'swiper/element/bundle';
+	import { _ } from 'svelte-i18n'
 
 	import bookmarkStore from '$lib/store/bookmark.store';
 	import modalStore from '$lib/store/modal.store';
@@ -18,6 +19,7 @@
 	import MenuComponent from '$lib/components/menu/MenuComponent.svelte';
 
 	import MagniglassIcon from '$lib/components/icons/MagniglassIcon.svelte';
+	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
 	import UpdateAppIcon from '$lib/components/icons/UpdateAppIcon.svelte';
 	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
@@ -36,6 +38,10 @@
 
 	function openUpdate(modal: string) {
 		document.dispatchEvent(triggerAppUpdate);
+		modalStore.set({ modal: modal, open: true });
+	}
+
+	function openLanguage(modal: string) {
 		modalStore.set({ modal: modal, open: true });
 	}
 
@@ -60,7 +66,7 @@
 	});
 </script>
 
-<div in:fade={{ duration: 200 }} class="content w-full h-screen">
+<div in:fade={{ duration: 200 }} class="content w-full pt-[2.2rem]">
 	{#if data.manga.status !== 'error' && data.cover.length !== 0}
 		<div
 			class="w-full flex fixed z-30 bg-pink-300 h-14 shadow items-center justify-between px-3 top-[2.2rem]"
@@ -82,7 +88,7 @@
 									className="flex items-center justify-center"
 								/>
 							</div>
-							<span>Search</span>
+							<span class="capitalize">{$_('menu.search')}</span>
 						</a>
 						<a
 							href="#!"
@@ -99,12 +105,33 @@
 									className="flex items-center justify-center"
 								/>
 							</div>
-							<span>Reload Page</span>
+							<span class="capitalize">{$_('menu.reload')}</span>
+						</a>
+					</div>
+
+					<!-- language menu -->
+					<div class="about">
+						<a
+							href="#!"
+							on:click|preventDefault={() => {
+								menuStore.set(false);
+								openLanguage('language-modal');
+							}}
+							class="text-gray-700 px-4 py-2 flex items-center"
+						>
+							<div class="logo pl-1 pr-3">
+								<TransalateIcon
+									width="w-5"
+									height="h-auto"
+									className="flex items-center justify-center"
+								/>
+							</div>
+							<span class="capitalize">{$_('menu.langSelect')}</span>
 						</a>
 					</div>
 
 					<!-- About menu -->
-					<div class="common">
+					<div class="about">
 						<a
 							href="#!"
 							on:click|preventDefault={() => {
@@ -120,7 +147,7 @@
 									className="flex items-center justify-center"
 								/>
 							</div>
-							<span>About</span>
+							<span class="capitalize">{$_('menu.about')}</span>
 						</a>
 						<a
 							href="#!"
@@ -137,17 +164,37 @@
 									className="flex items-center justify-center"
 								/>
 							</div>
-							<span>Check Update</span>
+							<span class="capitalize">{$_('menu.update')}</span>
+						</a>
+					</div>
+
+					<!-- debug -->
+					<div class="about">
+						<a
+							href="/road/to/nowhere"
+							on:click={() => {
+								menuStore.set(false);
+							}}
+							class="text-gray-700 px-4 py-2 flex items-center"
+						>
+							<div class="logo pl-1 pr-3">
+								<UpdateAppIcon
+									width="w-5"
+									height="h-auto"
+									className="flex items-center justify-center"
+								/>
+							</div>
+							<span class="capitalize">debug</span>
 						</a>
 					</div>
 				</div>
 			</MenuComponent>
 		</div>
 
-		<div class="main-content mt-24 overflow-auto">
+		<div class="main-content pt-14 overflow-auto">
 			<div class="pb-2 pt-8 px-4 flex items-center justify-start">
 				<span class="text-pink-300 text-xl uppercase underline underline-offset-4 font-light"
-					>new upload</span
+					>{$_('mainPage.newUpload')}</span
 				>
 			</div>
 			<div class="daily-manga pt-5">
@@ -190,7 +237,7 @@
 						class="text-pink-300 underline underline-offset-4 font-light text-lg py-2"
 						href="/list/daily"
 					>
-						<span>See More</span>
+						<span class="capitalize">{$_('mainPage.seeMore')}</span>
 					</a>
 				</div>
 			</div>
@@ -198,9 +245,9 @@
 
 		{#if $bookmarkStore.manga.length > 0}
 			<div class="saved-manga">
-				<div class="pb-2 pt-8 px-4 flex items-center justify-start">
+				<div class="pb-2 pt-5 px-4 flex items-center justify-start">
 					<span class="text-pink-300 text-xl uppercase underline underline-offset-4 font-light"
-						>bookmark</span
+						>{$_('mainPage.bookmark')}</span
 					>
 				</div>
 				<div class="grid grid-cols-3">
@@ -240,7 +287,7 @@
 							class="text-pink-300 underline underline-offset-4 font-light text-lg py-2"
 							href="/list/bookmark"
 						>
-							<span>See More</span>
+							<span class="capitalize">{$_('mainPage.seeMore')}</span>
 						</a>
 					</div>
 				{/if}
@@ -251,10 +298,10 @@
 	{#if data.manga.status === 'error' && data.cover.length === 0}
 		<div class="flex items-center h-screen w-full justify-center flex-col">
 			<span class="text-8xl pb-8">😿</span>
-			<span class="font-light">Your network connection might be not available !</span>
-			<span class="font-light">Please check your network connection then reload application</span>
+			<span class="font-light">{$_('error.networkError.text1')}</span>
+			<span class="font-light">{$_('error.networkError.text2')}</span>
 			<a class="underline" href="#!" on:click|preventDefault={() => window.location.reload()}
-				>Reload</a
+				>{$_('error.networkError.reload')}</a
 			>
 		</div>
 	{/if}
