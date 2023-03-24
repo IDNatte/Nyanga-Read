@@ -30,7 +30,7 @@
 				<div
 					class="modal-title px-4 py-5 fixed bg-white w-2/3 border-b flex items-center justify-between rounded-t"
 				>
-					<span class="text-lg font-thin">{title}</span>
+					<span class="text-lg font-thin capitalize">{title}</span>
 					<a href="#!" on:click|preventDefault={close}><CloseIcon /></a>
 				</div>
 				<div class="content p-5 mt-[4.3rem]">

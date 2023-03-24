@@ -16,6 +16,7 @@
     - [marked](https://marked.js.org/)
     - [swiper](https://swiperjs.com/)
     - [lodash debounce](https://lodash.com/docs/#debounce)
+    - [svelte-i18n](https://github.com/kaisermann/svelte-i18n)
   - System
     - [electron](https://www.electronjs.org/)
     - [lokijs](https://techfort.github.io/LokiJS/)

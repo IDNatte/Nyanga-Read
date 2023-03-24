@@ -46,8 +46,8 @@
 	}
 
 	function viewerImageLoad(event: any) {
-		$viewerStore.currentPage = event.detail.image.split('/')[5].split('-')[0];
 		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+		$viewerStore.currentPage = event.detail.image.split('/')[5].split('-')[0];
 	}
 
 	function viewerImageError() {

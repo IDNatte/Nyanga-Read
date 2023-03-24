@@ -29,7 +29,7 @@
 </script>
 
 <div>
-	<div class="content pt-2">
+	<div class="content pt-[2.3rem]">
 		<slot />
 	</div>
 

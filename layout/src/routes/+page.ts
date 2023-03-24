@@ -5,7 +5,7 @@ export const load: PageLoad = async ({ fetch }) => {
 	const getMangaDetail = async () => {
 		try {
 			const getManga = await fetch(
-				'https://api.mangadex.org/manga?originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30'
+				`https://api.mangadex.org/manga?originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&availableTranslatedLanguage[]=${document.documentElement.lang}`
 			)
 				.then((response) => response.json())
 				.finally(() => navigationStore.set('loaded'));

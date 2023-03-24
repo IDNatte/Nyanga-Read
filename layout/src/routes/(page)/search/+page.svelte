@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
+	import {_} from 'svelte-i18n'
 	import { debounce } from 'lodash';
 
 	import searchEphemeralStore, {
@@ -61,12 +62,12 @@
 	});
 </script>
 
-<div in:fade={{ duration: 200 }} class="search-page pt-[2.12rem]">
+<div in:fade={{ duration: 200 }} class="search-page pt-[2.2rem]">
 	<div class="search-content flex w-full fixed p-5 bg-pink-300 z-40 shadow">
 		<input
 			type="text"
 			on:input={searchData}
-			placeholder="search manga"
+			placeholder="{$_('search.searchBoxPlaceholder')}"
 			class="searchbox border w-full bg-transparent rounded p-1 font-light text-white duration-300 focus:outline-none"
 			bind:value={searchBoxText}
 		/>
@@ -81,7 +82,7 @@
 		{#if searchboxPlaceholder}
 			<div class="w-full text-center">
 				<div class="text-gray-400">
-					<span class="italic font-thin text-lg capitalize">tell me a manga title...</span>
+					<span class="italic font-thin text-lg capitalize">{$_('search.searchContent')}</span>
 					<span class="text-lg">🤔</span>
 				</div>
 			</div>

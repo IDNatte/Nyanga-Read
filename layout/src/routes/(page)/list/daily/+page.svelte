@@ -12,6 +12,7 @@
 	let limit: number = 3;
 
 	let endObserver: HTMLDivElement;
+	let scrollTarget: HTMLDivElement;
 
 	const observer = new IntersectionObserver(
 		(event) => {
@@ -36,7 +37,12 @@
 		}
 	);
 
+
+
 	function scrollEphemeral() {
+		// console.log($dailyEphemeralStore.scrollPos)
+		console.log(window.scrollY)
+
 		let lastScrollPosition = window.scrollY;
 		$dailyEphemeralStore.scrollPos = lastScrollPosition;
 	}
@@ -76,7 +82,8 @@
 
 		setTimeout(() => {
 			window.scrollTo({ top: scrollPos, left: 0, behavior: 'smooth' });
-		}, 2500);
+		}, 1500);
+
 		observer.observe(endObserver);
 	});
 
@@ -88,7 +95,7 @@
 <svelte:window on:scroll={scrollEphemeral} />
 
 <div in:fade={{ duration: 200 }}>
-	<div class="content grid grid-cols-3 pt-[2.2rem]">
+	<div class="content grid grid-cols-3 pt-[2.2rem]" on:scroll={scrollEphemeral}>
 		{#each $dailyEphemeralStore.data as { id, attributes, relationships }}
 			<CardComponent>
 				<a href="/read/{id}">
@@ -117,7 +124,7 @@
 		{/each}
 	</div>
 	<div
-		class="loader w-full h-8 bg-pink-700 text-white flex items-center justify-center"
+		class="loader w-full h-10 bg-pink-700 text-white flex items-center justify-center"
 		bind:this={endObserver}
 	>
 		<span>Loading Data</span>
