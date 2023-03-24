@@ -6,7 +6,6 @@
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 	import dailyEphemeralStore from '$lib/store/daily.ephemeral.store';
 
-
 	let initLimit: number = 9;
 	let perPage: number = 3;
 	let offset: number = 0;
@@ -37,11 +36,9 @@
 		}
 	);
 
-
-
 	function scrollEphemeral() {
-		let lastScrollPosition = window.scrollY
-		$dailyEphemeralStore.scrollPos = lastScrollPosition
+		let lastScrollPosition = window.scrollY;
+		$dailyEphemeralStore.scrollPos = lastScrollPosition;
 	}
 
 	async function getInitManga() {
@@ -78,15 +75,10 @@
 		}
 
 		setTimeout(() => {
-			window.scrollTo({top: scrollPos, left: 0, behavior: 'smooth'});
-		}, 2500)
-
-		console.log($dailyEphemeralStore.scrollPos)
-
+			window.scrollTo({ top: scrollPos, left: 0, behavior: 'smooth' });
+		}, 2500);
 		observer.observe(endObserver);
 	});
-
-
 
 	onDestroy(() => {
 		observer.unobserve(endObserver);
