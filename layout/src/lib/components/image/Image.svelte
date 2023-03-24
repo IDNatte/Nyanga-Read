@@ -19,6 +19,12 @@
 			loaded = true;
 			navigationStore.set('loaded');
 		};
+
+		thisImage.onerror = () => {
+			dispatch('imageloaderror')
+			loaded = false
+			navigationStore.set('loaded')
+		}
 	});
 </script>
 

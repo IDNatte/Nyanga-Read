@@ -6,6 +6,9 @@
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 	import viewerStore from '$lib/store/viewer.store';
 
+	import toast, { Toaster } from 'svelte-french-toast';
+	import ViewerToastComponent from '$lib/components/toast/ViewerToastComponent.svelte';
+
 	export let data: PageData;
 
 	$viewerStore.totalPage = data.chapter.length;
@@ -46,6 +49,10 @@
 		$viewerStore.currentPage = event.detail.image.split('/')[5].split('-')[0];
 	}
 
+	function viewerImageError() {
+		toast.error(ViewerToastComponent, {position: 'bottom-left', duration: 1500});
+	}
+
 	document.addEventListener('viewer-change:next', () => {
 		let image = getArrayIndex(imageSrc);
 		image += 1;
@@ -84,5 +91,8 @@
 		alt={`Chapter ${imageAlt}`}
 		className="rounded-none flex justify-center"
 		on:viewerimgloaded={viewerImageLoad}
+		on:imageloaderror={viewerImageError}
 	/>
 </div>
+
+<Toaster />

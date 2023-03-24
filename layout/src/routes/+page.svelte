@@ -61,6 +61,9 @@
 </script>
 
 <div in:fade={{ duration: 200 }} class="content w-full h-screen">
+	{#if data.manga.status == 'error' && data.cover.status !== 'error'}
+		 <!-- content here -->
+	{/if}
 	<div
 		class="w-full flex fixed z-30 bg-pink-300 h-14 shadow items-center justify-between px-3 top-[2.2rem]"
 	>

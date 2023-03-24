@@ -7,13 +7,13 @@
 
 	import bookmarkStore from '$lib/store/bookmark.store';
 	import navigationStore from '$lib/store/navigation.store';
+	import WindowFrameComponent from '$lib/components/frame/WindowFrameComponent.svelte';
 	import PageLoaderComponent from '$lib/components/loader/PageLoaderComponent.svelte';
 	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 
 	import appStore from '$lib/store/app.store';
 
 	import '../app.css';
-	import WindowFrameComponent from '$lib/components/frame/WindowFrameComponent.svelte';
 
 	const triggerAppAbout = new CustomEvent('request:app-about');
 	const triggerInstallUpdate = new CustomEvent('request:app-instal-update');

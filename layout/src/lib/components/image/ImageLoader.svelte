@@ -21,6 +21,6 @@
 
 <LazyloadComponent {className} single={true} let:intersect={intersecting}>
 	{#if intersecting || nativeLoading}
-		<Image on:viewerimgloaded {className} {alt} {src} />
+		<Image on:viewerimgloaded on:imageloaderror {className} {alt} {src} />
 	{/if}
 </LazyloadComponent>
