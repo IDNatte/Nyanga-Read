@@ -55,51 +55,59 @@
 </script>
 
 <WindowFrameComponent />
+<div class="window pt-[2.2rem]">
+	<main class="costume-height w-full overflow-auto">
 
-{#if $navigationStore === 'loading'}
-	<div out:fade={{ delay: 500 }}>
-		<PageLoaderComponent />
-	</div>
-{/if}
+		{#if $navigationStore === 'loading'}
+			<div out:fade={{ delay: 500 }}>
+				<PageLoaderComponent />
+			</div>
+		{/if}
 
-<main>
-	<slot />
-</main>
-
-<ModalComponent modal="about-modal" title="About Nyanga 😸">
-	<div class="prose">
-		{@html $appStore.about}
-	</div>
-</ModalComponent>
-
-<ModalComponent modal="update-modal" title="Update Nyanga 😸">
-	<div class="flex items-center justify-center flex-col">
-		<div class="icon py-4 {$appStore.update?.checking ? 'animate-bounce' : ''}">
-			<span class="text-9xl">😸</span>
+		<slot />
+	</main>
+	
+	<ModalComponent modal="about-modal" title="About Nyanga 😸">
+		<div class="prose">
+			{@html $appStore.about}
 		</div>
-		<div class="app-info py-3 flex flex-col justify-center items-center">
-			<span class="font-thin text-3xl capitalize">Nyanga read </span>
-			<span class="py-3 text-lg capitalize">version {$appStore.appVersion}</span>
-			{#if $appStore.update?.status === 'update-available'}
-				<span class="py-3 text-md capitalize">New update available 😸</span>
-			{/if}
-			{#if $appStore.update?.status === 'update-unavailable'}
-				<span class="py-3 text-md capitalize">You're @ latest version 🎉</span>
-			{/if}
-			{#if $appStore.update?.status === 'error'}
-				<span class="py-3 text-md capitalize">Update error 😿</span>
-			{/if}
-			{#if $appStore.update?.status === 'downloading'}
-				<span class="py-3 text-md capitalize">Downloading update 🙀</span>
-			{/if}
-
-			{#if $appStore.update?.status === 'downloaded'}
-				<a href="#!" on:click|preventDefault={installUpdate}>
-					<span class="py-3 text-md capitalize">Install update (?)</span>
-				</a>
-			{/if}
+	</ModalComponent>
+	
+	<ModalComponent modal="update-modal" title="Update Nyanga 😸">
+		<div class="flex items-center justify-center flex-col">
+			<div class="icon py-4 {$appStore.update?.checking ? 'animate-bounce' : ''}">
+				<span class="text-9xl">😸</span>
+			</div>
+			<div class="app-info py-3 flex flex-col justify-center items-center">
+				<span class="font-thin text-3xl capitalize">Nyanga read </span>
+				<span class="py-3 text-lg capitalize">version {$appStore.appVersion}</span>
+				{#if $appStore.update?.status === 'update-available'}
+					<span class="py-3 text-md capitalize">New update available 😸</span>
+				{/if}
+				{#if $appStore.update?.status === 'update-unavailable'}
+					<span class="py-3 text-md capitalize">You're @ latest version 🎉</span>
+				{/if}
+				{#if $appStore.update?.status === 'error'}
+					<span class="py-3 text-md capitalize">Update error 😿</span>
+				{/if}
+				{#if $appStore.update?.status === 'downloading'}
+					<span class="py-3 text-md capitalize">Downloading update 🙀</span>
+				{/if}
+	
+				{#if $appStore.update?.status === 'downloaded'}
+					<a href="#!" on:click|preventDefault={installUpdate}>
+						<span class="py-3 text-md capitalize">Install update (?)</span>
+					</a>
+				{/if}
+			</div>
 		</div>
-	</div>
-</ModalComponent>
+	</ModalComponent>
+	
+	<Toaster />
+</div>
 
-<Toaster />
+<style lang="postcss">
+	.costume-height {
+		height: calc(100vh - 2.2rem);
+	}
+</style>

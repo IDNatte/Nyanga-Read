@@ -144,7 +144,7 @@
 			</MenuComponent>
 		</div>
 
-		<div class="main-content pt-24">
+		<div class="main-content mt-24 overflow-auto">
 			<div class="pb-2 pt-8 px-4 flex items-center justify-start">
 				<span class="text-pink-300 text-xl uppercase underline underline-offset-4 font-light"
 					>new upload</span
