@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {_} from 'svelte-i18n'
+	import { _ } from 'svelte-i18n';
 
 	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
 	export let toast: any;

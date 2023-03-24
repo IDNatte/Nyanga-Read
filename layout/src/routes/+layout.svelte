@@ -6,8 +6,7 @@
 
 	import { marked } from 'marked';
 	import toast, { Toaster } from 'svelte-french-toast';
-	import { _ } from 'svelte-i18n'
-
+	import { _ } from 'svelte-i18n';
 
 	import bookmarkStore from '$lib/store/bookmark.store';
 	import navigationStore from '$lib/store/navigation.store';
@@ -50,15 +49,15 @@
 	function changeLanguage(code: string) {
 		document.documentElement.setAttribute('lang', code);
 		currentLang = convertLangCode(document.documentElement.lang);
-		window.location.reload()
+		window.location.reload();
 	}
 
 	function installUpdate() {
 		document.dispatchEvent(triggerInstallUpdate);
 	}
 
-	function setScrollpos () {
-		console.log(window.scrollY)
+	function setScrollpos() {
+		console.log(window.scrollY);
 	}
 
 	onMount(() => {
@@ -85,13 +84,12 @@
 	});
 </script>
 
-
 <WindowFrameComponent />
 
 {#if $navigationStore === 'loading'}
-<div out:fade={{ delay: 500 }}>
-	<PageLoaderComponent />
-</div>
+	<div out:fade={{ delay: 500 }}>
+		<PageLoaderComponent />
+	</div>
 {/if}
 
 <main>
@@ -111,7 +109,9 @@
 		</div>
 		<div class="app-info py-3 flex flex-col justify-center items-center">
 			<span class="font-thin text-3xl capitalize">Nyanga read </span>
-			<span class="py-3 text-lg capitalize">{$_('menu.updateOpt.version')} {$appStore.appVersion}</span>
+			<span class="py-3 text-lg capitalize"
+				>{$_('menu.updateOpt.version')} {$appStore.appVersion}</span
+			>
 			{#if $appStore.update?.status === 'update-available'}
 				<span class="py-3 text-md capitalize">{$_('menu.updateOpt.newUpAvail')}</span>
 			{/if}
@@ -169,7 +169,9 @@
 				</div>
 			</LanguageMenuComponent>
 
-			<span class="font-thin text-xl capitalize">{$_('menu.langSelectOpt.selector')} : {currentLang}</span>
+			<span class="font-thin text-xl capitalize"
+				>{$_('menu.langSelectOpt.selector')} : {currentLang}</span
+			>
 		</div>
 	</div>
 </ModalComponent>

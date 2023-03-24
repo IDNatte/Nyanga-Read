@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-	import {_} from 'svelte-i18n'
+	import { _ } from 'svelte-i18n';
 	import { debounce } from 'lodash';
 
 	import searchEphemeralStore, {
@@ -67,7 +67,7 @@
 		<input
 			type="text"
 			on:input={searchData}
-			placeholder="{$_('search.searchBoxPlaceholder')}"
+			placeholder={$_('search.searchBoxPlaceholder')}
 			class="searchbox border w-full bg-transparent rounded p-1 font-light text-white duration-300 focus:outline-none"
 			bind:value={searchBoxText}
 		/>

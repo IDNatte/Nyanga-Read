@@ -37,11 +37,9 @@
 		}
 	);
 
-
-
 	function scrollEphemeral() {
 		// console.log($dailyEphemeralStore.scrollPos)
-		console.log(window.scrollY)
+		console.log(window.scrollY);
 
 		let lastScrollPosition = window.scrollY;
 		$dailyEphemeralStore.scrollPos = lastScrollPosition;

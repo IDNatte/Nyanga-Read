@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
-	import {_} from 'svelte-i18n'
+	import { _ } from 'svelte-i18n';
 </script>
 
 <div
@@ -42,7 +42,9 @@
 			</div>
 			<div class="third-help flex flex-col items-center py-5">
 				<span class="italic">{$_('error.errorPage.thirdHelp.text1')}</span>
-				<a class="capitalize font-bold underline pt-1" href="/">{$_('error.errorPage.thirdHelp.gohome')}</a>
+				<a class="capitalize font-bold underline pt-1" href="/"
+					>{$_('error.errorPage.thirdHelp.gohome')}</a
+				>
 			</div>
 		</div>
 	</div>

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	
+
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { invalidateAll } from '$app/navigation';
 
 	import { register } from 'swiper/element/bundle';
-	import { _ } from 'svelte-i18n'
+	import { _ } from 'svelte-i18n';
 
 	import bookmarkStore from '$lib/store/bookmark.store';
 	import modalStore from '$lib/store/modal.store';
@@ -165,26 +165,6 @@
 								/>
 							</div>
 							<span class="capitalize">{$_('menu.update')}</span>
-						</a>
-					</div>
-
-					<!-- debug -->
-					<div class="about">
-						<a
-							href="/road/to/nowhere"
-							on:click={() => {
-								menuStore.set(false);
-							}}
-							class="text-gray-700 px-4 py-2 flex items-center"
-						>
-							<div class="logo pl-1 pr-3">
-								<UpdateAppIcon
-									width="w-5"
-									height="h-auto"
-									className="flex items-center justify-center"
-								/>
-							</div>
-							<span class="capitalize">debug</span>
 						</a>
 					</div>
 				</div>
