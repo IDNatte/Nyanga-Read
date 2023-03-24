@@ -5,7 +5,6 @@
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 	import dailyEphemeralStore from '$lib/store/daily.ephemeral.store';
-	import navigationStore from '$lib/store/navigation.store';
 
 
 	let initLimit: number = 9;
@@ -14,7 +13,6 @@
 	let limit: number = 3;
 
 	let endObserver: HTMLDivElement;
-	let scrollElement: HTMLDivElement
 
 	const observer = new IntersectionObserver(
 		(event) => {
@@ -98,7 +96,7 @@
 <svelte:window on:scroll={scrollEphemeral} />
 
 <div in:fade={{ duration: 200 }}>
-	<div bind:this={scrollElement} class="content grid grid-cols-3 pt-[2.2rem]">
+	<div class="content grid grid-cols-3 pt-[2.2rem]">
 		{#each $dailyEphemeralStore.data as { id, attributes, relationships }}
 			<CardComponent>
 				<a href="/read/{id}">
