@@ -1,31 +1,35 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { afterUpdate, onDestroy, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
+	import dailyEphemeralStore from '$lib/store/daily.ephemeral.store';
+	import navigationStore from '$lib/store/navigation.store';
 
-	let initLimit = 9;
-	let perPage = 3;
-	let limit = 3;
-	let offset = 0;
 
-	let data: Array<any> = [];
-	$: data = [];
+	let initLimit: number = 9;
+	let perPage: number = 3;
+	let offset: number = 0;
+	let limit: number = 3;
 
 	let endObserver: HTMLDivElement;
+	let scrollElement: HTMLDivElement
 
 	const observer = new IntersectionObserver(
 		(event) => {
 			if (event[0].intersectionRatio > 0.2) {
 				limit = perPage;
+				$dailyEphemeralStore.limit = limit;
 
-				if (data.length <= 9) {
+				if ($dailyEphemeralStore.data.length <= 9) {
 					offset = limit + initLimit;
+					$dailyEphemeralStore.offset = offset;
 				} else {
-					offset = offset + perPage;
+					offset = $dailyEphemeralStore.offset + perPage;
+					$dailyEphemeralStore.offset = offset;
 				}
-				getManga(offset, limit);
+				getManga($dailyEphemeralStore.offset, $dailyEphemeralStore.limit);
 			}
 		},
 		{
@@ -35,13 +39,20 @@
 		}
 	);
 
+
+
+	function scrollEphemeral() {
+		let lastScrollPosition = window.scrollY
+		$dailyEphemeralStore.scrollPos = lastScrollPosition
+	}
+
 	async function getInitManga() {
 		let mangaData = await fetch(
 			'https://api.mangadex.org/manga?limit=9&offset=0&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art'
 		);
 		if (mangaData.status === 200) {
 			let manga = await mangaData.json();
-			data = manga.data;
+			$dailyEphemeralStore.data = manga.data;
 		} else {
 			throw new Error('Something went wrong :/');
 		}
@@ -54,25 +65,41 @@
 
 		if (mangaData.status === 200) {
 			let manga = await mangaData.json();
-			data = [...data, ...manga.data];
+			let data = $dailyEphemeralStore.data;
+			$dailyEphemeralStore.data = [...data, ...manga.data];
 		} else {
 			throw new Error('Something went wrong :/');
 		}
 	}
 
 	onMount(async () => {
-		await getInitManga();
+		let scrollPos: number = $dailyEphemeralStore.scrollPos;
+
+		if ($dailyEphemeralStore.data.length === 0) {
+			await getInitManga();
+		}
+
+		setTimeout(() => {
+			window.scrollTo({top: scrollPos, left: 0, behavior: 'smooth'});
+		}, 2500)
+
+		console.log($dailyEphemeralStore.scrollPos)
+
 		observer.observe(endObserver);
 	});
+
+
 
 	onDestroy(() => {
 		observer.unobserve(endObserver);
 	});
 </script>
 
+<svelte:window on:scroll={scrollEphemeral} />
+
 <div in:fade={{ duration: 200 }}>
-	<div class="content grid grid-cols-3">
-		{#each data as { id, attributes, relationships }}
+	<div bind:this={scrollElement} class="content grid grid-cols-3 pt-[2.2rem]">
+		{#each $dailyEphemeralStore.data as { id, attributes, relationships }}
 			<CardComponent>
 				<a href="/read/{id}">
 					{#each relationships as rel}

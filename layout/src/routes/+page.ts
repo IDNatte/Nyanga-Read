@@ -10,7 +10,6 @@ export const load: PageLoad = async ({ fetch }) => {
 				.then((response) => response.json())
 				.finally(() => navigationStore.set('loaded'));
 
-
 			const manga = getManga.data;
 
 			const mangaDetail = manga.map((manga: any) => {
@@ -34,7 +33,7 @@ export const load: PageLoad = async ({ fetch }) => {
 		} catch (error) {
 			return {
 				status: 'error'
-			}
+			};
 		}
 	};
 
@@ -59,11 +58,8 @@ export const load: PageLoad = async ({ fetch }) => {
 
 			return mangaCover;
 		} catch (error) {
-			return {
-				status: 'error'
-			}
+			return [];
 		}
-
 	};
 
 	return {

@@ -47,10 +47,12 @@
 
 	function viewerImageLoad(event: any) {
 		$viewerStore.currentPage = event.detail.image.split('/')[5].split('-')[0];
+		window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+
 	}
 
 	function viewerImageError() {
-		toast.error(ViewerToastComponent, {position: 'bottom-left', duration: 1500});
+		toast.error(ViewerToastComponent, { position: 'bottom-left', duration: 1500 });
 	}
 
 	document.addEventListener('viewer-change:next', () => {
@@ -76,6 +78,8 @@
 		imageSrc = data.chapter[0].url;
 		imageAlt = data.chapter[0].chapterTitle;
 		$viewerStore.currentPage = 1;
+
+
 	});
 
 	onDestroy(() => {

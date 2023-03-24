@@ -21,10 +21,10 @@
 		};
 
 		thisImage.onerror = () => {
-			dispatch('imageloaderror')
-			loaded = false
-			navigationStore.set('loaded')
-		}
+			dispatch('imageloaderror');
+			loaded = false;
+			navigationStore.set('loaded');
+		};
 	});
 </script>
 
