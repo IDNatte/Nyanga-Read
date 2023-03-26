@@ -39,16 +39,13 @@
 	);
 
 	function scrollEphemeral() {
-		// console.log($dailyEphemeralStore.scrollPos)
-		console.log(window.scrollY);
-
 		let lastScrollPosition = window.scrollY;
 		$dailyEphemeralStore.scrollPos = lastScrollPosition;
 	}
 
 	async function getInitManga() {
 		let mangaData = await fetch(
-			'https://api.mangadex.org/manga?limit=9&offset=0&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art'
+			`https://api.mangadex.org/manga?limit=9&offset=0&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art&translatedLanguage[]=${document.documentElement.lang}`
 		);
 		if (mangaData.status === 200) {
 			let manga = await mangaData.json();
@@ -60,7 +57,7 @@
 
 	async function getManga(offset: number, limit: number) {
 		let mangaData = await fetch(
-			`https://api.mangadex.org/manga?limit=${limit}&offset=${offset}&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art`
+			`https://api.mangadex.org/manga?limit=${limit}&offset=${offset}&originalLanguage[]=ja&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&includes[]=cover_art&translatedLanguage[]=${document.documentElement.lang}`
 		);
 
 		if (mangaData.status === 200) {
