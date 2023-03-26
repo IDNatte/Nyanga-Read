@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type {LayoutData} from './$types'
 	import { goto, afterNavigate } from '$app/navigation';
 
 	import viewerStore from '$lib/store/viewer.store';
@@ -8,6 +9,9 @@
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
 	import ViewerChapterComponent from '$lib/components/navigation/ViewerChapterComponent.svelte';
+
+
+	export let data: LayoutData;
 
 	let previousPage: string = '/';
 	const triggerViewerChangeNext = new Event('viewer-change:next');
@@ -35,6 +39,7 @@
 <div>
 	<ViewerChapterComponent>
 		<div class="flex items-center">
+			<span class="font-thin text-[.8em] capitalize pr-1">volume {data.volume} chapter {data.chapter} </span>
 			<span class="font-thin text-[.8em] capitalize"
 				>Page {$viewerStore.currentPage} / {$viewerStore.totalPage}</span
 			>
