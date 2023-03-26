@@ -2,6 +2,9 @@ import { writable } from 'svelte/store';
 
 export type AppType = {
 	about: string;
+	lang?: {
+		code: 'en';
+	};
 	appVersion?: string;
 	update?: {
 		checking: boolean;

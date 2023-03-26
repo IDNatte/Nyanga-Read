@@ -35,6 +35,33 @@ document.addEventListener('DOMContentLoaded', () => {
 		window.backendAPI.triggreWinClose();
 	});
 
+	document.addEventListener('request:app-get-lang', () => {
+		window.backendAPI.triggerAppGetLanguage();
+	});
+
+	document.addEventListener('request:app-set-lang', (event) => {
+		window.backendAPI.triggerAppSetLanguage(event.detail);
+		// window.backendAPI.triggerAppFullReload()
+	});
+
+	document.addEventListener('request:check-app', () => {
+		window.backendAPI.triggerAppCheckInit();
+	});
+
+	document.addEventListener('request:app-full-reload', () => {
+		window.backendAPI.triggerAppFullReload();
+	});
+
+	window.backendAPI.onAppCheckInit((e, data) => {
+		let appInitRun = new CustomEvent('app-action:init', { detail: data });
+		document.dispatchEvent(appInitRun);
+	});
+
+	window.backendAPI.onGetAppLang((e, data) => {
+		let appLanguage = new CustomEvent('app-action:language', { detail: { data } });
+		document.dispatchEvent(appLanguage);
+	});
+
 	window.backendAPI.onMangaSave((e, data) => {
 		let mangaAction = new CustomEvent('manga-action:info', { detail: { info: data } });
 		document.dispatchEvent(mangaAction);

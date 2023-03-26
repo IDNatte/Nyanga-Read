@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+
 	import { onMount, onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
+
+	import toast, { Toaster } from 'svelte-french-toast';
 
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 	import viewerStore from '$lib/store/viewer.store';
 
-	import toast, { Toaster } from 'svelte-french-toast';
 	import ViewerToastComponent from '$lib/components/toast/ViewerToastComponent.svelte';
 
 	export let data: PageData;
@@ -15,6 +17,7 @@
 
 	let imageSrc: string;
 	let imageAlt: string;
+
 
 	function getArrayIndex(idxof: string): number {
 		let index = data.chapter.findIndex((value) => value.url == idxof);

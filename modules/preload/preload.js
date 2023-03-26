@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require("electron")
+const { contextBridge, ipcRenderer, ipcMain } = require("electron")
 
 contextBridge.exposeInMainWorld("backendAPI", {
   // manga save
@@ -34,6 +34,40 @@ contextBridge.exposeInMainWorld("backendAPI", {
   // end of manga load
 
   // application related
+
+  triggerAppFullReload: () => {
+    ipcRenderer.send("load:app-full-reload")
+  },
+
+  triggerAppCheckInit: () => {
+    ipcRenderer.send("load:check-init")
+  },
+
+  onAppCheckInit: (callback) => {
+    ipcRenderer.on("local:check-init", callback)
+  },
+
+  triggerAppGetLanguage: () => {
+    ipcRenderer.send("load:app-lang")
+  },
+
+  onGetAppLang: (callback) => {
+    ipcRenderer.on("local:app-lang", callback)
+  },
+
+  triggerAppSetLanguage: (appLang) => {
+    let language = {
+      langCode: appLang.code,
+      langTitle: appLang.title
+    }
+
+    ipcRenderer.send("save:app-lang", language)
+  },
+
+  onSetAppLanguage: (callback) => {
+    ipcRenderer.on("app-lang:saved", callback)
+  },
+
   triggerAppAbout: () => {
     ipcRenderer.send("load:app-about")
   },

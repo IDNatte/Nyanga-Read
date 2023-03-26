@@ -88,6 +88,17 @@
 			</div>
 		{/if}
 
+		{#if !searchboxPlaceholder && !loading && data.length === 0}
+			<div class="w-full text-center">
+				<div class="text-gray-400">
+					<span class="italic font-thin text-lg capitalize"
+						>{$_('search.searchContentEmpty', { values: { title: searchBoxText } })}</span
+					>
+					<span class="text-lg">🫤</span>
+				</div>
+			</div>
+		{/if}
+
 		<div class="grid grid-cols-3">
 			{#each data as { id, attributes, relationships }}
 				<CardComponent>

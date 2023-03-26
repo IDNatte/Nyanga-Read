@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { afterUpdate, onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+
+	import { _ } from 'svelte-i18n';
 
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
@@ -12,7 +14,6 @@
 	let limit: number = 3;
 
 	let endObserver: HTMLDivElement;
-	let scrollTarget: HTMLDivElement;
 
 	const observer = new IntersectionObserver(
 		(event) => {
@@ -125,6 +126,6 @@
 		class="loader w-full h-10 bg-pink-700 text-white flex items-center justify-center"
 		bind:this={endObserver}
 	>
-		<span>Loading Data</span>
+		<span>{$_('loading.dataLoading')}</span>
 	</div>
 </div>
