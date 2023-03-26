@@ -37,12 +37,12 @@
 	});
 
 	onMount(() => {
-		frameStore.set(`Read Nyanga | Volume ${data.volume} chapter ${data.chapter}`)
-	})
+		frameStore.set(`Read Nyanga | Volume ${data.volume} chapter ${data.chapter}`);
+	});
 
 	onDestroy(() => {
-		frameStore.set('Read Nyanga')
-	})
+		frameStore.set('Read Nyanga');
+	});
 </script>
 
 <svelte:head>
