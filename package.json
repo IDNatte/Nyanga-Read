@@ -68,6 +68,7 @@
       "!.editorconfig",
       "!.prettierignore",
       "!build/*",
+      "!docs/*",
       "!**/dist/*",
       "!**/github/*",
       "!**/layout/{.*,*.json,*.ts,*.cjs,*.js}",
