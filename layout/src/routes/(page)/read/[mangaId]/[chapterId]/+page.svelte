@@ -18,7 +18,6 @@
 	let imageSrc: string;
 	let imageAlt: string;
 
-
 	function getArrayIndex(idxof: string): number {
 		let index = data.chapter.findIndex((value) => value.url == idxof);
 		return index;

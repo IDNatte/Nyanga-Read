@@ -58,7 +58,9 @@
 					<ul class="divide-y">
 						{#each chapter as { chapterId, chapterName }}
 							<li class="py-2 block">
-								<a class="px-4 w-full block" href="/read/{data.mangaId}/{chapterId}?volume={volume}&chapter={chapterName}"
+								<a
+									class="px-4 w-full block"
+									href="/read/{data.mangaId}/{chapterId}?volume={volume}&chapter={chapterName}"
 									>Chapter {chapterName}</a
 								>
 							</li>
