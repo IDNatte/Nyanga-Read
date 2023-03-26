@@ -1,4 +1,6 @@
 <script lang="ts">
+	import frameStore from '$lib/store/frame.store';
+
 	import MinimizeIcon from '$lib/components/icons/MinimizeIcon.svelte';
 	import ResizeIcon from '$lib/components/icons/ResizeIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
@@ -28,7 +30,7 @@
 		class="window-title text-slate-800 text-sm capitalize w-5/6 flex items-center px-4 font-light"
 	>
 		<span><LogoIcon width="w-[20px]" /></span>
-		<span class="pl-3">Read Nyanga</span>
+		<span class="pl-3">{$frameStore}</span>
 	</div>
 	<div class="window-control flex">
 		<a href="#!" on:click|preventDefault={windowMinimize}>

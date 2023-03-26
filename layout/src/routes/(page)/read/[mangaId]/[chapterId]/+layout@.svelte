@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { LayoutData } from './$types';
+	import { onDestroy, onMount } from 'svelte';
 	import { goto, afterNavigate } from '$app/navigation';
 
+	import frameStore from '$lib/store/frame.store';
 	import viewerStore from '$lib/store/viewer.store';
 
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
@@ -33,14 +35,23 @@
 			previousPage = '/';
 		}
 	});
+
+	onMount(() => {
+		frameStore.set(`Read Nyanga | Volume ${data.volume} chapter ${data.chapter}`)
+	})
+
+	onDestroy(() => {
+		frameStore.set('Read Nyanga')
+	})
 </script>
+
+<svelte:head>
+	<title>Read Nyanga | volume {data.volume} chapter {data.chapter}</title>
+</svelte:head>
 
 <div>
 	<ViewerChapterComponent>
 		<div class="flex items-center">
-			<span class="font-thin text-[.8em] capitalize pr-1"
-				>volume {data.volume} chapter {data.chapter}
-			</span>
 			<span class="font-thin text-[.8em] capitalize"
 				>Page {$viewerStore.currentPage} / {$viewerStore.totalPage}</span
 			>
