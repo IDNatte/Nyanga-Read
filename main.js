@@ -3,7 +3,6 @@ const serve = require("electron-serve")
 const path = require("path")
 
 const eventHandle = require("./modules/event/main.event")
-const Database = require("./modules/database/database")
 
 const loadURL = serve({ directory: "layout/build" })
 
@@ -58,11 +57,6 @@ const createWindow = () => {
   })
 
   win.setTitle("Read Nyanga")
-
-  // initialize manga database first of all before load creating window
-
-  let database = new Database(".nyanga")
-  database.createCollection("mangaCollection")
 
   // window event handler
   eventHandle(win)

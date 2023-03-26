@@ -1,4 +1,17 @@
 {
+	"window": {
+		"fullReload": {
+			"modal": {
+				"header": {
+					"header": "full reload required"
+				},
+				"content": {
+					"text1": "Full application reload required",
+					"button": "Reload"
+				}
+			}
+		}
+	},
 	"mainPage": {
 		"newUpload": "new upload",
 		"bookmark": "bookmark",
@@ -25,7 +38,8 @@
 	},
 	"search": {
 		"searchBoxPlaceholder": "search manga",
-		"searchContent": "tell me a manga tittle... "
+		"searchContent": "tell me a manga tittle... ",
+		"searchContentEmpty": "nothing found with title \"{title}\"..."
 	},
 	"loading": {
 		"dataLoading": "loading data"

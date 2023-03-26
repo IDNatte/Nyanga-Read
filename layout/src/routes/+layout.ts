@@ -9,11 +9,7 @@ export const prerender = false;
 
 export const load: LayoutLoad = async () => {
 	if (browser) {
-		if (window.navigator.language === 'en-US') {
-			locale.set('en');
-		} else {
-			locale.set(window.navigator.language);
-		}
+		locale.set(document.documentElement.lang);
 	}
 
 	await waitLocale();

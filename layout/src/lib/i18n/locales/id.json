@@ -1,4 +1,17 @@
 {
+	"window": {
+		"fullReload": {
+			"modal": {
+				"header": {
+					"header": "muat ulang aplikasi"
+				},
+				"content": {
+					"text1": "memuat ulang aplikasi diperlukan",
+					"button": "muat ulang"
+				}
+			}
+		}
+	},
 	"mainPage": {
 		"newUpload": "upload baru",
 		"bookmark": "manga ditandai",
@@ -25,7 +38,8 @@
 	},
 	"search": {
 		"searchBoxPlaceholder": "cari manga",
-		"searchContent": "kasih tau nama manga dong..."
+		"searchContent": "kasih tau nama manga dong...",
+		"searchContentEmpty": "nyari title \"{title}\" gak ketemu..."
 	},
 	"loading": {
 		"dataLoading": "memuat data"

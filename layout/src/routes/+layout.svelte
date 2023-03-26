@@ -1,29 +1,34 @@
 <script lang="ts">
-	import type { LanguageInterface } from '$lib/ui/language.interface';
-
+	import { invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
-	import { marked } from 'marked';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import { marked } from 'marked';
 	import { _ } from 'svelte-i18n';
 
-	import bookmarkStore from '$lib/store/bookmark.store';
 	import navigationStore from '$lib/store/navigation.store';
+	import bookmarkStore from '$lib/store/bookmark.store';
+
 	import WindowFrameComponent from '$lib/components/frame/WindowFrameComponent.svelte';
 	import PageLoaderComponent from '$lib/components/loader/PageLoaderComponent.svelte';
 	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 
 	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
 
+	import LanguageMenuComponent from '$lib/components/menu/LanguageMenuComponent.svelte';
+	import languageMenuStore from '$lib/store/languageMenu.store';
+	import modalStore from '$lib/store/modal.store';
 	import appStore from '$lib/store/app.store';
 
 	import '../app.css';
-	import LanguageMenuComponent from '$lib/components/menu/LanguageMenuComponent.svelte';
-	import languageMenuStore from '$lib/store/languageMenu.store';
 
 	const triggerAppAbout = new CustomEvent('request:app-about');
 	const triggerInstallUpdate = new CustomEvent('request:app-instal-update');
+	const triggerGetLang = new CustomEvent('request:app-get-lang');
+	const triggerInitRun = new CustomEvent('request:check-app');
+	const triggerAppFullReload = new CustomEvent('request:app-full-reload');
+
 	const markedOptions = {
 		smartLists: true,
 		smartypants: true,
@@ -46,22 +51,32 @@
 		return lang;
 	}
 
-	function changeLanguage(code: string) {
-		document.documentElement.setAttribute('lang', code);
-		currentLang = convertLangCode(document.documentElement.lang);
+	async function changeLanguage(code: string, title: string) {
+		const triggerSetLang = new CustomEvent('request:app-set-lang', {
+			detail: {
+				code,
+				title
+			}
+		});
+
 		window.location.reload();
+		document.dispatchEvent(triggerSetLang);
 	}
 
 	function installUpdate() {
 		document.dispatchEvent(triggerInstallUpdate);
 	}
 
-	function setScrollpos() {
-		console.log(window.scrollY);
+	function fullReloadApp() {
+		document.dispatchEvent(triggerAppFullReload);
 	}
 
 	onMount(() => {
 		document.dispatchEvent(triggerAppAbout);
+
+		document.dispatchEvent(triggerGetLang);
+
+		document.dispatchEvent(triggerInitRun);
 
 		document.addEventListener('manga-action:info', (event: any) => {
 			toast(event.detail.info, { icon: '😸', position: 'top-right' });
@@ -69,6 +84,18 @@
 
 		document.addEventListener('manga-action:load', (event: any) => {
 			bookmarkStore.set(event.detail.data);
+		});
+
+		document.addEventListener('app-action:init', (event: any) => {
+			if (event.detail.reloadRequired) {
+				modalStore.set({ modal: 'winreload-modal', open: true });
+			}
+		});
+
+		document.addEventListener('app-action:language', async (event: any) => {
+			document.documentElement.lang = event.detail.data.data.langCode;
+			currentLang = convertLangCode(event.detail.data.data.langCode);
+			await invalidateAll();
 		});
 
 		document.addEventListener('app-action:about', (event: any) => {
@@ -134,6 +161,21 @@
 	</div>
 </ModalComponent>
 
+<ModalComponent modal="winreload-modal" title="{$_('window.fullReload.modal.header.header')} 😸">
+	<div class="flex items-center justify-center flex-col">
+		<div class="icon py-4">
+			<span class="text-9xl">😸</span>
+		</div>
+		<div class="app-info py-3 flex flex-col justify-center items-center">
+			<span class="font-thin text-3xl capitalize">Nyanga read</span>
+			<span class="py-3 text-lg capitalize">{$_('window.fullReload.modal.content.text1')}</span>
+			<a href="#!" on:click|preventDefault={fullReloadApp}>
+				<span class="py-3 text-md capitalize">{$_('window.fullReload.modal.content.button')}</span>
+			</a>
+		</div>
+	</div>
+</ModalComponent>
+
 <ModalComponent modal="language-modal" title="{$_('menu.langSelectOpt.selector')} 🌏">
 	<div class="flex items-center justify-center flex-col">
 		<div class="icon py-4 ">
@@ -150,7 +192,7 @@
 						class="py-2 px-2 center w-full"
 						href="#!"
 						on:click|preventDefault={() => {
-							changeLanguage('id');
+							changeLanguage('id', 'bahasa indonesia');
 							languageMenuStore.set(false);
 						}}
 					>
@@ -160,7 +202,7 @@
 						class="py-2 px-2 center w-full"
 						href="#!"
 						on:click|preventDefault={() => {
-							changeLanguage('en');
+							changeLanguage('en', 'english');
 							languageMenuStore.set(false);
 						}}
 					>
