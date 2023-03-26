@@ -47,7 +47,7 @@ Manga Reader for desktop powered by sveltekit, mangadex, and electron.
 
 currently this application available only in 2 language, _english_ and _Bahasa Indonesia_, if you feel you can help me transalating this application by transalating you can follow step below
 
-- Before you transalating application please check available manga transalated language from (mangadex source)[https://api.mangadex.org/docs/static-data/]
+- Before you transalating application please check available manga transalated language from [mangadex source](https://api.mangadex.org/docs/static-data/)
 - Fork this repo
 - requirements and installation
 
@@ -61,7 +61,7 @@ currently this application available only in 2 language, _english_ and _Bahasa I
 
   - Transalating
 
-    - add transaltion file in folder `/layout/src/lib/i18n/locales` file naming convention using `<language Code>.json` use (this reference)[https://www.w3docs.com/learn-html/html-language-codes.html].
+    - add transaltion file in folder `/layout/src/lib/i18n/locales` file naming convention using `<language Code>.json` use [this reference](https://www.w3docs.com/learn-html/html-language-codes.html).
     - for json structure you can following example from file `/layout/src/lib/i18n/locales/en.json`
 
   - Submit your transalation by sending me _github pull request_, i'll review it before merging it to main branch.
