@@ -61,8 +61,6 @@ contextBridge.exposeInMainWorld("backendAPI", {
       langTitle: appLang.title
     }
 
-    console.log(appLang)
-
     ipcRenderer.send("save:app-lang", language)
   },
 
