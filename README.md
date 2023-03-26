@@ -34,11 +34,6 @@ Manga Reader for desktop powered by sveltekit, mangadex, and electron.
 <p align="center"><i>volume and chapter selection</i></p>
 
 <p align="center">
-  <img src="./docs/images/volume-chapter-list.png" />
-</p>
-<p align="center"><i>volume and chapter selection</i></p>
-
-<p align="center">
   <img src="./docs/images/image-viewer.png" />
 </p>
 <p align="center"><i>Full HD image quality</i></p>
