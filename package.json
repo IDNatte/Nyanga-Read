@@ -14,6 +14,7 @@
   },
   "description": "Nyanga Reader 😸",
   "devDependencies": {
+    "@electron/rebuild": "^3.2.10",
     "electron": "^23.2.0",
     "electron-builder": "^23.6.0",
     "prettier": "^2.8.7",
@@ -28,6 +29,7 @@
     "electron:pack": "electron-builder --dir",
     "electron:publish:win": "electron-builder --win -p always",
     "electron:publish:linux": "electron-builder --linux -p always",
+    "app:postinstall": "electron-rebuild",
     "app:build": "cd layout && yarn run build && cd .. && yarn run electron:build",
     "app:release:win": "cd layout && yarn run build && cd .. && yarn run electron:publish:win",
     "app:release:linux": "cd layout && yarn run build && cd .. && yarn run electron:publish:linux"
@@ -35,7 +37,10 @@
   "dependencies": {
     "electron-serve": "^1.1.0",
     "electron-updater": "^5.3.0",
-    "lokijs": "^1.5.12"
+    "lokijs": "^1.5.12",
+    "pouchdb": "^8.0.1",
+    "pouchdb-adapter-node-websql": "^7.0.0",
+    "sqlite3": "^5.1.6"
   },
   "build": {
     "appId": "com.IDNatte.readnyanga",

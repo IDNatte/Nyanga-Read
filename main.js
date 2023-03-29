@@ -3,6 +3,12 @@ const serve = require("electron-serve")
 const path = require("path")
 
 const eventHandle = require("./modules/event/main.event")
+// database test
+// const testdb = require("./modules/database/testdb")
+// pouch.plugin(require("pouchdb-adapter-node-websql"))
+const DatabaseTest = require("./modules/database/testdb")
+
+// const DatabaseTest = new pouch("database.db", { adapter: "websql" })
 
 const loadURL = serve({ directory: "layout/build" })
 
@@ -60,6 +66,13 @@ const createWindow = () => {
 
   // window event handler
   eventHandle(win)
+
+  // debug
+  // testdb()
+  // const test = new DatabaseTest(".nyanga")
+  // test.getInfo().then((info) => {
+  //   console.log(info)
+  // })
 }
 
 app.whenReady().then(() => {
