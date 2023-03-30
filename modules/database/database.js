@@ -1,38 +1,21 @@
-const loki = require("lokijs")
+const PouchDB = require("pouchdb")
 const path = require("path")
 const os = require("os")
-const fs = require("fs")
 
-class Database {
-  constructor(filepath) {
-    this.databasePath = path.join(os.homedir(), filepath)
-    try {
-      fs.readdirSync(this.databasePath)
-      this.database = new loki(
-        path.join(this.databasePath, "nyangaread.database.json"),
-        { autoload: true, autosave: true }
-      )
-    } catch {
-      fs.mkdirSync(this.databasePath, { recursive: true })
-      this.database = new loki(
-        path.join(this.databasePath, "nyangaread.database.json"),
-        { autoload: true, autosave: true }
-      )
-    }
-  }
+PouchDB.plugin(require("pouchdb-adapter-node-websql"))
+PouchDB.plugin(require("pouchdb-find"))
 
-  getCollection(collectionName) {
-    return this.database.getCollection(collectionName)
-  }
+function Database(filepath) {
+  const databasePath = path.join(os.homedir(), filepath)
 
-  createCollection(collectionName) {
-    let collection = this.database.addCollection(collectionName)
-    return collection
-  }
+  const database = new PouchDB(
+    path.join(databasePath, "nyangaread.database.db"),
+    { adapter: "websql", auto_compaction: true }
+  )
 
-  listCollection() {
-    return this.database.listCollections()
-  }
+  return database
 }
 
-module.exports = Database
+module.exports = {
+  Database
+}

@@ -5,6 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import { invalidateAll } from '$app/navigation';
 
+	import { truncate } from 'lodash';
 	import { register } from 'swiper/element/bundle';
 	import { _ } from 'svelte-i18n';
 
@@ -193,13 +194,15 @@
 								<div class="border shadow-md rounded">
 									<a href="/read/{mangaId}">
 										<ImageLoader src={coverUrl} alt={mangaTitle.en} />
-										<div class="title text-center text-sm p-2">
-											<div class="w-full">{mangaTitle.en || mangaTitle.ja}</div>
+										<div class="title text-center text-xs p-2">
+											<div class="w-full">
+												{truncate(mangaTitle.en || mangaTitle.ja, { length: 20 })}
+											</div>
 											<div class="w-full">
 												{#if mangaAltTitles.length > 1}
 													({#each mangaAltTitles as title}
 														{#if title.ja}
-															<span>{title.ja}</span>
+															<span>{truncate(title.ja, { length: 20 })}</span>
 														{/if}
 													{/each})
 												{/if}
@@ -243,13 +246,17 @@
 											/>
 										{/if}
 									{/each}
-									<div class="title text-center text-sm p-2">
-										<div class="w-full">{data.attributes.title.en || data.attributes.title.ja}</div>
+									<div class="title text-center text-xs p-2">
+										<div class="w-full">
+											{truncate(data.attributes.title.en || data.attributes.title.ja, {
+												length: 20
+											})}
+										</div>
 										<div class="w-full">
 											{#if data.attributes.altTitles.length > 1}
 												({#each data.attributes.altTitles as altTtitle}
 													{#if altTtitle.ja}
-														<span>{altTtitle.ja}</span>
+														<span>{truncate(altTtitle.ja, { length: 20 })}</span>
 													{/if}
 												{/each})
 											{/if}

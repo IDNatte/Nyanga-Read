@@ -2,36 +2,49 @@ const { ipcMain, app } = require("electron")
 const { autoUpdater } = require("electron-updater")
 const { readFile } = require("fs")
 const path = require("path")
-const fs = require("fs")
-const os = require("os")
 
-const { initDatabase } = require("../init/init")
-const Database = require("../database/database")
+const { Database } = require("../database/database")
 
-let database = new Database(".nyanga")
+let database = Database(".nyanga")
 
 function rendererEventModule(win) {
   // intialize first database
-
   ipcMain.on("load:check-init", (event) => {
-    fs.access(
-      path.join(os.homedir(), ".nyanga/nyangaread.database.json"),
-      (err) => {
-        if (err) {
-          initDatabase().then((result) => {
-            if (result.created) {
-              let data = {
-                reloadRequired: true
-              }
-              event.sender.send("local:check-init", data)
+    database.get("appSettings").catch(() => {
+      database
+        .put({
+          _id: "appSettings",
+          lang: {
+            langCode: "en",
+            langTitle: "english"
+          }
+        })
+        .then(() => {
+          database.createIndex({
+            index: {
+              fields: ["bookmark_manga"],
+              name: "mangadesigndoc",
+              type: "json",
+              ddoc: "__mangadesigndoc"
             }
           })
-        }
-      }
-    )
-  })
 
-  // call reload if full reload required
+          database.createIndex({
+            index: {
+              fields: ["lastread_manga"],
+              name: "readdesigndoc",
+              type: "json",
+              ddoc: "__readdesigndoc"
+            }
+          })
+
+          let data = {
+            reloadRequired: true
+          }
+          event.sender.send("local:check-init", data)
+        })
+    })
+  })
 
   ipcMain.on("load:app-full-reload", () => {
     app.relaunch()
@@ -123,7 +136,6 @@ function rendererEventModule(win) {
       "utf-8",
       (err, data) => {
         if (err) {
-          console.log(err)
           event.sender.send("local:app-about", err)
         }
 
@@ -136,94 +148,186 @@ function rendererEventModule(win) {
   })
 
   ipcMain.on("load:app-lang", (event) => {
-    let dbAppSettings = database.getCollection("appSettings")
-
-    if (dbAppSettings) {
-      let language = dbAppSettings
-        .chain()
-        .find({ settingsID: "language" })
-        .data({ removeMeta: true })
-
-      let data = language[0]
-      event.sender.send("local:app-lang", data)
-    }
+    database
+      .get("appSettings")
+      .then((data) => {
+        event.sender.send("local:app-lang", {
+          langCode: data.lang.langCode,
+          langTitle: data.lang.langTitle
+        })
+      })
+      .catch((error) => {
+        let data = {
+          reloadRequired: true,
+          error: error
+        }
+        event.sender.send("app:unknown-error", data)
+      })
   })
 
   ipcMain.on("save:app-lang", (event, language) => {
-    let dbAppSettings = database.getCollection("appSettings")
-
-    if (dbAppSettings) {
-      let checkDbIfPopulated = dbAppSettings
-        .chain()
-        .find({ settingsID: "language" })
-        .count()
-
-      if (checkDbIfPopulated === 0) {
-        dbAppSettings.insert({ settingsID: "language", data: language })
-      }
-
-      if (checkDbIfPopulated !== 0) {
-        dbAppSettings.findAndUpdate({ settingsID: "language" }, (app) => {
-          app.data = language
+    database
+      .get("appSettings")
+      .then((doc) => {
+        return database.put({
+          _id: doc._id,
+          _rev: doc._rev,
+          lang: language
         })
-      }
-    }
+      })
+      .catch((error) => {
+        let data = {
+          reloadRequired: true,
+          error: error
+        }
+        event.sender.send("app:unknown-error", data)
+      })
   })
 
   ipcMain.on("load:manga-all", (event) => {
-    let mangaCollection = database.getCollection("mangaCollection")
-    let data = {
-      manga: mangaCollection.chain().data({ removeMeta: true }).reverse()
-    }
+    database
+      .allDocs({
+        include_docs: true,
+        startkey: "manga-",
+        endkey: "manga-\ufff0"
+      })
+      .then((data) => {
+        let manga = []
 
-    event.sender.send("local:manga-load-all", data)
+        for (let doc in data.rows) {
+          manga.push({ mangaId: data.rows[doc].doc.bookmark_manga })
+        }
+
+        event.sender.send("local:manga-load-all", manga.reverse())
+      })
   })
 
   ipcMain.on("load:manga", (event) => {
-    let mangaCollection = database.getCollection("mangaCollection")
+    database
+      .allDocs({
+        include_docs: true,
+        startkey: "manga-",
+        endkey: "manga-\ufff0"
+      })
+      .then((data) => {
+        let manga = []
 
-    let checkCollection = database
-      .listCollection()
-      .find(({ name }) => name === "mangaCollection")
-
-    if (checkCollection) {
-      let count = mangaCollection.count()
-      let data
-
-      if (count > 3) {
-        let manga = mangaCollection.chain().data({ removeMeta: true }).reverse()
-        let mangaData = manga.slice(0, 3)
-
-        data = {
-          manga: mangaData,
-          page: true
+        for (let doc in data.rows) {
+          manga.push({ mangaId: data.rows[doc].doc.bookmark_manga })
         }
-      } else {
-        data = {
-          manga: mangaCollection.chain().data({ removeMeta: true }).reverse(),
-          page: false
-        }
-      }
-      event.sender.send("local:manga-load", data)
-    } else {
-      let data = {
-        manga: [],
-        page: false
-      }
 
-      event.sender.send("local:manga-load", data)
-    }
+        let mangaData = {
+          page: data.rows.length >= 3 ? true : false,
+          manga: manga.reverse().splice(0, 3)
+        }
+
+        event.sender.send("local:manga-load", mangaData)
+      })
+      .catch((error) => {
+        let data = {
+          reloadRequired: true,
+          error: error
+        }
+        event.sender.send("app:unknown-error", data)
+      })
   })
 
   ipcMain.on("save:manga", (event, manga) => {
-    let mangaCollection = database.getCollection("mangaCollection")
-    let checkMangaId = mangaCollection.findOne({ mangaId: manga.mangaId })
-    if (!checkMangaId) {
-      mangaCollection.insert(manga)
-      event.sender.send("manga:saved", "Manga Saved")
-    } else {
-      event.sender.send("manga:saved", "Manga Already Saved !")
-    }
+    database
+      .find({
+        selector: { bookmark_manga: { $eq: manga.mangaId } },
+        use_index: "__mangadesigndoc"
+      })
+      .then((data) => {
+        if (data.docs.length === 0) {
+          database
+            .put({
+              _id: `manga-${new Date().toJSON()}`,
+              bookmark_manga: manga.mangaId
+            })
+            .then(() => {
+              event.sender.send("manga:saved", "Manga Saved")
+            })
+            .catch((error) => {
+              let data = {
+                reloadRequired: true,
+                error: error
+              }
+              event.sender.send("app:unknown-error", data)
+            })
+        }
+
+        if (data.docs.length === 1) {
+          event.sender.send("manga:saved", "Manga Already Saved !")
+        }
+
+        if (data.docs.length > 1) {
+          event.sender.send("manga:saved", "Something feels wrong")
+        }
+      })
+      .catch((error) => {
+        let data = {
+          reloadRequired: true,
+          error: error
+        }
+        event.sender.send("app:unknown-error", data)
+      })
+  })
+
+  ipcMain.on("manga:set-last-read", (event, setmanga) => {
+    database
+      .find({
+        selector: { lastread_manga: { $eq: setmanga.manga } },
+        use_index: "__readdesigndoc"
+      })
+      .then((data) => {
+        if (data.docs.length === 0) {
+          database.put({
+            _id: `lastread-${new Date().toJSON()}`,
+            lastread_manga: setmanga.manga,
+            lastread_chapter: setmanga.chapter,
+            lastread_volumeName: setmanga.volumeName,
+            lastread_chapterName: setmanga.chapterName
+          })
+        }
+
+        if (data.docs.length > 0) {
+          const lastUpdate = data.docs.length - 1
+          database.put({
+            _id: data.docs[lastUpdate]._id,
+            _rev: data.docs[lastUpdate]._rev,
+            lastread_manga: setmanga.manga,
+            lastread_chapter: setmanga.chapter,
+            lastread_volumeName: setmanga.volumeName,
+            lastread_chapterName: setmanga.chapterName
+          })
+        }
+      })
+      .catch((error) => {
+        let data = {
+          reloadRequired: true,
+          error: error
+        }
+        event.sender.send("app:unknown-error", data)
+      })
+  })
+
+  ipcMain.on("load:manga-last-read", (event, mangaId) => {
+    database
+      .find({
+        selector: { lastread_manga: { $eq: mangaId } },
+        use_index: "__readdesigndoc"
+      })
+      .then((data) => {
+        event.sender.send("local:manga-last-read", data.docs[0])
+      })
+      .catch((error) => {
+        let data = {
+          reloadRequired: true,
+          error: error
+        }
+        event.sender.send("app:unknown-error", data)
+      })
   })
 }
 

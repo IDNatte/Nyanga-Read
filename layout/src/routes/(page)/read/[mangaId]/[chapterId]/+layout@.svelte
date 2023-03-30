@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { LayoutData } from './$types';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { goto, afterNavigate } from '$app/navigation';
 
-	import frameStore from '$lib/store/frame.store';
 	import viewerStore from '$lib/store/viewer.store';
 
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
@@ -17,6 +16,14 @@
 	let previousPage: string = '/';
 	const triggerViewerChangeNext = new Event('viewer-change:next');
 	const triggerViewerChangePrev = new Event('viewer-change:prev');
+	const triggerSaveLastRead = new CustomEvent('request:set-last-read', {
+		detail: {
+			chapter: data.chapter,
+			manga: data.manga,
+			chapterName: data.chapterName,
+			volumeName: data.volumeName
+		}
+	});
 
 	function next() {
 		document.dispatchEvent(triggerViewerChangeNext);
@@ -37,17 +44,9 @@
 	});
 
 	onMount(() => {
-		frameStore.set(`Read Nyanga | Volume ${data.volume} chapter ${data.chapter}`);
-	});
-
-	onDestroy(() => {
-		frameStore.set('Read Nyanga');
+		document.dispatchEvent(triggerSaveLastRead);
 	});
 </script>
-
-<svelte:head>
-	<title>Read Nyanga | volume {data.volume} chapter {data.chapter}</title>
-</svelte:head>
 
 <div>
 	<ViewerChapterComponent>
