@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
+	import { truncate } from 'lodash';
+
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import ImageLoader from '$lib/components/image/ImageLoader.svelte';
 	import bookmarkStore from '$lib/store/bookmark.store';
@@ -24,7 +26,7 @@
 		document.dispatchEvent(triggerLoadAllBookmark);
 
 		document.addEventListener('manga-action:load-all', (event: any) => {
-			bookmarkStore.set(event.detail.data);
+			$bookmarkStore.manga = event.detail.data;
 		});
 	});
 </script>
@@ -43,8 +45,10 @@
 								/>
 							{/if}
 						{/each}
-						<div class="title text-center text-sm p-2">
-							<div class="w-full">{data.attributes.title.en || data.attributes.title.ja}</div>
+						<div class="title text-center text-xs p-2">
+							<div class="w-full">
+								{truncate(data.attributes.title.en || data.attributes.title.ja, { length: 20 })}
+							</div>
 							<div class="w-full">
 								{#if data.attributes.altTitles.length > 1}
 									({#each data.attributes.altTitles as altTtitle}

@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
+	import { truncate } from 'lodash';
 	import { _ } from 'svelte-i18n';
 
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
@@ -103,13 +104,15 @@
 							/>
 						{/if}
 					{/each}
-					<div class="title text-center text-sm p-2">
-						<div class="w-full">{attributes.title.en}</div>
+					<div class="title text-center text-xs p-2">
+						<div class="w-full">
+							{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}
+						</div>
 						<div class="w-full">
 							{#if attributes.altTitles.length > 1}
 								({#each attributes.altTitles as title}
 									{#if title.ja}
-										<span>{title.ja}</span>
+										<span>{truncate(title.ja, { length: 20 })}</span>
 									{/if}
 								{/each})
 							{/if}

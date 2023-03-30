@@ -1,7 +1,7 @@
-const { contextBridge, ipcRenderer, ipcMain } = require("electron")
+const { contextBridge, ipcRenderer } = require("electron")
 
 contextBridge.exposeInMainWorld("backendAPI", {
-  // manga save
+  // manga related
   triggerSave: (mangaId) => {
     let manga = {
       mangaId
@@ -9,19 +9,28 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("save:manga", manga)
   },
 
-  onMangaSave: (callback) => {
-    ipcRenderer.on("manga:saved", callback)
-  },
-
-  // end of manga save
-
-  // manga load
   triggerMangaLoad: () => {
     ipcRenderer.send("load:manga")
   },
 
   triggerMangaLoadAll: () => {
     ipcRenderer.send("load:manga-all")
+  },
+
+  triggerMangaSetLastRead: (manga) => {
+    ipcRenderer.send("manga:set-last-read", manga)
+  },
+
+  triggerMangaGetLastRead: (manga) => {
+    ipcRenderer.send("load:manga-last-read", manga)
+  },
+
+  onMangaGetLastRead: (callback) => {
+    ipcRenderer.on("local:manga-last-read", callback)
+  },
+
+  onMangaSave: (callback) => {
+    ipcRenderer.on("manga:saved", callback)
   },
 
   onMangaLoadAll: (callback) => {
@@ -31,7 +40,7 @@ contextBridge.exposeInMainWorld("backendAPI", {
   onMangaLoad: (callback) => {
     ipcRenderer.on("local:manga-load", callback)
   },
-  // end of manga load
+  // end of manga related
 
   // application related
 
@@ -98,6 +107,10 @@ contextBridge.exposeInMainWorld("backendAPI", {
 
   triggerWinResize: () => {
     ipcRenderer.send("win:resize")
+  },
+
+  onAppError: (callback) => {
+    ipcRenderer.on("app:unknown-error", callback)
   }
 
   // end of application related

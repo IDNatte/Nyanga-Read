@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	document.addEventListener('request:app-set-lang', (event) => {
 		window.backendAPI.triggerAppSetLanguage(event.detail);
-		// window.backendAPI.triggerAppFullReload()
 	});
 
 	document.addEventListener('request:check-app', () => {
@@ -52,39 +51,63 @@ document.addEventListener('DOMContentLoaded', () => {
 		window.backendAPI.triggerAppFullReload();
 	});
 
+	document.addEventListener('request:set-last-read', (event) => {
+		let data = {
+			manga: event.detail.manga,
+			chapter: event.detail.chapter,
+			volumeName: event.detail.volumeName,
+			chapterName: event.detail.chapterName
+		};
+		window.backendAPI.triggerMangaSetLastRead(data);
+	});
+
+	document.addEventListener('request:get-last-read', (event) => {
+		window.backendAPI.triggerMangaGetLastRead(event.detail.manga);
+	});
+
 	window.backendAPI.onAppCheckInit((e, data) => {
-		let appInitRun = new CustomEvent('app-action:init', { detail: data });
+		const appInitRun = new CustomEvent('app-action:init', { detail: data });
 		document.dispatchEvent(appInitRun);
 	});
 
 	window.backendAPI.onGetAppLang((e, data) => {
-		let appLanguage = new CustomEvent('app-action:language', { detail: { data } });
-		console.log(data)
+		const appLanguage = new CustomEvent('app-action:language', { detail: { data } });
 		document.dispatchEvent(appLanguage);
 	});
 
+	window.backendAPI.onMangaGetLastRead((e, data) => {
+		const mangaAction = new CustomEvent('manga-action:last-read', { detail: data });
+		document.dispatchEvent(mangaAction);
+	});
+
 	window.backendAPI.onMangaSave((e, data) => {
-		let mangaAction = new CustomEvent('manga-action:info', { detail: { info: data } });
+		const mangaAction = new CustomEvent('manga-action:info', { detail: { info: data } });
 		document.dispatchEvent(mangaAction);
 	});
 
 	window.backendAPI.onMangaLoad((e, data) => {
-		let mangaLoad = new CustomEvent('manga-action:load', { detail: { data } });
+		const mangaLoad = new CustomEvent('manga-action:load', { detail: { data } });
 		document.dispatchEvent(mangaLoad);
 	});
 
 	window.backendAPI.onMangaLoadAll((e, data) => {
-		let mangaLoadAll = new CustomEvent('manga-action:load-all', { detail: { data } });
+		const mangaLoadAll = new CustomEvent('manga-action:load-all', { detail: { data } });
 		document.dispatchEvent(mangaLoadAll);
 	});
 
 	window.backendAPI.onAppAbout((e, data) => {
-		let appAbout = new CustomEvent('app-action:about', { detail: { data } });
+		const appAbout = new CustomEvent('app-action:about', { detail: { data } });
 		document.dispatchEvent(appAbout);
 	});
 
 	window.backendAPI.onAppUpdate((e, data) => {
-		let appUpdate = new CustomEvent('app-action:update', { detail: { data } });
+		const appUpdate = new CustomEvent('app-action:update', { detail: { data } });
 		document.dispatchEvent(appUpdate);
+	});
+
+	window.backendAPI.onAppError((e, data) => {
+		const appError = new CustomEvent('app-action:error', { detail: data });
+		console.log(data);
+		document.dispatchEvent(appError);
 	});
 });
