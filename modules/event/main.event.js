@@ -2,36 +2,41 @@ const { ipcMain, app } = require("electron")
 const { autoUpdater } = require("electron-updater")
 const { readFile } = require("fs")
 const path = require("path")
-const fs = require("fs")
-const os = require("os")
 
-const { initDatabase } = require("../init/init")
-const Database = require("../database/database")
+const DatabaseLegacy = require("../database/database-legacy")
+const { Database } = require("../database/database")
 
-let database = new Database(".nyanga")
+let database = new DatabaseLegacy(".nyanga")
+let db2 = Database(".nyanga")
 
 function rendererEventModule(win) {
   // intialize first database
-
   ipcMain.on("load:check-init", (event) => {
-    fs.access(
-      path.join(os.homedir(), ".nyanga/nyangaread.database.json"),
-      (err) => {
-        if (err) {
-          initDatabase().then((result) => {
-            if (result.created) {
-              let data = {
-                reloadRequired: true
-              }
-              event.sender.send("local:check-init", data)
-            }
-          })
-        }
+    db2.createIndex({
+      index: {
+        fields: ["mangaId", "_id"],
+        name: "mangadesigndoc",
+        type: "json"
       }
-    )
-  })
+    })
 
-  // call reload if full reload required
+    db2.get("appSettings").catch(() => {
+      db2
+        .put({
+          _id: "appSettings",
+          lang: {
+            langCode: "en",
+            langTitle: "english"
+          }
+        })
+        .then(() => {
+          let data = {
+            reloadRequired: true
+          }
+          event.sender.send("local:check-init", data)
+        })
+    })
+  })
 
   ipcMain.on("load:app-full-reload", () => {
     app.relaunch()
@@ -136,38 +141,35 @@ function rendererEventModule(win) {
   })
 
   ipcMain.on("load:app-lang", (event) => {
-    let dbAppSettings = database.getCollection("appSettings")
+    // let dbAppSettings = database.getCollection("appSettings")
 
-    if (dbAppSettings) {
-      let language = dbAppSettings
-        .chain()
-        .find({ settingsID: "language" })
-        .data({ removeMeta: true })
+    db2.get("appSettings").then((data) => {
+      // console.log(data.lang)
+      event.sender.send("local:app-lang", {
+        langCode: data.lang.langCode,
+        langTitle: data.lang.langTitle
+      })
+    })
 
-      let data = language[0]
-      event.sender.send("local:app-lang", data)
-    }
+    // if (dbAppSettings) {
+    //   let language = dbAppSettings
+    //     .chain()
+    //     .find({ settingsID: "language" })
+    //     .data({ removeMeta: true })
+
+    //   let data = language[0]
+    //   event.sender.send("local:app-lang", data)
+    // }
   })
 
   ipcMain.on("save:app-lang", (event, language) => {
-    let dbAppSettings = database.getCollection("appSettings")
-
-    if (dbAppSettings) {
-      let checkDbIfPopulated = dbAppSettings
-        .chain()
-        .find({ settingsID: "language" })
-        .count()
-
-      if (checkDbIfPopulated === 0) {
-        dbAppSettings.insert({ settingsID: "language", data: language })
-      }
-
-      if (checkDbIfPopulated !== 0) {
-        dbAppSettings.findAndUpdate({ settingsID: "language" }, (app) => {
-          app.data = language
-        })
-      }
-    }
+    db2.get("appSettings").then((doc) => {
+      return db2.put({
+        _id: doc._id,
+        _rev: doc._rev,
+        lang: language
+      })
+    })
   })
 
   ipcMain.on("load:manga-all", (event) => {
@@ -175,6 +177,16 @@ function rendererEventModule(win) {
     let data = {
       manga: mangaCollection.chain().data({ removeMeta: true }).reverse()
     }
+
+    db2
+      .allDocs({
+        include_docs: true,
+        startkey: "manga-",
+        endkey: "manga-\ufff0"
+      })
+      .then((data) => {
+        console.log(data.rows)
+      })
 
     event.sender.send("local:manga-load-all", data)
   })
@@ -213,17 +225,67 @@ function rendererEventModule(win) {
 
       event.sender.send("local:manga-load", data)
     }
+
+    db2
+      .allDocs({
+        include_docs: true,
+        startkey: "manga-",
+        endkey: "manga-\ufff0"
+      })
+      .then((data) => {
+        console.log(data)
+
+        let manga = []
+
+        for (let doc in data.rows) {
+          manga.push({ mangaId: data.rows[doc].doc.mangaId })
+        }
+
+        let mangaData = {
+          page: data.rows.length > 3 ? true : false,
+          manga: manga.slice(0, 3).reverse()
+        }
+
+        console.log(mangaData)
+      })
   })
 
   ipcMain.on("save:manga", (event, manga) => {
-    let mangaCollection = database.getCollection("mangaCollection")
-    let checkMangaId = mangaCollection.findOne({ mangaId: manga.mangaId })
-    if (!checkMangaId) {
-      mangaCollection.insert(manga)
-      event.sender.send("manga:saved", "Manga Saved")
-    } else {
-      event.sender.send("manga:saved", "Manga Already Saved !")
-    }
+    // console.log(manga)
+
+    // let mangaCollection = database.getCollection("mangaCollection")
+    // let checkMangaId = mangaCollection.findOne({ mangaId: manga.mangaId })
+    // if (!checkMangaId) {
+    //   mangaCollection.insert(manga)
+    //   event.sender.send("manga:saved", "Manga Saved")
+    // } else {
+    //   event.sender.send("manga:saved", "Manga Already Saved !")
+    // }
+
+    db2
+      .find({
+        selector: { mangaId: { $eq: manga.mangaId } }
+      })
+      .then((data) => {
+        if (data.docs.length === 0) {
+          db2
+            .put({
+              _id: `manga-${new Date().toJSON()}`,
+              mangaId: manga.mangaId
+            })
+            .then(() => {
+              event.sender.send("manga:saved", "Manga Saved")
+            })
+        }
+
+        if (data.docs.length === 1) {
+          event.sender.send("manga:saved", "Manga Already Saved !")
+        }
+
+        if (data.docs.length > 1) {
+          event.sender.send("manga:saved", "Something feels wrong")
+        }
+      })
   })
 }
 

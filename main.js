@@ -6,9 +6,8 @@ const eventHandle = require("./modules/event/main.event")
 // database test
 // const testdb = require("./modules/database/testdb")
 // pouch.plugin(require("pouchdb-adapter-node-websql"))
-const DatabaseTest = require("./modules/database/testdb")
-
-// const DatabaseTest = new pouch("database.db", { adapter: "websql" })
+// const DatabaseTest = require("./modules/database/database")
+// const database = require('./modules/database/database')
 
 const loadURL = serve({ directory: "layout/build" })
 
@@ -69,7 +68,8 @@ const createWindow = () => {
 
   // debug
   // testdb()
-  // const test = new DatabaseTest(".nyanga")
+  // let db = new database('.nyanga')
+  // db.database.
   // test.getInfo().then((info) => {
   //   console.log(info)
   // })

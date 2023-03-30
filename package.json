@@ -40,6 +40,7 @@
     "lokijs": "^1.5.12",
     "pouchdb": "^8.0.1",
     "pouchdb-adapter-node-websql": "^7.0.0",
+    "pouchdb-find": "^8.0.1",
     "sqlite3": "^5.1.6"
   },
   "build": {

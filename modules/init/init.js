@@ -1,6 +1,6 @@
 const Database = require("../database/database")
 
-function initDatabase(app) {
+function initDatabase() {
   return new Promise((resolve, reject) => {
     try {
       let database = new Database(".nyanga")

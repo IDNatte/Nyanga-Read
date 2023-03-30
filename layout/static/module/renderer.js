@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	window.backendAPI.onGetAppLang((e, data) => {
 		let appLanguage = new CustomEvent('app-action:language', { detail: { data } });
+		console.log(data)
 		document.dispatchEvent(appLanguage);
 	});
 

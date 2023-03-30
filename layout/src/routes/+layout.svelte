@@ -93,8 +93,8 @@
 		});
 
 		document.addEventListener('app-action:language', async (event: any) => {
-			document.documentElement.lang = event.detail.data.data.langCode;
-			currentLang = convertLangCode(event.detail.data.data.langCode);
+			document.documentElement.lang = event.detail.data.langCode;
+			currentLang = convertLangCode(event.detail.data.langCode);
 			await invalidateAll();
 		});
 
