@@ -1,8 +1,7 @@
 {
   "name": "read-nyanga",
-  "packageManager": "yarn@3.3.1",
   "version": "2.0.0",
-  "main": "main.js",
+  "main": "./main.js",
   "author": {
     "email": "idnatte@gmail.com",
     "name": "IDNatte",
@@ -18,6 +17,7 @@
     "concurrently": "^8.0.1",
     "electron": "^23.2.1",
     "electron-builder": "^23.6.0",
+    "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
     "prettierrc": "^0.0.0-5"
   },
@@ -45,51 +45,5 @@
     "pouchdb-adapter-node-websql": "^7.0.0",
     "pouchdb-find": "^8.0.1",
     "sqlite3": "^5.1.6"
-  },
-  "build": {
-    "appId": "com.IDNatte.readnyanga",
-    "productName": "Read Nyanga",
-    "publish": [
-      {
-        "provider": "github",
-        "repo": "mang-redr",
-        "owner": "IDNatte"
-      }
-    ],
-    "win": {
-      "target": "nsis",
-      "icon": "build/icon/image/logo.png"
-    },
-    "linux": {
-      "target": "appImage",
-      "icon": "build/icon/image/logo.png",
-      "category": "Utility"
-    },
-    "files": [
-      "*/**",
-      "main.js",
-      "!*.yml",
-      "!*.lock",
-      "!.github",
-      "!.gitignore",
-      "!gh_token.*",
-      "!.prettierrc",
-      "!.editorconfig",
-      "!nodemon.json",
-      "!.prettierignore",
-      "!build/*",
-      "!docs/*",
-      "!**/dist/*",
-      "!**/github/*",
-      "!**/layout/{.*,*.json,*.ts,*.cjs,*.js}",
-      "!**/layout/.svelte-kit/*",
-      "!**/layout/.yarn/*",
-      "!**/layout/static/*",
-      "!**/layout/src/*",
-      "!**/layout/node_modules/*"
-    ],
-    "nsis": {
-      "installerIcon": "build/icon/image/logo-ico.ico"
-    }
   }
 }
