@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ignore": [
+    "**/docs/**",
+    "**/layout/**",
+    "**/build/**",
+    "**/.yarn/**",
+    "**/.github/**"
+  ]
+}
