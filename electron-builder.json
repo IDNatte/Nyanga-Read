@@ -20,9 +20,5 @@
   "nsis": {
     "installerIcon": "build/icon/image/logo-ico.ico"
   },
-  "files": [
-    "main.js",
-    "**/layout/build${/*}",
-    "modules${/*}"
-  ]
+  "files": ["main.js", "**/layout/build${/*}", "modules${/*}"]
 }
