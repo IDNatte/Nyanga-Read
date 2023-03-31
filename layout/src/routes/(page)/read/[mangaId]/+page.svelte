@@ -72,7 +72,7 @@
 						{#if readLatest}
 							<a
 								class="costume-last-readed"
-								href="/read/{data.mangaId}/{lastChapter}?chapter={lastChapter}&manga={data.mangaId}&chapterName={lastChapter}&volumeName={lastVolumeName}"
+								href="/read/{data.mangaId}/{lastChapter}?chapter={lastChapter}&manga={data.mangaId}&chapterName={lastChapterName}&volumeName={lastVolumeName}"
 								>Read Vol. {lastVolumeName} Chap. {lastChapterName}
 							</a>
 						{/if}
