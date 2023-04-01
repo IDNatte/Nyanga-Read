@@ -14,6 +14,7 @@ node_modules
 
 # Costume output
 frontend
+layout
 
 # Sveltekit
 .DS_Store
