@@ -4,7 +4,10 @@
 
 # Nyanga Read 😸
 
-Manga Reader for desktop powered by sveltekit, mangadex, and electron.
+**this version is marked experimental and replacing electronjs over pywebview to cut compiled size
+this branch is still under heavy development**
+
+Manga Reader for desktop powered by sveltekit, mangadex, and pywebview.
 
 - Transalated manga based on what language you choose
 - Local bookmark save
