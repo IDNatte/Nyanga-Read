@@ -276,17 +276,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^18.11.18":
   version: 18.15.11
   resolution: "@types/node@npm:18.15.11"
   checksum: 977b4ad04708897ff0eb049ecf82246d210939c82461922d20f7d2dcfd81bbc661582ba3af28869210f7e8b1934529dcd46bff7d448551400f9d48b9d3bddec3
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^16.11.26":
-  version: 16.18.22
-  resolution: "@types/node@npm:16.18.22"
-  checksum: 0fa5b7ca37855125988eb90207b9ebd50cc9c30a559be6d69e53f7e4cc474ce514994012c806d2e83e03bf1f48705b7e3d1c45a424f6e11ee39818ee4c4c2c2d
   languageName: node
   linkType: hard
 
@@ -1444,16 +1437,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^23.2.1":
-  version: 23.2.1
-  resolution: "electron@npm:23.2.1"
+"electron@npm:^24.0.0":
+  version: 24.0.0
+  resolution: "electron@npm:24.0.0"
   dependencies:
     "@electron/get": ^2.0.0
-    "@types/node": ^16.11.26
+    "@types/node": ^18.11.18
     extract-zip: ^2.0.1
   bin:
     electron: cli.js
-  checksum: 38b6f25c555ccc799c2efa95b80af11416cbe0145a94c49047da13d08f4ed1fab87b5fe1b1207db2d7594d0e13bc814e675910c8c4bc4741bd8fa786520070b1
+  checksum: 6b2fe2f25e996eed5aefaac481d9d1666e0d4666843887e9029a044640a7559933c1ae9d67215af88a018c2052821201ea23475396c7ead6a7ba6716b0913fdb
   languageName: node
   linkType: hard
 
@@ -1712,7 +1705,7 @@ __metadata:
 
 "fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -3706,7 +3699,7 @@ __metadata:
   dependencies:
     "@electron/rebuild": ^3.2.10
     concurrently: ^8.0.1
-    electron: ^23.2.1
+    electron: ^24.0.0
     electron-builder: ^23.6.0
     electron-serve: ^1.1.0
     electron-updater: ^5.3.0
