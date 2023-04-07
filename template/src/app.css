@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*::-webkit-scrollbar {
+	@apply bg-pink-300 w-[.5em] h-auto;
+}
+
+*::-webkit-scrollbar-thumb {
+	@apply bg-pink-800 rounded;
+}

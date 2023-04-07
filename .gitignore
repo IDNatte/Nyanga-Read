@@ -16,6 +16,9 @@ node_modules
 frontend
 layout
 
+# template folder
+# template
+
 # Sveltekit
 .DS_Store
 node_modules

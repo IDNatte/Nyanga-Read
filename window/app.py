@@ -25,7 +25,7 @@ if __name__ == "__main__":
         js_api=api,
         width=1280,
         height=700,
-        min_size=(1280, 700),
+        min_size=(1280, 800),
     )
 
     if ENV:

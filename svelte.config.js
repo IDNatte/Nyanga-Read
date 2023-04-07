@@ -14,6 +14,7 @@ const config = {
 		adapter: adapter({
 			pages: 'layout',
 			strict: false
+			// fallback: 'index.html'
 		})
 	}
 };
