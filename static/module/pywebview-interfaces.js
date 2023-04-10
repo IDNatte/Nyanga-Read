@@ -8,11 +8,11 @@ window.addEventListener('pywebviewready', () => {
 		pywebview.api.getSvelteVersion(event.detail.version);
 	});
 
-	document.addEventListener('request:init-manga', async (event) => {
-		const initManga = await pywebview.api.initManga(event.detail.lang);
-		const sendLocalCacheImage = new CustomEvent('load:init-manga', { detail: initManga });
-		document.dispatchEvent(sendLocalCacheImage);
-	});
+	// document.addEventListener('request:init-manga', async (event) => {
+	// 	const initManga = await pywebview.api.initManga(event.detail.lang);
+	// 	const sendLocalCacheImage = new CustomEvent('load:init-manga', { detail: initManga });
+	// 	document.dispatchEvent(sendLocalCacheImage);
+	// });
 
 	/**
 	 *

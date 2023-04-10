@@ -13,6 +13,7 @@
 		"svelte:format": "prettier --plugin-search-dir . --write .",
 		"python:build": "./.venv/Scripts/pyinstaller Nyanga-Read.spec",
 		"python:test": "./.venv/Scripts/python ./window/app.py",
+		"app:build:test": "yarn run svelte:build && ./.venv/Scripts/pyinstaller --noconfirm Nyanga-Read-debug.spec",
 		"app:build": "yarn run svelte:build && yarn run python:build"
 	},
 	"devDependencies": {
