@@ -1,44 +1,6 @@
-# Yarn
-.yarn
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
 node_modules
-
-# Swap the comments on the following lines if you don't wish to use zero-installs
-# Documentation here: https://yarnpkg.com/features/zero-installs
-.yarn/cache
-#.pnp.*
-
-# Costume output
-frontend
-layout
-
-# template folder
-# template
-
-# Sveltekit
-.DS_Store
-node_modules
-/build
-/.svelte-kit
-/package
-.env
-.env.*
-!.env.example
-.vercel
-.output
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-
-# Python and all PyInstaller
-.venv
-.env
-venv
-env
-
-__pycache__/
-build
 dist
+out
+*.log*
+
+.yarn
