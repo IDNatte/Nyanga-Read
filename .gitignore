@@ -1,6 +1,26 @@
+.DS_Store
 node_modules
-dist
-out
-*.log*
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+.vercel
+.output
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
+
+# yarn
 .yarn
+
+
+# python
+__pycache__
+.venv
+.env
+dist
+build
+layout
+*.log
