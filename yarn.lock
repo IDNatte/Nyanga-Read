@@ -41,9 +41,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron/rebuild@npm:^3.2.10":
-  version: 3.2.10
-  resolution: "@electron/rebuild@npm:3.2.10"
+"@electron/rebuild@npm:^3.2.12":
+  version: 3.2.12
+  resolution: "@electron/rebuild@npm:3.2.12"
   dependencies:
     "@malept/cross-spawn-promise": ^2.0.0
     chalk: ^4.0.0
@@ -51,7 +51,6 @@ __metadata:
     detect-libc: ^2.0.1
     fs-extra: ^10.0.0
     got: ^11.7.0
-    lzma-native: ^8.0.5
     node-abi: ^3.0.0
     node-api-version: ^0.1.4
     node-gyp: ^9.0.0
@@ -60,8 +59,8 @@ __metadata:
     tar: ^6.0.5
     yargs: ^17.0.1
   bin:
-    electron-rebuild: lib/src/cli.js
-  checksum: 5bbcc81f1473d29ef5e7aa8826dc6a7bb9c7846d95364687d69e84e925e9b8f38e6b1c9c9a448b9132654ffe3cae2863bdb2e11e585ca502ac90ab29f4d44649
+    electron-rebuild: lib/cli.js
+  checksum: 8a1458958045e7430133de942bd999d1b83844762ea3f86a59869a0c85498659bdec9106e43ecf395f1d58b3cea63e8e337bf4e0c3366291ead7940e229131f7
   languageName: node
   linkType: hard
 
@@ -2517,20 +2516,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lzma-native@npm:^8.0.5":
-  version: 8.0.6
-  resolution: "lzma-native@npm:8.0.6"
-  dependencies:
-    node-addon-api: ^3.1.0
-    node-gyp: latest
-    node-gyp-build: ^4.2.1
-    readable-stream: ^3.6.0
-  bin:
-    lzmajs: bin/lzmajs
-  checksum: cbe782fd53309163a9362d0b5a960051936268a891779d26fdfe42085ce7fa309dc96e91414fe64ddd2bde2e2c25fc18e1d89aa6a2691557dd89b6582840a979
-  languageName: node
-  linkType: hard
-
 "make-dir@npm:^3.1.0":
   version: 3.1.0
   resolution: "make-dir@npm:3.1.0"
@@ -2883,15 +2868,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-addon-api@npm:^3.1.0":
-  version: 3.2.1
-  resolution: "node-addon-api@npm:3.2.1"
-  dependencies:
-    node-gyp: latest
-  checksum: 2369986bb0881ccd9ef6bacdf39550e07e089a9c8ede1cbc5fc7712d8e2faa4d50da0e487e333d4125f8c7a616c730131d1091676c9d499af1d74560756b4a18
-  languageName: node
-  linkType: hard
-
 "node-addon-api@npm:^4.2.0":
   version: 4.3.0
   resolution: "node-addon-api@npm:4.3.0"
@@ -2935,17 +2911,6 @@ __metadata:
     encoding:
       optional: true
   checksum: acb04f9ce7224965b2b59e71b33c639794d8991efd73855b0b250921382b38331ffc9d61bce502571f6cc6e11a8905ca9b1b6d4aeb586ab093e2756a1fd190d0
-  languageName: node
-  linkType: hard
-
-"node-gyp-build@npm:^4.2.1":
-  version: 4.6.0
-  resolution: "node-gyp-build@npm:4.6.0"
-  bin:
-    node-gyp-build: bin.js
-    node-gyp-build-optional: optional.js
-    node-gyp-build-test: build-test.js
-  checksum: 25d78c5ef1f8c24291f4a370c47ba52fcea14f39272041a90a7894cd50d766f7c8cb8fb06c0f42bf6f69b204b49d9be3c8fc344aac09714d5bdb95965499eb15
   languageName: node
   linkType: hard
 
@@ -3697,7 +3662,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "read-nyanga@workspace:."
   dependencies:
-    "@electron/rebuild": ^3.2.10
+    "@electron/rebuild": ^3.2.12
     concurrently: ^8.0.1
     electron: ^24.1.2
     electron-builder: ^23.6.0
