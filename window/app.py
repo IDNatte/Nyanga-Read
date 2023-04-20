@@ -24,11 +24,23 @@ def server_main():
 if __name__ == "__main__":
     env = os.environ.get("UI_APP_DEV", default=None)
     if env:
-        webview.create_window("Nyanga Read", "http://localhost:5173")
+        webview.create_window(
+            "Nyanga Read",
+            "http://localhost:5173",
+            width=1280,
+            height=700,
+            min_size=(1280, 800),
+        )
         webview.start(private_mode=False, debug=True)
 
     else:
         server_main()
 
-        webview.create_window("Nyanga Read", "http://localhost:5000")
+        webview.create_window(
+            "Nyanga Read",
+            "http://localhost:5000",
+            width=1280,
+            height=700,
+            min_size=(1280, 800),
+        )
         webview.start(private_mode=False)
