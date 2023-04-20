@@ -30,5 +30,5 @@ if __name__ == "__main__":
     else:
         server_main()
 
-        webview.create_window("Testing", "http://localhost:5000")
+        webview.create_window("Nyanga Read", "http://localhost:5000")
         webview.start(private_mode=False)
