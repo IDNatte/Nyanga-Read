@@ -1,4 +1,4 @@
-from server import server
+from server.server import create_app
 import webview
 
 import threading
@@ -8,11 +8,11 @@ import os
 
 def server_instance():
     try:
-        server.logger.info("starting server")
-        server.run(host="localhost", port=5000)
+        create_app().logger.info("starting server")
+        create_app().run(host="localhost", port=5000)
 
     except Exception as error:
-        server.logger.error(f"{error}")
+        create_app().logger.error(f"{error}")
         sys.exit(1)
 
 
@@ -21,9 +21,15 @@ def server_main():
     server_thread.start()
 
 
-if __name__ == "__main__":
-    env = os.environ.get("UI_APP_DEV", default=None)
-    if env:
+def main():
+    ui_dev = os.environ.get("UI_APP_DEV", default=None)
+    server_dev = os.environ.get("APP_DEV", default=None)
+
+    if ui_dev:
+        # back-end server required for debuging IPC functionality
+        server_main()
+        # ------------------------------------------------------>
+
         webview.create_window(
             "Nyanga Read",
             "http://localhost:5173",
@@ -31,9 +37,13 @@ if __name__ == "__main__":
             height=700,
             min_size=(1280, 800),
         )
-        webview.start(private_mode=False, debug=True)
+        webview.start(
+            user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
+            private_mode=False,
+            debug=True,
+        )
 
-    else:
+    if server_dev:
         server_main()
 
         webview.create_window(
@@ -43,4 +53,28 @@ if __name__ == "__main__":
             height=700,
             min_size=(1280, 800),
         )
-        webview.start(private_mode=False)
+        webview.start(
+            user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
+            private_mode=False,
+            debug=True,
+        )
+
+    if not server_dev and not ui_dev:
+        server_main()
+
+        webview.create_window(
+            "Nyanga Read",
+            "http://localhost:5000",
+            width=1280,
+            height=700,
+            min_size=(1280, 800),
+        )
+        webview.start(
+            user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
+            private_mode=False,
+            debug=True,
+        )
+
+
+if __name__ == "__main__":
+    main()

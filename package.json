@@ -14,10 +14,9 @@
 		"svelte:check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"svelte:lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"svelte:format": "prettier --plugin-search-dir . --write .",
-		"python:ui:dev": "APP_DEV=\"True\" && UI_APP_DEV=\"True\" ./.venv/Scripts/python ./window/app.py",
+		"python:ui:dev": "UI_APP_DEV=\"True\" ./.venv/Scripts/python ./window/app.py",
 		"python:start": "APP_DEV=\"True\" ./.venv/Scripts/python ./window/app.py",
 		"python:build": "./.venv/Scripts/pyinstaller --noconfirm Nyanga-Read.spec",
-		"python:test": "./.venv/Scripts/python ./window/app.py",
 		"app:build:test": "yarn run svelte:build && ./.venv/Scripts/pyinstaller --noconfirm Nyanga-Read-debug.spec",
 		"app:build": "yarn run svelte:build && yarn run python:build"
 	},
