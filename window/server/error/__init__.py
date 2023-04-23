@@ -11,7 +11,7 @@ class UAError(Exception):
 
 class CSRFError(Exception):
     """
-    User Agent Exception error
+    CSRF Exception error
     """
 
     def __init__(self, name, description, code):

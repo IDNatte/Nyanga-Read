@@ -20,13 +20,17 @@ def verify_csrf(function):
     @wraps(function)
     def verify_csrf_token(*args, **kwargs):
         try:
-            token_header = request.headers["Pywv-CSRF-Token"]
-            if token_header == wv_token.token:
+            token_header = request.headers["PCSRFWV-Token"]
+
+            if token_header == wv_token:
                 return function(*args, **kwargs)
-            else:
+
+            elif token_header != wv_token:
+                raise CSRFError("CSRFHeaderInvalid", "CSRF Header Invalid", 401)
+
+        except KeyError:
+            if KeyError:
                 raise CSRFError("CSRFHeaderMissing", "CSRF Header Missing", 401)
-        except:
-            raise CSRFError("CSRFHeaderMissing", "CSRF Header Missing", 401)
 
     return verify_csrf_token
 
