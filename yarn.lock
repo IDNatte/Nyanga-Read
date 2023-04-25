@@ -41,9 +41,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron/rebuild@npm:^3.2.12":
-  version: 3.2.12
-  resolution: "@electron/rebuild@npm:3.2.12"
+"@electron/rebuild@npm:^3.2.13":
+  version: 3.2.13
+  resolution: "@electron/rebuild@npm:3.2.13"
   dependencies:
     "@malept/cross-spawn-promise": ^2.0.0
     chalk: ^4.0.0
@@ -60,7 +60,7 @@ __metadata:
     yargs: ^17.0.1
   bin:
     electron-rebuild: lib/cli.js
-  checksum: 8a1458958045e7430133de942bd999d1b83844762ea3f86a59869a0c85498659bdec9106e43ecf395f1d58b3cea63e8e337bf4e0c3366291ead7940e229131f7
+  checksum: 79ce6323fa95cab75dc1edb52540c8dd367db9ab084ca94fefde1a46699139b3cee3f5449b7b3b5b9b529887d9f3fabe1689a738351b716e3090e636296c3b1b
   languageName: node
   linkType: hard
 
@@ -3662,7 +3662,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "read-nyanga@workspace:."
   dependencies:
-    "@electron/rebuild": ^3.2.12
+    "@electron/rebuild": ^3.2.13
     concurrently: ^8.0.1
     electron: ^24.1.2
     electron-builder: ^23.6.0
