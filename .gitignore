@@ -24,3 +24,6 @@ dist
 build
 layout
 *.log
+
+# python profiling
+*.prof
