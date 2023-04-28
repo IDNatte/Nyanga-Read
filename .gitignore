@@ -27,3 +27,4 @@ layout
 
 # python profiling
 *.prof
+*.dat
