@@ -1,6 +1,6 @@
 stages:
-  - build-window
   - build-linux
+  - build-window
   - deploy
 
 build-window:
@@ -10,26 +10,15 @@ build-window:
   stage: build-window
   before_script:
     - choco install nodejs --version 18.16.0 --x64 -y
-    - choco install python --version 3.10.0 --x64 -y
+    - choco install dotnet --ignore-checksums -y
+    - choco install python --x64 -y
     - refreshenv
 
   script:
-    # - npm install
-    # - |
-    #   npm run svelte:build
-    # - .\.venv\Scripts\Activate.ps1
-    # - python --version
-    # - mkdir log
-    # - cd log
-    # - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
-    # - dir
-    # - cd ..
-    # - dir
-
     - npm install
     - |
       npm run svelte:build
-    - c:\python310\python.exe -m venv .venv --upgrade-deps
+    - c:\python311\python.exe -m venv .venv --upgrade-deps
     - .\.venv\Scripts\Activate.ps1
     - pip install -r requirements-win.txt
     - mkdir log
