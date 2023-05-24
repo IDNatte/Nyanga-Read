@@ -1,6 +1,6 @@
 stages:
   - build-window
-  - build-linux
+  # - build-linux
 
 build-window:
   image: mcr.microsoft.com/windows/servercore:ltsc2019
@@ -17,42 +17,45 @@ build-window:
     - |
       npm run svelte:build
     - c:\python310\python.exe -m venv .venv --upgrade-deps
-    - ./.venv/Script/Activate.ps1
-    - pip install -r requirements.txt
-    - mkdir log
-    - type log/app.log
-    - pyinstaller --noconfirm --dispath nyanga-windows Nyanga-Read-windows.spec
+    - type log\app.log
+    - dir
+    - cd .\.venv\Scripts\
+    - dir
+    # - .\.venv\Scripts\Activate.ps1
+    # - pip install -r requirements.txt
+    # - mkdir log
+    # - type log\app.log
+    # - pyinstaller --noconfirm --dispath nyanga-windows Nyanga-Read-windows.spec
 
   artifacts:
     paths:
       - nyanga-windows/
+# build-linux:
+#   image: ubuntu:latest
+#   stage: build-linux
+#   before_script:
+#     - apt update -qy
+#     - apt install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv
+#     - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+#     - export NVM_DIR="$HOME/.nvm"
+#     - source "$NVM_DIR/nvm.sh"
+#     - nvm install 18.16.0
+#     - corepack enable
+#     - corepack prepare yarn@stable --activate
 
-build-linux:
-  image: ubuntu:latest
-  stage: build-linux
-  before_script:
-    - apt update -qy
-    - apt install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv
-    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-    - export NVM_DIR="$HOME/.nvm"
-    - source "$NVM_DIR/nvm.sh"
-    - nvm install 18.16.0
-    - corepack enable
-    - corepack prepare yarn@stable --activate
+#   script:
+#     - yarn install
+#     - |
+#       yarn run svelte:build
 
-  script:
-    - yarn install
-    - |
-      yarn run svelte:build
+#     - python3 -m venv .venv --upgrade-deps
+#     - source .venv/bin/activate
+#     - mkdir -p log
+#     - touch log/app.log
+#     - pip install pycairo PyGObject
+#     - pip install -r requirements.txt
+#     - pyinstaller --noconfirm --distpath nyanga-linux Nyanga-Read-linux.spec
 
-    - python3 -m venv .venv --upgrade-deps
-    - source .venv/bin/activate
-    - mkdir -p log
-    - touch log/app.log
-    - pip install pycairo PyGObject
-    - pip install -r requirements.txt
-    - pyinstaller --noconfirm --distpath nyanga-linux Nyanga-Read-linux.spec
-
-  artifacts:
-    paths:
-      - nyanga-linux/
+#   artifacts:
+#     paths:
+#       - nyanga-linux/
