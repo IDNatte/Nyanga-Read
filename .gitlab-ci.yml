@@ -17,11 +17,12 @@ build-window:
     # - |
     #   npm run svelte:build
     - c:\python310\python.exe -m venv .venv --upgrade-deps
-    - mkdir log
-    - type log\app.log
     - dir
     - cd .\.venv\Scripts\
     - dir
+    - mkdir log
+    - type .\log\app.log
+
     # - .\.venv\Scripts\Activate.ps1
     # - pip install -r requirements.txt
     # - mkdir log
