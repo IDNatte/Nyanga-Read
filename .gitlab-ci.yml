@@ -34,7 +34,7 @@ build-window:
     - pip install -r requirements-win.txt
     - mkdir log
     - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
-    - pyinstaller --noconfirm --distpath nyanga-windows --add-data log;log --add-data layout;layout --name Nyanga-Read-Win window\app.py --icon .\assets\icon\image\logo-ico.ico
+    - pyinstaller --noconfirm --onefile --windowed --noconsole --distpath nyanga-windows --add-data log;log --add-data layout;layout --name Nyanga-Read-Win --icon .\assets\icon\image\logo-ico.ico window\app.py
 
   artifacts:
     paths:
