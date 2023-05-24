@@ -11,21 +11,24 @@ build-window:
     - choco install nodejs --version 18.16.0 --x64 -y
     - choco install python --version 3.10 --x86 -y
     - refreshenv
+    # - |
+    #   powershell -Command "[Environment]::SetEnvironmentVariable('PATH', $env:PATH + ';C:\ProgramData\chocolatey\lib\python', [EnvironmentVariableTarget]::
 
   script:
-    - npm install
-    - |
-      npm run svelte:build
-    - C:\ProgramData\chocolatey\lib\python -m venv .venv --upgrade-deps
-    - ./.venv/Script/Activate.ps1
-    - pip install -r requirements.txt
-    - mkdir log
-    - type log/app.log
-    - pyinstaller --noconfirm --dispath nyanga-windows Nyanga-Read-windows.spec
+    - python --version
+    # - npm install
+    # - |
+    #   npm run svelte:build
+    # - python -m venv .venv --upgrade-deps
+    # - ./venv/Script/Activate.ps1
+    # - pip install -r requirements.txt
+    # - mkdir log
+    # - type log/app.log
+    # - pyinstaller --noconfirm --dispath nyanga-windows Nyanga-Read-windows.spec
 
-  artifacts:
-    paths:
-      - nyanga-windows/
+  # artifacts:
+  #   paths:
+  #     - nyanga-windows/
 
 build-linux:
   image: ubuntu:latest
