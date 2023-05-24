@@ -34,7 +34,7 @@ build-window:
     - pip install -r requirements.txt
     - mkdir log
     - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
-    - pyinstaller --noconfirm --dispath nyanga-windows Nyanga-Read-windows.spec
+    - pyinstaller --noconfirm --distpath nyanga-windows Nyanga-Read-windows.spec
 
   artifacts:
     paths:
