@@ -13,10 +13,11 @@ build-window:
     - refreshenv
 
   script:
-    - npm install
-    - |
-      npm run svelte:build
+    # - npm install
+    # - |
+    #   npm run svelte:build
     - c:\python310\python.exe -m venv .venv --upgrade-deps
+    - mkdir log
     - type log\app.log
     - dir
     - cd .\.venv\Scripts\
