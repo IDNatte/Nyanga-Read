@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['window\\app.py'],
+    ['window/app.py'],
     pathex=[],
     binaries=[],
     datas=[
@@ -44,5 +44,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['assets\\icon\\image\\logo-ico.ico'],
+    icon=['assets/icon/image/logo-ico.ico'],
 )

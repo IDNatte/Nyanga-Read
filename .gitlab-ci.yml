@@ -1,0 +1,28 @@
+stages:
+  # - build-window
+  - build-linux
+
+# build-window:
+#   image: mcr.microsoft.com/windows/servercore:ltsc2019
+#   stage: build-window
+
+build-linux:
+  image: ubuntu:latest
+  stage: build-linux
+  before_script:
+    - apt update
+    - curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash
+    - apt install -y libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs
+    - corepack enable
+    - corepack prepare yarn@stable --activate
+
+  script:
+    - yarn install
+    - |
+      yarn run svelte:build
+    - pip install -r requirements.txt
+    - pyinstaller --noconfirm Nyanga-Read.spec
+
+  artifacts:
+    paths:
+      - "dist/"

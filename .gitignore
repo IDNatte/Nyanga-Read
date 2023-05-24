@@ -28,3 +28,6 @@ layout
 # python profiling
 *.prof
 *.dat
+
+*test*
+*debug*

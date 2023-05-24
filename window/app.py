@@ -39,7 +39,6 @@ def main():
         )
         webview.start(
             user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
-            private_mode=False,
             debug=True,
         )
 
