@@ -15,7 +15,7 @@ build-window:
     #   powershell -Command "[Environment]::SetEnvironmentVariable('PATH', $env:PATH + ';C:\ProgramData\chocolatey\lib\python', [EnvironmentVariableTarget]::
 
   script:
-    - python --version
+    - c:\python311\python.exe --version
     # - npm install
     # - |
     #   npm run svelte:build
