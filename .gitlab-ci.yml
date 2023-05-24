@@ -11,7 +11,7 @@ build-linux:
   stage: build-linux
   before_script:
     - apt update -qy
-    - apt install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs
+    - apt install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv
     - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
     - export NVM_DIR="$HOME/.nvm"
     - source "$NVM_DIR/nvm.sh"
@@ -23,6 +23,8 @@ build-linux:
     - yarn install
     - |
       yarn run svelte:build
+
+    - python3 -m venv .venv --upgrade-deps
     - pip install -r requirements.txt
     - pyinstaller --noconfirm Nyanga-Read.spec
 
