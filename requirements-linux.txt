@@ -1,6 +1,4 @@
 pyinstaller
-pycairo
-PyGObject
 flask
 pywebview
 pygtk
