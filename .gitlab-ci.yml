@@ -1,6 +1,6 @@
 stages:
-  - build-linux
   - build-window
+  - build-linux
   - deploy
 
 build-window:
@@ -23,7 +23,7 @@ build-window:
     - pip install -r requirements-win.txt
     - mkdir log
     - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
-    - pyinstaller --noconfirm --onefile --windowed --noconsole --distpath nyanga-windows --add-data "log;log" --add-data "layout;layout" --name Nyanga-Read-Win --icon .\assets\icon\image\logo-ico.ico .\window\app.py
+    - pyinstaller --noconfirm --distpath nyanga-windows Nyanga-Read-windows.spec
 
   artifacts:
     paths:
