@@ -10,6 +10,7 @@ build-window:
   before_script:
     - choco install nodejs --version 18.16.0 --x64 -y
     - choco install python --version 3.10 --x86 -y
+    - refreshenv
 
   script:
     - npm install
