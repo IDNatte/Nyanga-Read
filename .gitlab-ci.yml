@@ -29,7 +29,7 @@ build-linux:
     - mkdir -p log
     - pip install pycairo PyGObject
     - pip install -r requirements.txt
-    - pyinstaller --noconfirm Nyanga-Read.spec
+    - pyinstaller --noconfirm Nyanga-Read-linux.spec
 
   artifacts:
     paths:
