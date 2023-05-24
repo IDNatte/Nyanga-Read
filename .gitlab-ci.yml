@@ -27,7 +27,8 @@ build-linux:
     - python3 -m venv .venv --upgrade-deps
     - source .venv/bin/activate
     - mkdir -p log
-    - pip3 install -r requirements.txt
+    - pip install pycairo PyGObject
+    - pip install -r requirements.txt
     - pyinstaller --noconfirm Nyanga-Read.spec
 
   artifacts:
