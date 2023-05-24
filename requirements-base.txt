@@ -1,4 +1,4 @@
-altgraph==0.17.3
+altgraph
 bottle==0.12.25
 cffi==1.15.1
 click==8.1.3

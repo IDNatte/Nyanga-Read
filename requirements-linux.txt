@@ -1,0 +1,4 @@
+pyinstaller
+pycairo
+PyGObject
+flask

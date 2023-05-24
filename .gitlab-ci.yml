@@ -31,7 +31,7 @@ build-window:
       npm run svelte:build
     - c:\python310\python.exe -m venv .venv --upgrade-deps
     - .\.venv\Scripts\Activate.ps1
-    - pip install -r requirements.txt
+    - pip install -r requirements-win.txt
     - mkdir log
     - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
     - pyinstaller --noconfirm --distpath nyanga-windows Nyanga-Read-windows.spec
@@ -63,7 +63,7 @@ build-linux:
     - mkdir -p log
     - touch log/app.log
     - pip install pycairo PyGObject
-    - pip install -r requirements.txt
+    - pip install -r requirements-linux.txt
     - pyinstaller --noconfirm --distpath nyanga-linux Nyanga-Read-linux.spec
 
   artifacts:
