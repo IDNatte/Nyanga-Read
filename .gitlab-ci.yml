@@ -1,6 +1,7 @@
 stages:
   - build-window
   # - build-linux
+  # - deploy
 
 build-window:
   image: mcr.microsoft.com/windows/servercore:ltsc2019
@@ -21,7 +22,8 @@ build-window:
     - python --version
     - mkdir log
     - cd log
-    - type app.log
+    - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
+    - dir
     - cd ..
     - dir
     # - .\.venv\Scripts\Activate.ps1
@@ -63,3 +65,14 @@ build-window:
 #   artifacts:
 #     paths:
 #       - nyanga-linux/
+
+# pages:
+#   stage: deploy
+#   script:
+#     - mkdir public/
+#     - cp -R nyanga-linux public/
+#     - cp -R nyanga-windows public/
+
+#   artifacts:
+#     paths:
+#       - public/
