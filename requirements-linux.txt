@@ -4,3 +4,4 @@ PyGObject
 flask
 pywebview
 pygtk
+flask-cors

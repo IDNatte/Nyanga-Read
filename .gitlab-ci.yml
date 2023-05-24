@@ -10,7 +10,7 @@ build-window:
   stage: build-window
   before_script:
     - choco install nodejs --version 18.16.0 --x64 -y
-    - choco install dotnet --ignore-checksums -y
+    - choco install dotnet -y
     - choco install python --x64 -y
     - refreshenv
 
@@ -51,7 +51,6 @@ build-linux:
     - source .venv/bin/activate
     - mkdir -p log
     - touch log/app.log
-    - pip install pycairo PyGObject
     - pip install -r requirements-linux.txt
     - pyinstaller --noconfirm --distpath nyanga-linux Nyanga-Read-linux.spec
 
