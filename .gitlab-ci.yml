@@ -10,9 +10,12 @@ build-linux:
   image: ubuntu:latest
   stage: build-linux
   before_script:
-    - apt update
-    - curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash
-    - apt install -y libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs
+    - apt update -qy
+    - apt install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+    - export NVM_DIR="$HOME/.nvm"
+    - source "$NVM_DIR/nvm.sh"
+    - nvm install 18.16.0
     - corepack enable
     - corepack prepare yarn@stable --activate
 
