@@ -51,7 +51,6 @@ build-linux:
     - source .venv/bin/activate
     - mkdir -p log
     - touch log/app.log
-    - pip install pycairo PyGObject
     - pip install -r requirements-linux.txt
     - pyinstaller --noconfirm --distpath nyanga-linux Nyanga-Read-linux.spec
 

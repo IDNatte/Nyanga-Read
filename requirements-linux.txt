@@ -2,3 +2,5 @@ pyinstaller
 flask
 pywebview
 flask-cors
+pycairo
+PyGObject
