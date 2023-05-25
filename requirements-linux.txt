@@ -1,5 +1,4 @@
 pyinstaller
 flask
 pywebview
-pygtk
 flask-cors
