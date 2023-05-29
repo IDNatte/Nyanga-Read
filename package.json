@@ -17,10 +17,6 @@
 		"python:start": "APP_DEV=\"True\" ./.venv/bin/python ./window/app.py",
 		"python:build": "./.venv/bin/pyinstaller --noconfirm Nyanga-Read.spec",
 		"python:ui:dev": "UI_APP_DEV=\"True\" ./.venv/bin/python ./window/app.py",
-		"python:benchmark": "APP_DEV=\"True\" ./.venv/bin/python ./window/benchmark.py",
-		"python:profiler": "APP_DEV=\"True\" ./.venv/bin/python ./window/profiler.py",
-		"python:memprof": "./.venv/bin/mprof run ./window/mem_prof.py --multiprocess && ./.venv/bin/mprof plot --slope && ./.venv/bin/mprof clean",
-		"python:view:profiler": "APP_DEV=\"True\" ./.venv/Scripts/snakeviz ./app_benchmark.prof",
 		"app:build:test": "yarn run svelte:build && ./.venv/bin/pyinstaller --noconfirm Nyanga-Read-debug.spec",
 		"app:build": "yarn run svelte:build && yarn run python:build"
 	},
