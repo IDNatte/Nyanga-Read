@@ -19,18 +19,22 @@ def verify_csrf(function):
 
     @wraps(function)
     def verify_csrf_token(*args, **kwargs):
-        try:
-            token_header = request.headers["PCSRFWV-Token"]
+        if not ui_dev:
+            try:
+                token_header = request.headers["PCSRFWV-Token"]
 
-            if token_header == wv_token:
-                return function(*args, **kwargs)
+                if token_header == wv_token:
+                    return function(*args, **kwargs)
 
-            elif token_header != wv_token:
-                raise CSRFError("CSRFHeaderInvalid", "CSRF Header Invalid", 401)
+                elif token_header != wv_token:
+                    raise CSRFError("CSRFHeaderInvalid", "CSRF Header Invalid", 401)
 
-        except KeyError:
-            if KeyError:
-                raise CSRFError("CSRFHeaderMissing", "CSRF Header Missing", 401)
+            except KeyError:
+                if KeyError:
+                    raise CSRFError("CSRFHeaderMissing", "CSRF Header Missing", 401)
+
+        if ui_dev:
+            return function(*args, **kwargs)
 
     return verify_csrf_token
 
@@ -42,14 +46,18 @@ def verify_ua(function):
 
     @wraps(function)
     def verify_user_agent(*args, **kwargs):
-        try:
-            headers = request.headers["User-Agent"]
-            if headers == PYWEBVIEW_UA:
-                return function(*args, **kwargs)
+        if not ui_dev:
+            try:
+                headers = request.headers["User-Agent"]
+                if headers == PYWEBVIEW_UA:
+                    return function(*args, **kwargs)
 
-            else:
+                else:
+                    raise UAError("UANotAccepted", "User Agent not accepted", 401)
+            except:
                 raise UAError("UANotAccepted", "User Agent not accepted", 401)
-        except:
-            raise UAError("UANotAccepted", "User Agent not accepted", 401)
+
+        if ui_dev:
+            return function(*args, **kwargs)
 
     return verify_user_agent

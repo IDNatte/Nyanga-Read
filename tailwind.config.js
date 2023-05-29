@@ -2,7 +2,12 @@
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {}
+		extend: {
+			fontFamily: {
+				sans: ['Quicksand', 'system-ui', 'sans-serif'],
+				jpfont: ['Tsukimi']
+			}
+		}
 	},
 	plugins: []
 };

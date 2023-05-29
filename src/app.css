@@ -2,10 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: 'Quicksand';
+	src: url('assets/quicksand/static/Quicksand-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Tsukimi';
+	src: url('assets/jp-tsukimi/TsukimiRounded-Regular.ttf') format('truetype');
+}
+
 *::-webkit-scrollbar {
 	@apply bg-pink-300 w-[.5em] h-auto;
 }
 
 *::-webkit-scrollbar-thumb {
 	@apply bg-pink-800;
+}
+
+html {
+	font-family: 'Quicksand';
 }

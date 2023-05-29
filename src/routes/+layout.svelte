@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import csrfStore from '$lib/store/csrf/csrf.store';
+	import NavbarComponent from '$lib/components/navbar/NavbarComponent.svelte';
 
 	onMount(() => {
 		let pycsrf = document.querySelector('.pycsrf') as HTMLInputElement;
@@ -9,7 +10,6 @@
 </script>
 
 <main>
-	<a href="/testing">testing</a>
-
+	<NavbarComponent />
 	<slot />
 </main>
