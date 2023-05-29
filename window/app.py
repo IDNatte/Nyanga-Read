@@ -1,7 +1,7 @@
 from server.server import create_app
 import webview
 
-import multiprocessing
+import threading
 import sys
 import os
 
@@ -17,7 +17,7 @@ def server_instance():
 
 
 def server_main():
-    server_thread = multiprocessing.Process(target=server_instance, daemon=True)
+    server_thread = threading.Thread(target=server_instance, daemon=True)
     server_thread.start()
 
 
