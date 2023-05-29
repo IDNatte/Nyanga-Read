@@ -25,9 +25,8 @@ build
 layout
 *.log
 
-# python profiling
-*.prof
-*.dat
+nyanga-linux
+nyanga-windows
 
 *test*
 *debug*
