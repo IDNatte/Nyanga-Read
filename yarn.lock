@@ -201,22 +201,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.1.0, @floating-ui/core@npm:^1.2.6":
-  version: 1.2.6
-  resolution: "@floating-ui/core@npm:1.2.6"
-  checksum: e4aa96c435277f1720d4bc939e17a79b1e1eebd589c20b622d3c646a5273590ff889b8c6e126f7be61873cf8c4d7db7d418895986ea19b8b0d0530de32504c3a
-  languageName: node
-  linkType: hard
-
-"@floating-ui/dom@npm:^1.1.0, @floating-ui/dom@npm:^1.2.1":
-  version: 1.2.9
-  resolution: "@floating-ui/dom@npm:1.2.9"
-  dependencies:
-    "@floating-ui/core": ^1.2.6
-  checksum: 16ae5e05a41c2ca16d51579d12729ca9d346241319f68ce5678f5fbeb9c4f9a16176c95089bbd7a0eb37c6ed90e5fd55a310ffc9948af7c841d5b8bfa0afe1b8
-  languageName: node
-  linkType: hard
-
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -349,6 +333,22 @@ __metadata:
   version: 1.0.0-next.21
   resolution: "@polka/url@npm:1.0.0-next.21"
   checksum: c7654046d38984257dd639eab3dc770d1b0340916097b2fac03ce5d23506ada684e05574a69b255c32ea6a144a957c8cd84264159b545fca031c772289d88788
+  languageName: node
+  linkType: hard
+
+"@splidejs/splide@npm:^4.1.3":
+  version: 4.1.4
+  resolution: "@splidejs/splide@npm:4.1.4"
+  checksum: 919f6e1e5da1ebdfe6df77592fab25d0dd52b1809ac61723157cf1c8dd1804bf7739a28e2bb7a22257c5f7628eacba0439ff1268e9bab8577f638f5376fd4b5e
+  languageName: node
+  linkType: hard
+
+"@splidejs/svelte-splide@npm:^0.2.9":
+  version: 0.2.9
+  resolution: "@splidejs/svelte-splide@npm:0.2.9"
+  dependencies:
+    "@splidejs/splide": ^4.1.3
+  checksum: 166fe77086cae47aa7d09184ccfb6809512cd40a6ae2722acfdb9c0fd7b598446e58c1fa17747e785103908bd0cbf58e2ad7ed7e46363ed22311d291d9c96630
   languageName: node
   linkType: hard
 
@@ -2228,6 +2228,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nyanga-read@workspace:."
   dependencies:
+    "@splidejs/svelte-splide": ^0.2.9
     "@sveltejs/adapter-static": ^2.0.2
     "@sveltejs/kit": ^1.5.0
     "@types/cookie": ^0.5.1
@@ -2242,7 +2243,6 @@ __metadata:
     prettier-plugin-svelte: ^2.8.1
     svelte: ^3.54.0
     svelte-check: ^3.0.1
-    svelte-select: ^5.6.1
     tailwindcss: ^3.3.1
     tslib: ^2.4.1
     typescript: ^5.0.0
@@ -2917,16 +2917,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-floating-ui@npm:1.2.8":
-  version: 1.2.8
-  resolution: "svelte-floating-ui@npm:1.2.8"
-  dependencies:
-    "@floating-ui/core": ^1.1.0
-    "@floating-ui/dom": ^1.1.0
-  checksum: 884b3c5f7f32e6b1937432e61e200800a215f63ec1e7b5a81ca43602727505824c53d95780574d9aed74f4486eac70628ab89b2f4c3f012175c1a3789a2a7d4a
-  languageName: node
-  linkType: hard
-
 "svelte-hmr@npm:^0.15.1":
   version: 0.15.1
   resolution: "svelte-hmr@npm:0.15.1"
@@ -2979,16 +2969,6 @@ __metadata:
     typescript:
       optional: true
   checksum: fedec5f8ce90ed11c3408d739e1403b0df1d32206702e3607043a6d06e6007d2f3d9efc6c261b2c2cb4f6e48311e2bad12d42f1de05acc4f908100735e29fac9
-  languageName: node
-  linkType: hard
-
-"svelte-select@npm:^5.6.1":
-  version: 5.6.1
-  resolution: "svelte-select@npm:5.6.1"
-  dependencies:
-    "@floating-ui/dom": ^1.2.1
-    svelte-floating-ui: 1.2.8
-  checksum: eeca9950682afab3b39b7ce3e7ded03477a3bc91fcaddd19a96c3dff784a3f358ad32d9203a6aa2e458d4f2efeb1be76055e73936f49a0a24d7b64dba8e91215
   languageName: node
   linkType: hard
 
