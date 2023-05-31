@@ -2,3 +2,4 @@ pyinstaller
 flask
 pywebview
 flask-cors
+requests

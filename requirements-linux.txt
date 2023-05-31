@@ -4,3 +4,4 @@ pywebview
 flask-cors
 pycairo
 PyGObject
+requests
