@@ -4,6 +4,8 @@
 
 # Nyanga Read 😸
 
+<p>experimental build status [![pipeline status](https://gitlab.com/IDNatte/Nyanga-Read/badges/experimental/pipeline.svg)](https://gitlab.com/IDNatte/Nyanga-Read/-/commits/experimental)</p>
+
 **this version is marked experimental and replacing electronjs over pywebview to cut compiled size
 this branch is still under heavy development**
 
