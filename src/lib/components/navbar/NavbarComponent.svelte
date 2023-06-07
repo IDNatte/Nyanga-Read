@@ -19,7 +19,7 @@
 </script>
 
 <nav
-	class="navbar w-full bg-pink-300 flex flex-row items-center justify-between px-2 text-gray-900 fixed"
+	class="navbar w-full bg-pink-300 flex flex-row items-center justify-between px-2 text-gray-900 fixed z-50"
 >
 	<a class="py-2" href="/">
 		<NavbarIcon width="w-[300px]" height="h-auto" />

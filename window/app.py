@@ -23,12 +23,10 @@ def server_main():
 
 def main():
     ui_dev = os.environ.get("UI_APP_DEV", default=None)
-    server_dev = os.environ.get("APP_DEV", default=None)
+    app_dev = os.environ.get("APP_DEV", default=None)
 
     if ui_dev:
-        # back-end server required for debuging IPC functionality
         server_main()
-        # ------------------------------------------------------>
 
         webview.create_window(
             "Nyanga Read",
@@ -42,7 +40,7 @@ def main():
             debug=True,
         )
 
-    if server_dev:
+    elif app_dev:
         server_main()
 
         webview.create_window(
@@ -57,7 +55,7 @@ def main():
             debug=True,
         )
 
-    if not server_dev and not ui_dev:
+    else:
         server_main()
 
         webview.create_window(

@@ -1,5 +1,5 @@
 export default function refresh(node: HTMLElement, params: any) {
-  const test = (event: any) => {
+  const shortcut = (event: any) => {
     if ((!!params.alt != event.altKey) ||
       (!!params.shift != event.shiftKey) ||
       (!!params.control != (event.ctrlKey || event.metaKey)) ||
@@ -12,10 +12,10 @@ export default function refresh(node: HTMLElement, params: any) {
 
   }
 
-  document.addEventListener('keydown', test)
+  document.addEventListener('keydown', shortcut)
   return {
     destroy() {
-      document.removeEventListener('keydown', test)
+      document.removeEventListener('keydown', shortcut)
     }
   }
 }
