@@ -5,11 +5,9 @@
 # Nyanga Read 😸
 
 <p align="center">
-  <a href="https://gitlab.com/IDNatte/Nyanga-Read/-/pipelines"><img alt="pipeline status" src="https://gitlab.com/IDNatte/Nyanga-Read/badges/experimental/pipeline.svg?key_text=Debian+Build&key_width=90px" /></a>
-  <a href="https://gitlab.com/IDNatte/Nyanga-Read/-/pipelines"><img alt="pipeline status" src="https://gitlab.com/IDNatte/Nyanga-Read/badges/experimental/pipeline.svg?key_text=Windows+Build&key_width=90px" /></a>
+  <a href="https://gitlab.com/IDNatte/Nyanga-Read/-/commits/experimental"><img alt="pipeline status" src="https://gitlab.com/IDNatte/Nyanga-Read/badges/experimental/pipeline.svg?key_text=Debian+Build&key_width=90px" /></a>
+  <a href="hhttps://gitlab.com/IDNatte/Nyanga-Read/-/commits/experimental"><img alt="pipeline status" src="https://gitlab.com/IDNatte/Nyanga-Read/badges/experimental/pipeline.svg?key_text=Windows+Build&key_width=90px" /></a>
 </p>
-
-t
 
 **this version is marked experimental and replacing electronjs over pywebview to cut compiled size
 this branch is still under heavy development**
