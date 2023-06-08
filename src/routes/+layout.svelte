@@ -32,7 +32,7 @@
 	}}
 >
 	<NavbarComponent />
-	<div class="pt-20">
+	<div class="pt-[4.5em]">
 		<slot />
 	</div>
 </main>
