@@ -404,6 +404,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tailwindcss/typography@npm:^0.5.9":
+  version: 0.5.9
+  resolution: "@tailwindcss/typography@npm:0.5.9"
+  dependencies:
+    lodash.castarray: ^4.4.0
+    lodash.isplainobject: ^4.0.6
+    lodash.merge: ^4.6.2
+    postcss-selector-parser: 6.0.10
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: b98e21bdd1798d7e4683499893c5c20ad43fcc8955d5d6eefbe1d30e98e9b6c28949ae8f276d39be9a66fafe843597717196bc5a0a2ac0f87ef86aa051ab9611
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -429,6 +443,13 @@ __metadata:
   version: 4.14.195
   resolution: "@types/lodash@npm:4.14.195"
   checksum: 39b75ca635b3fa943d17d3d3aabc750babe4c8212485a4df166fe0516e39288e14b0c60afc6e21913cc0e5a84734633c71e617e2bd14eaa1cf51b8d7799c432e
+  languageName: node
+  linkType: hard
+
+"@types/marked@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@types/marked@npm:5.0.0"
+  checksum: 4828a51186074ac18bd04e2f84aff17e97ec72b227f9f4be0cedff6de6fe0fec016250bc22b2ae5d40d7cf0e6de1853df5d437f2dfe983cd96928763c75e6e47
   languageName: node
   linkType: hard
 
@@ -1878,6 +1899,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.castarray@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.castarray@npm:4.4.0"
+  checksum: fca8c7047e0ae2738b0b2503fb00157ae0ff6d8a1b716f87ed715b22560e09de438c75b65e01a7e44ceb41c5b31dce2eb576e46db04beb9c699c498e03cbd00f
+  languageName: node
+  linkType: hard
+
+"lodash.isplainobject@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "lodash.isplainobject@npm:4.0.6"
+  checksum: 29c6351f281e0d9a1d58f1a4c8f4400924b4c79f18dfc4613624d7d54784df07efaff97c1ff2659f3e085ecf4fff493300adc4837553104cef2634110b0d5337
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
@@ -1947,6 +1982,15 @@ __metadata:
     socks-proxy-agent: ^7.0.0
     ssri: ^9.0.0
   checksum: 2332eb9a8ec96f1ffeeea56ccefabcb4193693597b132cd110734d50f2928842e22b84cfa1508e921b8385cdfd06dda9ad68645fed62b50fff629a580f5fb72c
+  languageName: node
+  linkType: hard
+
+"marked@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "marked@npm:5.0.5"
+  bin:
+    marked: bin/marked.js
+  checksum: 0148b62895e93dff7f209469ec1d0d5cbb52e4d974c6ed02d35f9feaf75580c2daf16610486b0c36780c75d893b14103e74c8737f9921e54b3bd2b4d1dc51039
   languageName: node
   linkType: hard
 
@@ -2245,8 +2289,10 @@ __metadata:
     "@splidejs/svelte-splide": ^0.2.9
     "@sveltejs/adapter-static": ^2.0.2
     "@sveltejs/kit": ^1.5.0
+    "@tailwindcss/typography": ^0.5.9
     "@types/cookie": ^0.5.1
     "@types/lodash": ^4.14.195
+    "@types/marked": ^5.0.0
     "@typescript-eslint/eslint-plugin": ^5.45.0
     "@typescript-eslint/parser": ^5.45.0
     autoprefixer: ^10.4.14
@@ -2254,6 +2300,7 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-svelte3: ^4.0.0
     lodash: ^4.17.21
+    marked: ^5.0.5
     postcss: ^8.4.23
     prettier: ^2.8.0
     prettier-plugin-svelte: ^2.8.1
@@ -2452,6 +2499,16 @@ __metadata:
   peerDependencies:
     postcss: ^8.2.14
   checksum: 2105dc52cd19747058f1a46862c9e454b5a365ac2e7135fc1015d67a8fe98ada2a8d9ee578e90f7a093bd55d3994dd913ba5ff1d5e945b4ed9a8a2992ecc8f10
+  languageName: node
+  linkType: hard
+
+"postcss-selector-parser@npm:6.0.10":
+  version: 6.0.10
+  resolution: "postcss-selector-parser@npm:6.0.10"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: 46afaa60e3d1998bd7adf6caa374baf857cc58d3ff944e29459c9a9e4680a7fe41597bd5b755fc81d7c388357e9bf67c0251d047c640a09f148e13606b8a8608
   languageName: node
   linkType: hard
 

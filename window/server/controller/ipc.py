@@ -31,8 +31,30 @@ def init():
         requests.exceptions.ConnectionError,
         requests.exceptions.ConnectTimeout,
         requests.exceptions.Timeout,
-    ) as e:
-        print(e)
+    ) as _:
+        return jsonify({"error": True, "location": "exception"})
+
+
+@ipc_handler.route("/get_detail/<manga>")
+@verify_csrf
+@verify_ua
+def get_manga_detail(manga):
+    try:
+        detail = requests.get(
+            f"https://api.mangadex.org/manga/{manga}?includes[]=cover_art"
+        )
+
+        if detail.status_code == 200:
+            return jsonify({"detail_data": detail.json()})
+
+        else:
+            return jsonify({"error": True, "httpError": True})
+
+    except (
+        requests.exceptions.ConnectionError,
+        requests.exceptions.ConnectTimeout,
+        requests.exceptions.Timeout,
+    ) as _:
         return jsonify({"error": True, "location": "exception"})
 
 

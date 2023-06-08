@@ -10,10 +10,10 @@
 </script>
 
 <div class="homepage pb-5">
-	<div class="main-content pt-20">
+	<div class="main-content">
 		<div class="grid grid-cols-3 w-full">
 			{#each data.daily as { id, attributes, relationships }}
-				<CardComponent>
+				<CardComponent link="/manga/{id}">
 					<div slot="card-image" class="w-full h-full">
 						{#each relationships as cover}
 							{#if cover.type === 'cover_art'}
@@ -46,7 +46,7 @@
 	<div class="main-content pt-20">
 		<div class="grid grid-cols-3 w-full">
 			{#each data.daily as { id, attributes, relationships }}
-				<CardComponent>
+				<CardComponent link="/manga/{id}">
 					<div slot="card-image" class="w-full h-full">
 						{#each relationships as cover}
 							{#if cover.type === 'cover_art'}
