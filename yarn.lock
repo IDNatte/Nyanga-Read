@@ -2306,6 +2306,7 @@ __metadata:
     prettier-plugin-svelte: ^2.8.1
     svelte: ^3.54.0
     svelte-check: ^3.0.1
+    svelte-french-toast: ^1.0.4-beta.0
     tailwindcss: ^3.3.1
     tslib: ^2.4.1
     typescript: ^5.0.0
@@ -2990,6 +2991,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"svelte-french-toast@npm:^1.0.4-beta.0":
+  version: 1.0.4-beta.0
+  resolution: "svelte-french-toast@npm:1.0.4-beta.0"
+  dependencies:
+    svelte-writable-derived: ^3.0.1
+  peerDependencies:
+    svelte: ^3.57.0
+  checksum: b1f34fcaa664c732b85a42bfd49ae5c4301172748babe04d228fabb0b52a3b78dcf94ee3319c9d2bb655ec8090ec85e084e198200550c91845cfec309cc2d77e
+  languageName: node
+  linkType: hard
+
 "svelte-hmr@npm:^0.15.1":
   version: 0.15.1
   resolution: "svelte-hmr@npm:0.15.1"
@@ -3042,6 +3054,15 @@ __metadata:
     typescript:
       optional: true
   checksum: fedec5f8ce90ed11c3408d739e1403b0df1d32206702e3607043a6d06e6007d2f3d9efc6c261b2c2cb4f6e48311e2bad12d42f1de05acc4f908100735e29fac9
+  languageName: node
+  linkType: hard
+
+"svelte-writable-derived@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "svelte-writable-derived@npm:3.0.1"
+  peerDependencies:
+    svelte: ^3.2.1
+  checksum: 90b30b93e35af01a2264c27085d9cdb6efa2a69196a7fc7055f4104e55a3e8e425aad13976eb015f3b321363dce5c38251708a28e93a07a22fac874b47b3bf17
   languageName: node
   linkType: hard
 

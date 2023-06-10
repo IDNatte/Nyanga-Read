@@ -2,8 +2,8 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import loaderStore from '$lib/store/loader/loader.store';
 
-	export let src: string;
-	export let alt: string;
+	export let alt: string | null | undefined;
+	export let src: string | null | undefined;
 	export let className: string;
 
 	const dispatch: any = createEventDispatcher();
@@ -11,7 +11,9 @@
 	let thisImage: HTMLImageElement;
 
 	onMount(() => {
+		loaderStore.set('loading');
 		thisImage.onload = () => {
+			console.log('onload');
 			dispatch('viewerimgloaded', {
 				image: src
 			});
@@ -21,9 +23,9 @@
 		};
 
 		thisImage.onerror = () => {
+			loaderStore.set('loaded');
 			dispatch('imageloaderror');
 			loaded = false;
-			loaderStore.set('loaded');
 		};
 	});
 </script>

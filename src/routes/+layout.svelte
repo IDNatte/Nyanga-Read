@@ -7,7 +7,6 @@
 	import csrfStore from '$lib/store/csrf/csrf.store';
 	import loaderStore from '$lib/store/loader/loader.store';
 
-	import NavbarComponent from '$lib/components/navbar/NavbarComponent.svelte';
 	import PageLoader from '$lib/components/loader/PageLoader.svelte';
 
 	onMount(() => {
@@ -17,7 +16,7 @@
 </script>
 
 {#if $loaderStore === 'loading'}
-	<div out:fade={{ delay: 500 }}>
+	<div class="fixed z-50" out:fade={{ delay: 500 }}>
 		<PageLoader />
 	</div>
 {/if}
@@ -31,8 +30,6 @@
 		}
 	}}
 >
-	<NavbarComponent />
-	<div class="pt-[4.5em]">
-		<slot />
-	</div>
+	<!-- <NavbarComponent /> -->
+	<slot />
 </main>

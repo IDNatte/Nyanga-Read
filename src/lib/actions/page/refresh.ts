@@ -9,7 +9,6 @@ export default function refresh(node: HTMLElement, params: any) {
 
     event.preventDefault()
     params.callback ? params.callback() : node.click()
-
   }
 
   document.addEventListener('keydown', shortcut)

@@ -18,7 +18,7 @@ CORS(ipc_handler)
 def init():
     try:
         daily = requests.get(
-            "https://api.mangadex.org/manga?includes[]=cover_art&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&limit=3&originalLanguage[]=ja"
+            "https://api.mangadex.org/manga?includes[]=cover_art&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&limit=3&originalLanguage[]=ja&availableTranslatedLanguage[]=en",
         )
 
         if daily.status_code == 200:
@@ -41,11 +41,62 @@ def init():
 def get_manga_detail(manga):
     try:
         detail = requests.get(
-            f"https://api.mangadex.org/manga/{manga}?includes[]=cover_art"
+            f"https://api.mangadex.org/manga/{manga}?includes[]=cover_art&?includes[]=manga"
         )
 
+        manga = requests.get(
+            f"https://api.mangadex.org/manga/{manga}/aggregate?translatedLanguage[]=en"
+        )
+        manga = manga.json()
+        mangaData = []
+
+        for volume in manga.get("volumes"):
+            chapter = manga.get("volumes").get(volume).get("chapters")
+            for chapter_number in chapter:
+                mangaData.append(
+                    {
+                        "chapter_id": chapter.get(chapter_number).get("id"),
+                        "chapter": chapter.get(chapter_number).get("chapter"),
+                    }
+                )
+
         if detail.status_code == 200:
-            return jsonify({"detail_data": detail.json()})
+            return jsonify({"detail_data": detail.json(), "manga_data": mangaData})
+
+        else:
+            return jsonify({"error": True, "httpError": True})
+
+    except (
+        requests.exceptions.ConnectionError,
+        requests.exceptions.ConnectTimeout,
+        requests.exceptions.Timeout,
+    ) as _:
+        return jsonify({"error": True, "location": "exception"})
+
+
+@ipc_handler.route("/read_chapter/<chapter>")
+@verify_csrf
+@verify_ua
+def read_chapter(chapter):
+    try:
+        chapter_data = requests.get(
+            f"https://api.mangadex.org/at-home/server/{chapter}"
+        )
+        if chapter_data.status_code == 200:
+            chapter = chapter_data.json()
+            base_url = chapter.get("baseUrl")
+            chapter_hash = chapter.get("chapter").get("hash")
+            chapter_img_path = chapter.get("chapter").get("data")
+            chapter_img = []
+            for index, chapter_filename in enumerate(chapter_img_path):
+                chapter_img.append(
+                    {
+                        "url": f"{base_url}/data/{chapter_hash}/{chapter_filename}",
+                        "chapterNumber": int(index + 1),
+                        "index": int(index),
+                    }
+                )
+            return jsonify(chapter_img)
 
         else:
             return jsonify({"error": True, "httpError": True})
