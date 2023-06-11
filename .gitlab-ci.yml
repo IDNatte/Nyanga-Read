@@ -88,7 +88,7 @@ build-linux-debug:
     - mkdir -p log
     - touch log/app.log
     - pip install -r requirements-linux.txt
-    - pyinstaller --noconfirm --distpath nyanga-linux-debug Nyanga-Read-linux-debug.spec
+    - pyinstaller --noconfirm --distpath nyanga-linux-debug Nyanga-Read-linux-onedir-debug.spec
 
   artifacts:
     paths:
