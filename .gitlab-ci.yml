@@ -1,6 +1,7 @@
 stages:
   - build
   - build-linux
+  - debug
   - deploy
 
 build-window:
@@ -58,12 +59,46 @@ build-linux:
     paths:
       - nyanga-linux/
 
+build-linux-debug:
+  image: ubuntu:latest
+  stage: debug
+  before_script:
+    - apt update -qy
+    - apt install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+    - export NVM_DIR="$HOME/.nvm"
+    - source "$NVM_DIR/nvm.sh"
+    - nvm install 18.16.0
+    - corepack enable
+    - corepack prepare yarn@stable --activate
+
+  script:
+    - yarn install
+    - |
+      yarn run svelte:build
+
+    - python3 -m venv .venv --upgrade-deps
+    - source .venv/bin/activate
+    - mkdir -p log
+    - touch log/app.log
+    - pip install -r requirements-linux.txt
+    - pyinstaller --noconfirm --distpath nyanga-linux-debug Nyanga-Read-linux-debug.spec
+
+  artifacts:
+    paths:
+      - nyanga-linux-debug/
+
 pages:
   stage: deploy
+  before_script:
+    - apt install -y zip
   script:
     - mkdir public/
-    - cp -R nyanga-linux public/
-    - cp -R nyanga-windows public/
+    - zip -r dist.zip nyanga-linux/ nyanga-windows/ nyanga-linux-debug/
+    # - cp -R nyanga-linux public/
+    # - cp -R nyanga-windows public/
+    # - cp -R nyanga-linux-debug public/
+    - cp dist.zip public/
 
   artifacts:
     paths:
