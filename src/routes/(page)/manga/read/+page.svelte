@@ -9,9 +9,11 @@
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import toast from 'svelte-french-toast';
+	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
 
 	let image: string | null | undefined = null;
-	let chapter: number | null | undefined = 1;
+	// let chapter: number | null | undefined;
+	// $: chapter = 1;
 	let index: number = 0;
 	let maxPage: number;
 
@@ -33,8 +35,8 @@
 			// initial data
 			image = chapterData[0].url;
 			index = chapterData[0].index;
-			chapter = chapterData[0].chapter_number;
-			maxPage = chapterData.length;
+			// chapter = chapterData[0].chapter_number;
+			maxPage = chapterData.length - 1;
 
 			return chapterData;
 		} else {
@@ -48,7 +50,7 @@
 				index = ++index;
 				let nexImage = find($imageviewerStore, { index: index });
 				image = nexImage?.url;
-				chapter = nexImage?.chapterNumber;
+				// chapter = nexImage?.chapterNumber;
 
 				window.scrollTo({
 					top: 0,
@@ -62,7 +64,7 @@
 				index = --index;
 				let previewImage = find($imageviewerStore, { index: index });
 				image = previewImage?.url;
-				chapter = previewImage?.chapterNumber;
+				// chapter = previewImage?.chapterNumber;
 
 				window.scrollTo({
 					top: 0,
@@ -72,7 +74,7 @@
 		}
 	}
 
-	function loadImageError(chapter: string | number | null | undefined) {
+	function loadImageError() {
 		toast.error(`cannot load image for chapter`, {
 			position: 'bottom-right'
 		});
@@ -93,14 +95,17 @@
 		/>
 	</div>
 {:then}
+	<!-- {chapter} -->
 	<div in:fade={{ delay: 151, duration: 200 }}>
 		<ImageLoaderComponent
-			on:imageloaderror={() => loadImageError(chapter)}
+			on:imageloaderror={() => loadImageError()}
 			className="w-full h-auto"
 			src={image}
-			alt={`${chapter}`}
+			alt={`${index + 1}`}
 		/>
 	</div>
+
+	<ViewerNavigationComponent currentChapter={index + 1} maxChapter={maxPage + 1} />
 {:catch error}
 	<span>{error}</span>
 {/await}

@@ -1,7 +1,6 @@
 stages:
   - build
   - build-linux
-  - debug
   - deploy
 
 build-window:
@@ -26,12 +25,9 @@ build-window:
     - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
     - pyinstaller --noconfirm --distpath nyanga-windows Nyanga-Read-windows.spec
 
-  rules:
-    - if: $CI_COMMIT_TAG
-
   artifacts:
     paths:
-      - nyanga-windows/
+      - nyanga-window/
 
 build-linux:
   image: ubuntu:latest
@@ -58,41 +54,9 @@ build-linux:
     - pip install -r requirements-linux.txt
     - pyinstaller --noconfirm --distpath nyanga-linux Nyanga-Read-linux.spec
 
-  rules:
-    - if: $CI_COMMIT_TAG
-
   artifacts:
     paths:
       - nyanga-linux/
-
-build-linux-debug:
-  image: ubuntu:latest
-  stage: debug
-  before_script:
-    - apt update -qy
-    - apt install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv
-    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-    - export NVM_DIR="$HOME/.nvm"
-    - source "$NVM_DIR/nvm.sh"
-    - nvm install 18.16.0
-    - corepack enable
-    - corepack prepare yarn@stable --activate
-
-  script:
-    - yarn install
-    - |
-      yarn run svelte:build
-
-    - python3 -m venv .venv --upgrade-deps
-    - source .venv/bin/activate
-    - mkdir -p log
-    - touch log/app.log
-    - pip install -r requirements-linux.txt
-    - pyinstaller --noconfirm --distpath nyanga-linux-debug Nyanga-Read-linux-onedir-debug.spec
-
-  artifacts:
-    paths:
-      - nyanga-linux-debug/
 
 pages:
   stage: deploy
@@ -100,18 +64,8 @@ pages:
     - apt install -y zip
   script:
     - mkdir public/
-    - zip -r dist.zip nyanga-linux/ nyanga-windows/ nyanga-linux-debug/
-    # - cp -R nyanga-linux public/
-    # - cp -R nyanga-windows public/
-    # - cp -R nyanga-linux-debug public/
+    - zip -r dist.zip nyanga-linux/ nyanga-window/
     - cp dist.zip public/
-
-  rules:
-    - if: $CI_COMMIT_TAG
-
-  release: # See https://docs.gitlab.com/ee/ci/yaml/#release for available properties
-    tag_name: "$CI_COMMIT_TAG"
-    description: "$CI_COMMIT_TAG"
 
   artifacts:
     paths:

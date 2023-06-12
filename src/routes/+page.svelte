@@ -5,7 +5,7 @@
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
-	import NavbarComponent from '$lib/components/navbar/NavbarComponent.svelte';
+	import NavbarComponent from '$lib/components/navigation/NavbarComponent.svelte';
 
 	export let data: PageData;
 </script>
