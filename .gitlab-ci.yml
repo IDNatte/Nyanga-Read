@@ -60,8 +60,6 @@ build-linux:
 
 pages:
   stage: deploy
-  before_script:
-    - apt install -y zip
   script:
     - mkdir public/
     - zip -r dist.zip nyanga-linux/ nyanga-window/
