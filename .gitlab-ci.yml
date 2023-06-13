@@ -61,6 +61,7 @@ build-linux:
 pages:
   stage: deploy
   script:
+    - apt get update && apt get install zip -y
     - mkdir public/
     - zip -r dist.zip nyanga-linux/ nyanga-window/
     - cp dist.zip public/
