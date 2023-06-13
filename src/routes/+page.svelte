@@ -4,8 +4,8 @@
 	import { truncate } from 'lodash';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
-	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import NavbarComponent from '$lib/components/navigation/NavbarComponent.svelte';
+	import CardComponent from '$lib/components/card/CardComponent.svelte';
 
 	export let data: PageData;
 </script>
@@ -14,6 +14,7 @@
 
 {#if data.daily}
 	<div class="homepage pb-5 pt-[4.5em]">
+		<!-- daily list -->
 		<div class="main-content">
 			<div class="grid grid-cols-3 w-full">
 				{#each data.daily as { id, attributes, relationships }}
@@ -42,12 +43,13 @@
 					</CardComponent>
 				{/each}
 			</div>
-			<div class="see-more w-full flex justify-center">
-				<a class="capitalize text-pink-400/60" href="/">see more</a>
+			<div class="see-more w-full flex justify-center py-3">
+				<a class="capitalize text-pink-400/60" href="/manga/daily">see more</a>
 			</div>
 		</div>
 
-		<div class="main-content pt-20">
+		<!-- Bookmarked -->
+		<div class="main-content pt-18">
 			<div class="grid grid-cols-3 w-full">
 				{#each data.daily as { id, attributes, relationships }}
 					<CardComponent link="/manga/detail?manga={id}">
@@ -74,7 +76,7 @@
 					</CardComponent>
 				{/each}
 			</div>
-			<div class="see-more w-full flex justify-center">
+			<div class="see-more w-full flex justify-center py-3">
 				<a class="capitalize text-pink-400/60" href="/">see more</a>
 			</div>
 		</div>

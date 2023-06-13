@@ -1,6 +1,7 @@
 from flask_cors import CORS
 from flask import Blueprint
 from flask import jsonify
+from flask import request as req
 
 from server.middleware import verify_csrf
 from server.middleware import verify_ua
@@ -23,6 +24,43 @@ def init():
 
         if daily.status_code == 200:
             return jsonify({"daily_data": daily.json()})
+
+        else:
+            return jsonify({"error": True, "httpError": True})
+
+    except (
+        requests.exceptions.ConnectionError,
+        requests.exceptions.ConnectTimeout,
+        requests.exceptions.Timeout,
+    ) as _:
+        return jsonify({"error": True, "location": "exception"})
+
+
+@ipc_handler.route("/manga_list")
+@verify_csrf
+@verify_ua
+def manga_lists():
+    try:
+        page = req.args.get("page", None)
+        if page:
+            limit = 9
+            offset = (int(page) - 1) * int(limit)
+            manga_list = requests.get(
+                f"https://api.mangadex.org/manga?includes[]=cover_art&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&originalLanguage[]=ja&availableTranslatedLanguage[]=en&limit={limit}&offset={offset}",
+            )
+
+            if manga_list.status_code == 200:
+                return jsonify({"daily_mangalists": manga_list.json()})
+
+            else:
+                return jsonify({"error": True, "httpError": True})
+
+        manga_list = requests.get(
+            "https://api.mangadex.org/manga?includes[]=cover_art&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&originalLanguage[]=ja&availableTranslatedLanguage[]=en&limit=9&offset=0",
+        )
+
+        if manga_list.status_code == 200:
+            return jsonify({"daily_mangalists": manga_list.json()})
 
         else:
             return jsonify({"error": True, "httpError": True})

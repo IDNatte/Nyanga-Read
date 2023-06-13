@@ -35,7 +35,6 @@
 			// initial data
 			image = chapterData[0].url;
 			index = chapterData[0].index;
-			// chapter = chapterData[0].chapter_number;
 			maxPage = chapterData.length - 1;
 
 			return chapterData;
@@ -50,7 +49,6 @@
 				index = ++index;
 				let nexImage = find($imageviewerStore, { index: index });
 				image = nexImage?.url;
-				// chapter = nexImage?.chapterNumber;
 
 				window.scrollTo({
 					top: 0,
@@ -64,7 +62,6 @@
 				index = --index;
 				let previewImage = find($imageviewerStore, { index: index });
 				image = previewImage?.url;
-				// chapter = previewImage?.chapterNumber;
 
 				window.scrollTo({
 					top: 0,

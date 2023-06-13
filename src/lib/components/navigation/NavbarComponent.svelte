@@ -64,13 +64,13 @@
 	</div>
 </nav>
 
-<style>
+<style lang="postcss">
 	ul {
 		@apply divide-y;
 	}
 
 	ul li a {
-		@apply w-full block py-2 px-3 font-light capitalize flex items-center;
+		@apply w-full py-2 px-3 font-light capitalize flex items-center;
 	}
 
 	ul li a span {

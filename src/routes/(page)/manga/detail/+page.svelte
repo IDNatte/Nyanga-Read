@@ -6,7 +6,6 @@
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
-	import { delay } from 'lodash';
 
 	const markedOpt = {
 		smartLists: true,
