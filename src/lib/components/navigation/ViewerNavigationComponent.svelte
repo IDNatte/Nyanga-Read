@@ -5,6 +5,8 @@
 
 	export let maxChapter: number | null | undefined = 0;
 	export let currentChapter: number | null | undefined = 0;
+	export let homePage: string;
+	export let prevPage: string;
 </script>
 
 <div class="h-screen fixed">
@@ -18,12 +20,12 @@
 		<div class="bg-pink-200 px-5 py-3 rounded-full shadow">
 			<ul class="viewer-navigation-button">
 				<li>
-					<a href="/">
+					<a href={homePage}>
 						<HomeIcon />
 					</a>
 				</li>
 				<li>
-					<a href="/">
+					<a href={prevPage}>
 						<ReturnIcon />
 					</a>
 				</li>

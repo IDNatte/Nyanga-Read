@@ -79,7 +79,6 @@
 </script>
 
 <div in:fade={{ delay: 151, duration: 200 }} class="list-daily-content h-auto">
-	<span>{page}</span>
 	<div class="grid grid-cols-3 w-full">
 		{#each $dailyStore.data as { id, attributes, relationships }}
 			<CardComponent link="/manga/detail?manga={id}">

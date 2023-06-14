@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
 	import { fade } from 'svelte/transition';
+	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 
 	import { find } from 'lodash';
 
@@ -12,10 +14,9 @@
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
 
 	let image: string | null | undefined = null;
-	// let chapter: number | null | undefined;
-	// $: chapter = 1;
 	let index: number = 0;
 	let maxPage: number;
+	let previewPage: string = base;
 
 	async function readManga() {
 		const chapterId = $page.url.searchParams.get('chapter');
@@ -76,6 +77,11 @@
 			position: 'bottom-right'
 		});
 	}
+
+	afterNavigate(({ from }) => {
+		previewPage =
+			`${from?.url.pathname}?manga=${from?.url.searchParams.get('manga')}` || previewPage;
+	});
 </script>
 
 <svelte:window on:keydown={navigationShortcut} />
@@ -102,7 +108,12 @@
 		/>
 	</div>
 
-	<ViewerNavigationComponent currentChapter={index + 1} maxChapter={maxPage + 1} />
+	<ViewerNavigationComponent
+		prevPage={previewPage}
+		homePage="/"
+		currentChapter={index + 1}
+		maxChapter={maxPage + 1}
+	/>
 {:catch error}
 	<span>{error}</span>
 {/await}
