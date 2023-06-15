@@ -12,11 +12,15 @@
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import toast from 'svelte-french-toast';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
+	import { onMount } from 'svelte';
+
+	let navigationShow: boolean;
+	$: navigationShow = true;
 
 	let image: string | null | undefined = null;
+	let previewPage: string = base;
 	let index: number = 0;
 	let maxPage: number;
-	let previewPage: string = base;
 
 	async function readManga() {
 		const chapterId = $page.url.searchParams.get('chapter');
@@ -78,6 +82,20 @@
 		});
 	}
 
+	function hoverHideNavigation() {
+		navigationShow = false;
+	}
+
+	function hoverShowNavigation() {
+		navigationShow = true;
+	}
+
+	onMount(() => {
+		setTimeout(() => {
+			navigationShow = false;
+		}, 2500);
+	});
+
 	afterNavigate(({ from }) => {
 		previewPage =
 			`${from?.url.pathname}?manga=${from?.url.searchParams.get('manga')}` || previewPage;
@@ -99,16 +117,19 @@
 	</div>
 {:then}
 	<!-- {chapter} -->
-	<div in:fade={{ delay: 151, duration: 200 }}>
+	<div class="w-full flex items-center justify-center" in:fade={{ delay: 151, duration: 200 }}>
 		<ImageLoaderComponent
 			on:imageloaderror={() => loadImageError()}
-			className="w-full h-auto"
+			className="w-11/12 h-auto flex items-center justify-center"
 			src={image}
 			alt={`${index + 1}`}
 		/>
 	</div>
 
 	<ViewerNavigationComponent
+		on:hoverIn={hoverShowNavigation}
+		on:hoverOut={hoverHideNavigation}
+		showNavigation={navigationShow}
 		prevPage={previewPage}
 		homePage="/"
 		currentChapter={index + 1}

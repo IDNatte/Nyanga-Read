@@ -29,7 +29,7 @@ def main():
         server_main()
 
         webview.create_window(
-            "Nyanga Read",
+            "😸 Nyanga Read",
             "http://localhost:5173",
             width=1280,
             height=700,
@@ -44,7 +44,7 @@ def main():
         server_main()
 
         webview.create_window(
-            "Nyanga Read",
+            "😸 Nyanga Read",
             "http://localhost:5000",
             width=1280,
             height=700,
@@ -59,7 +59,7 @@ def main():
         server_main()
 
         webview.create_window(
-            "Nyanga Read",
+            "😸 Nyanga Read",
             "http://localhost:5000",
             width=1280,
             height=700,

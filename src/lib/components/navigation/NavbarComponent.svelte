@@ -35,7 +35,7 @@
 			<DropdownComponent top="top-12">
 				<ul>
 					<li>
-						<a href="/testing">
+						<a href="/manga/search">
 							<MagniglassIcon width="w-5" height="w-5" />
 							<span>Search</span>
 						</a>

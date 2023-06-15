@@ -147,6 +147,32 @@ def read_chapter(chapter):
         return jsonify({"error": True, "location": "exception"})
 
 
+@ipc_handler.route("/search")
+@verify_csrf
+@verify_ua
+def search():
+    try:
+        search_title = req.args.get("search", None)
+        if search_title:
+            search_manga = requests.get(
+                f"https://api.mangadex.org/manga?title={search_title}&originalLanguage[]=ja&includes[]=cover_art&availableTranslatedLanguage[]=en&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&limit=9&offset=0"
+            )
+
+            if search_manga.status_code == 200:
+                return jsonify({"search_result": search_manga.json()})
+
+            else:
+                return jsonify({"error": True, "httpError": True})
+        else:
+            return jsonify({"result": None})
+    except (
+        requests.exceptions.ConnectionError,
+        requests.exceptions.ConnectTimeout,
+        requests.exceptions.Timeout,
+    ) as _:
+        return jsonify({"error": True, "location": "exception"})
+
+
 @ipc_handler.route("/testing")
 @verify_csrf
 @verify_ua
