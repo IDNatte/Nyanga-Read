@@ -13,7 +13,6 @@
 	onMount(() => {
 		loaderStore.set('loading');
 		thisImage.onload = () => {
-			console.log('onload');
 			dispatch('viewerimgloaded', {
 				image: src
 			});
@@ -23,7 +22,6 @@
 		};
 
 		thisImage.onerror = () => {
-			loaderStore.set('loaded');
 			dispatch('imageloaderror');
 			loaded = false;
 		};

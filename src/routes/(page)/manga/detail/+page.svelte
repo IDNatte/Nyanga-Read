@@ -27,7 +27,6 @@
 
 		if (manga.status === 200) {
 			const mangaDetail = await manga.json();
-			console.log(mangaDetail.detail_data.data);
 			return {
 				detail: mangaDetail.detail_data.data,
 				mangaLists: mangaDetail.manga_data
@@ -90,10 +89,10 @@
 			</div>
 			<div class="content-wrapper p-5">
 				<div class="chapter-list">
-					<ul>
+					<ul class="chapter-list">
 						{#each data.mangaLists as { chapter, chapter_id }}
 							<li>
-								<a href="/manga/read?chapter={chapter_id}">{chapter}</a>
+								<a href="/manga/read?chapter={chapter_id}">Chapter {chapter}</a>
 							</li>
 						{/each}
 					</ul>
@@ -104,3 +103,9 @@
 {:catch error}
 	<span>{error}</span>
 {/await}
+
+<style lang="postcss">
+	.chapter-list li a {
+		@apply w-full block border rounded px-3 my-2 py-2 shadow;
+	}
+</style>

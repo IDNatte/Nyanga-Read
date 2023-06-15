@@ -30,15 +30,19 @@
 							{/each}
 						</div>
 
-						<div
-							slot="card-title"
-							class="w-full flex justify-center p-5 flex-col items-center text-center"
-						>
-							<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span>
+						<div slot="card-title" class="w-full flex p-5 justify-between items-center">
+							<div class="flex flex-col">
+								<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span>
 
-							{#each attributes.altTitles as item}
-								<span class="font-jpfont">{truncate(item.ja, { length: 30 })}</span>
-							{/each}
+								{#each attributes.altTitles as item}
+									<span class="font-jpfont">{truncate(item.ja, { length: 15 })}</span>
+								{/each}
+							</div>
+							{#if attributes.lastChapter && attributes.lastVolume}
+								<span class="text-sm capitalize text-gray-500 bg-pink-100 rounded-full px-3 py-2"
+									>ch. {attributes.lastChapter} vol. {attributes.lastVolume}</span
+								>
+							{/if}
 						</div>
 					</CardComponent>
 				{/each}
@@ -63,15 +67,19 @@
 								{/if}
 							{/each}
 						</div>
-						<div
-							slot="card-title"
-							class="w-full flex justify-center p-5 flex-col items-center text-center"
-						>
-							<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span>
+						<div slot="card-title" class="w-full flex p-5 justify-between items-center">
+							<div class="flex flex-col">
+								<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span>
 
-							{#each attributes.altTitles as item}
-								<span class="font-jpfont">{truncate(item.ja, { length: 20 })}</span>
-							{/each}
+								{#each attributes.altTitles as item}
+									<span class="font-jpfont">{truncate(item.ja, { length: 15 })}</span>
+								{/each}
+							</div>
+							{#if attributes.lastChapter && attributes.lastVolume}
+								<span class="text-sm capitalize text-gray-500 bg-pink-100 rounded-full px-3 py-2"
+									>ch. {attributes.lastChapter} vol. {attributes.lastVolume}</span
+								>
+							{/if}
 						</div>
 					</CardComponent>
 				{/each}
