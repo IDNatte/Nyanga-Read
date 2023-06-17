@@ -2,7 +2,8 @@
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
 	import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
 
-	export let backUrl: string;
+	export let showBack: boolean = true;
+	export let backUrl: string = '/';
 	export let homeUrl: string;
 </script>
 
@@ -12,9 +13,12 @@
 			<li>
 				<a href={homeUrl}><HomeIcon /></a>
 			</li>
-			<li>
-				<a href={backUrl}><ReturnIcon /></a>
-			</li>
+
+			{#if showBack}
+				<li>
+					<a href={backUrl}><ReturnIcon /></a>
+				</li>
+			{/if}
 		</ul>
 	</div>
 </div>

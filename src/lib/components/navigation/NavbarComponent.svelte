@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+
 	import dropdownStore from '$lib/store/dropdown/dropdown.store';
 
 	import DropdownComponent from '$lib/components/dropdown/DropdownComponent.svelte';
@@ -21,9 +23,9 @@
 <nav
 	class="navbar w-full bg-pink-300 flex flex-row items-center justify-between px-2 text-gray-900 fixed z-50"
 >
-	<a class="py-2" href="/">
-		<NavbarIcon width="w-[300px]" height="h-auto" />
-	</a>
+	<div class="py-2 pl-2">
+		<NavbarIcon width="w-[56px]" height="h-auto" />
+	</div>
 	<div class="pr-5">
 		<div class="dropdown-wrapper relative">
 			<button
@@ -35,25 +37,46 @@
 			<DropdownComponent top="top-12">
 				<ul>
 					<li>
-						<a href="/manga/search">
+						<a
+							href="/manga/search"
+							on:click={() => {
+								dropdownStore.set(false);
+							}}
+						>
 							<MagniglassIcon width="w-5" height="w-5" />
 							<span>Search</span>
 						</a>
 					</li>
 					<li>
-						<a href="/testing">
+						<a
+							href="/#!"
+							on:click|preventDefault={async () => {
+								dropdownStore.set(false);
+								await invalidateAll();
+							}}
+						>
 							<RefreshIcon width="w-5" height="w-5" />
 							<span>Reload Page</span>
 						</a>
 					</li>
 					<li>
-						<a href="/testing">
+						<a
+							href="/testing"
+							on:click={() => {
+								dropdownStore.set(false);
+							}}
+						>
 							<TransalateIcon width="w-5" height="w-5" />
 							<span>Select language</span>
 						</a>
 					</li>
 					<li>
-						<a href="/testing">
+						<a
+							href="/testing"
+							on:click={() => {
+								dropdownStore.set(false);
+							}}
+						>
 							<InfoIcon width="w-5" height="w-5" />
 							<span>About Application</span>
 						</a>

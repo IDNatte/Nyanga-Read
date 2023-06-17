@@ -136,5 +136,8 @@
 		maxChapter={maxPage + 1}
 	/>
 {:catch error}
-	<span>{error}</span>
+	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
+		<span class="text-5xl pb-5">🙀</span>
+		<span class="uppercase">something went wrong..!!</span>
+	</div>
 {/await}

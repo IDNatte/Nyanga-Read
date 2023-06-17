@@ -1,12 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 	import { debounce, truncate } from 'lodash';
 
-	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
-	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import searchStore from '$lib/store/ephemeral/search/search.store';
 
+	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
+	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
+	import CardComponent from '$lib/components/card/CardComponent.svelte';
+
 	let placeholder: boolean = true;
+	let previewPage: string = '/';
 	let searchValue: string;
 
 	let data: Array<any>;
@@ -44,7 +48,7 @@
 
 			const search = await searchManga(searchValue);
 			if (search.status === 'success') {
-				data = [...data, ...search.result];
+				data = search.result;
 			} else {
 				data = [];
 			}
@@ -66,6 +70,14 @@
 			} else {
 				data = [];
 			}
+		}
+	});
+
+	afterNavigate(({ from }) => {
+		if (from?.url.pathname === '/manga/read') {
+			previewPage = '/';
+		} else {
+			previewPage = from?.url.pathname || previewPage;
 		}
 	});
 </script>
@@ -128,3 +140,5 @@
 		{/if}
 	</div>
 </div>
+
+<FloatNavigationComponent showBack={false} homeUrl="/" />

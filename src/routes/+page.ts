@@ -1,3 +1,4 @@
+import mainStore from "$lib/store/ephemeral/main/main.store";
 import type { PageLoad } from "./$types";
 
 export const load: PageLoad = async ({ fetch }) => {
@@ -11,9 +12,13 @@ export const load: PageLoad = async ({ fetch }) => {
     }
   })
 
-  const dailyContent = await daily.json()
+  if (daily.status === 200) {
+    const dailyContent = await daily.json()
+    mainStore.set({ daily: dailyContent.daily_data.data, bookmark: [] })
+    // mainStore.set({ daily: [], bookmark: [] })
 
-  return {
-    daily: dailyContent.daily_data.data
+  } else {
+    mainStore.set({ daily: [], bookmark: [] })
   }
+
 }

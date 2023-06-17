@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-
-	import DetailNavigationComponent from '$lib/components/navigation/DetailNavigationComponent.svelte';
+	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 
 	let previewPage: string = '/';
 
@@ -17,5 +16,5 @@
 <main class="detail-page">
 	<slot />
 
-	<DetailNavigationComponent homeUrl="/" backUrl={previewPage} />
+	<FloatNavigationComponent homeUrl="/" backUrl={previewPage} />
 </main>

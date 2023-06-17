@@ -1,6 +1,7 @@
 from server.server import create_app
 import webview
 
+import importlib
 import threading
 import sys
 import os
@@ -32,8 +33,8 @@ def main():
             "😸 Nyanga Read",
             "http://localhost:5173",
             width=1280,
-            height=700,
-            min_size=(1280, 800),
+            height=850,
+            min_size=(1280, 850),
         )
         webview.start(
             user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
@@ -47,8 +48,8 @@ def main():
             "😸 Nyanga Read",
             "http://localhost:5000",
             width=1280,
-            height=700,
-            min_size=(1280, 800),
+            height=850,
+            min_size=(1280, 850),
         )
         webview.start(
             user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
@@ -62,8 +63,8 @@ def main():
             "😸 Nyanga Read",
             "http://localhost:5000",
             width=1280,
-            height=700,
-            min_size=(1280, 800),
+            height=850,
+            min_size=(1280, 850),
         )
         webview.start(
             user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",

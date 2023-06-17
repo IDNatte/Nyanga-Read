@@ -4,9 +4,15 @@
 
 <main class="error flex items-center justify-center w-full h-screen">
 	<div class="flex items-center divide-x divide-slate-500">
-		<span class="font-bold text-2xl pr-2">{$page.status}</span>
-		<span class="pl-2 capitalize">
-			{$page.error?.message}
-		</span>
+		<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
+			<span class="text-5xl pb-5">🙀</span>
+			<span class="uppercase">something went wrong..!!</span>
+			<div class="rounded bg-slate-800 w-[400px] h-[150px] mt-7 text-white flex flex-col">
+				<span class="block border-b py-2 pl-2 capitalize text-sm">error message</span>
+				<div class="w-full h-full flex items-center justify-center">
+					<pre class="p-5">{$page.status}:{$page.error?.message}</pre>
+				</div>
+			</div>
+		</div>
 	</div>
 </main>

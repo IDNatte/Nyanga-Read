@@ -19,7 +19,7 @@ CORS(ipc_handler)
 def init():
     try:
         daily = requests.get(
-            "https://api.mangadex.org/manga?includes[]=cover_art&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&limit=3&originalLanguage[]=ja&availableTranslatedLanguage[]=en&offset=0",
+            "https://api.mangadex.org/manga?includes[]=cover_art&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&originalLanguage[]=ja&availableTranslatedLanguage[]=en&limit=3&offset=0"
         )
 
         if daily.status_code == 200:
