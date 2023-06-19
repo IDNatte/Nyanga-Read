@@ -6,7 +6,6 @@
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
-	import { stringify } from 'postcss';
 
 	const markedOpt = {
 		smartLists: true,
@@ -113,7 +112,9 @@
 					<ul class="chapter-list">
 						{#each data.mangaLists as { chapter, chapter_id }}
 							<li>
-								<a href="/manga/read?chapter={chapter_id}">Chapter {chapter}</a>
+								<a href="/manga/read?chapter={chapter_id}&chapter_number={chapter}"
+									>Chapter {chapter}</a
+								>
 							</li>
 						{/each}
 					</ul>

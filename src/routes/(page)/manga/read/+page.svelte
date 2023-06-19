@@ -19,8 +19,10 @@
 
 	let image: string | null | undefined = null;
 	let previewPage: string = base;
-	let index: number = 0;
 	let maxPage: number;
+
+	let index: number;
+	$: index = 0;
 
 	async function readManga() {
 		const chapterId = $page.url.searchParams.get('chapter');
@@ -45,6 +47,32 @@
 			return chapterData;
 		} else {
 			throw new Error('something went wrong !');
+		}
+	}
+
+	function prevChapter() {
+		if (index > 0) {
+			index = --index;
+			let previewImage = find($imageviewerStore, { index: index });
+			image = previewImage?.url;
+
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		}
+	}
+
+	function nextChapter() {
+		if (index < maxPage) {
+			index = ++index;
+			let nexImage = find($imageviewerStore, { index: index });
+			image = nexImage?.url;
+
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
 		}
 	}
 
@@ -116,7 +144,6 @@
 		/>
 	</div>
 {:then}
-	<!-- {chapter} -->
 	<div class="w-full flex items-center justify-center" in:fade={{ delay: 151, duration: 200 }}>
 		<ImageLoaderComponent
 			on:imageloaderror={() => loadImageError()}
@@ -129,11 +156,15 @@
 	<ViewerNavigationComponent
 		on:hoverIn={hoverShowNavigation}
 		on:hoverOut={hoverHideNavigation}
+		on:nextArrow={nextChapter}
+		on:prevArrow={prevChapter}
+		chapter={Number($page.url.searchParams.get('chapter_number'))}
+		showArrowNavigation={navigationShow}
 		showNavigation={navigationShow}
+		currentPage={index + 1}
 		prevPage={previewPage}
+		maxPage={maxPage + 1}
 		homePage="/"
-		currentChapter={index + 1}
-		maxChapter={maxPage + 1}
 	/>
 {:catch error}
 	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
