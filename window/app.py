@@ -1,7 +1,6 @@
 from server.server import create_app
 import webview
 
-import importlib
 import threading
 import sys
 import os
@@ -66,7 +65,7 @@ def main():
             height=850,
             min_size=(1280, 850),
         )
-        webview.start(user_agent="pywebview-client/1.0 pywebview-ui/3.0.0", debug=True)
+        webview.start(user_agent="pywebview-client/1.0 pywebview-ui/3.0.0")
 
 
 if __name__ == "__main__":

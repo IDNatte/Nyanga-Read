@@ -28,13 +28,13 @@ def add_header(response):
 
 
 @main_handler.route("/")
-# @verify_ua
+@verify_ua
 def index():
     return render_template("index.html", token=w_token)
 
 
 @main_handler.route("/", defaults={"path": ""})
 @main_handler.route("/<path:path>")
-# @verify_ua
+@verify_ua
 def catch_all(path):
     return send_from_directory(main_handler.static_folder, path)

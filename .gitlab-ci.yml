@@ -1,6 +1,5 @@
 stages:
   - build
-  - build-linux
   - deploy
 
 build-window:
@@ -29,7 +28,7 @@ build-window:
     paths:
       - nyanga-window/
 
-build-linux:
+build-ubuntu:
   image: ubuntu:22.04
   stage: build
   before_script:
@@ -52,17 +51,17 @@ build-linux:
     - mkdir -p log
     - touch log/app.log
     - pip install -r requirements-linux.txt
-    - pyinstaller --noconfirm --distpath nyanga-linux Nyanga-Read-linux.spec
+    - pyinstaller --noconfirm --distpath nyanga-ubuntu Nyanga-Read-linux.spec
 
   artifacts:
     paths:
-      - nyanga-linux/
+      - nyanga-ubuntu/
 
 pages:
   stage: deploy
   script:
     - mkdir public/
-    - cp -R nyanga-linux/ public/
+    - cp -R nyanga-ubuntu/ public/
     - cp -R nyanga-window/ public/
 
   artifacts:

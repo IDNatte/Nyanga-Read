@@ -14,8 +14,8 @@ CORS(ipc_handler)
 
 
 @ipc_handler.route("/init")
-# @verify_csrf
-# @verify_ua
+@verify_csrf
+@verify_ua
 def init():
     try:
         daily = requests.get(
@@ -37,8 +37,8 @@ def init():
 
 
 @ipc_handler.route("/manga_list")
-# @verify_csrf
-# @verify_ua
+@verify_csrf
+@verify_ua
 def manga_lists():
     try:
         page = req.args.get("page", None)
@@ -74,12 +74,12 @@ def manga_lists():
 
 
 @ipc_handler.route("/get_detail/<manga>")
-# @verify_csrf
-# @verify_ua
+@verify_csrf
+@verify_ua
 def get_manga_detail(manga):
     try:
         detail = requests.get(
-            f"https://api.mangadex.org/manga/{manga}?includes[]=cover_art&?includes[]=manga"
+            f"https://api.mangadex.org/manga/{manga}?includes[]=cover_art&includes[]=artist&includes[]=manga"
         )
 
         manga = requests.get(
@@ -113,8 +113,8 @@ def get_manga_detail(manga):
 
 
 @ipc_handler.route("/read_chapter/<chapter>")
-# @verify_csrf
-# @verify_ua
+@verify_csrf
+@verify_ua
 def read_chapter(chapter):
     try:
         chapter_data = requests.get(
@@ -148,8 +148,8 @@ def read_chapter(chapter):
 
 
 @ipc_handler.route("/search")
-# @verify_csrf
-# @verify_ua
+@verify_csrf
+@verify_ua
 def search():
     try:
         search_title = req.args.get("search", None)
@@ -174,7 +174,7 @@ def search():
 
 
 @ipc_handler.route("/testing")
-# @verify_csrf
-# @verify_ua
+@verify_csrf
+@verify_ua
 def testing():
     return jsonify({"testing": True})

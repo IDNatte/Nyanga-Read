@@ -6,6 +6,7 @@
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
+	import { stringify } from 'postcss';
 
 	const markedOpt = {
 		smartLists: true,
@@ -76,7 +77,27 @@
 			</div>
 		</div>
 		<div class="detail-content divide-y-2">
-			<div class="content-wrapper p-5">
+			<div class="meta-wrapper p-5">
+				<div>
+					{#each data.detail.relationships as artist}
+						{#if artist.type === 'artist'}
+							<span
+								class="manga-title bg-pink-400 inline-block px-2 py-1 text-white text-center text-sm"
+								>By {artist.attributes.name}</span
+							>
+						{/if}
+					{/each}
+				</div>
+				<div class="pt-2">
+					{#each data.detail.attributes.tags as { attributes }}
+						<span
+							class="manga-title bg-pink-300 inline-block px-2 py-1 text-white text-center rounded-full text-sm ml-1"
+							>{attributes.name.en || attributes.name.ja}</span
+						>
+					{/each}
+				</div>
+			</div>
+			<div class="description-wrapper p-5">
 				{#if data.detail.attributes.description.en}
 					<div class="detail w-full prose items-center max-w-full">
 						{@html marked(data.detail.attributes.description.en, markedOpt)}
