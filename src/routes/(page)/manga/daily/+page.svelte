@@ -12,7 +12,7 @@
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 
 	let page: number;
-	$: page = 1;
+	$: page = $dailyStore.page;
 
 	let endObserver: HTMLDivElement;
 	let error: boolean = false;
@@ -20,15 +20,14 @@
 
 	const observer = new IntersectionObserver(
 		async (event: any) => {
-			if (event[0].intersectionRatio > 0.2) {
-				page = ++page;
+			if (event[0].intersectionRatio > 0.5) {
 				await getNextManga(page);
 			}
 		},
 		{
 			root: null,
 			rootMargin: '0px',
-			threshold: 0.2
+			threshold: 0.5
 		}
 	);
 
@@ -45,15 +44,15 @@
 		if (mangaLists.status === 200) {
 			const mangaData = await mangaLists.json();
 			$dailyStore.data = mangaData.daily_mangalists.data;
-			$dailyStore.page = page;
+			$dailyStore.page = ++page;
 		} else {
 			error = true;
 		}
 	}
 
-	async function getNextManga(page: number) {
+	async function getNextManga(pageNumber: number) {
 		const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
-		const mangaLists = await fetch(`http://localhost:5000/ipc/manga_list?page=${page}`, {
+		const mangaLists = await fetch(`http://localhost:5000/ipc/manga_list?page=${pageNumber}`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0',
@@ -65,13 +64,16 @@
 			const mangaData = await mangaLists.json();
 			const prevData = $dailyStore.data;
 			$dailyStore.data = [...prevData, ...mangaData.daily_mangalists.data];
+			$dailyStore.page = pageNumber + 1;
 		} else {
 			throw new Error('Something went wrong');
 		}
 	}
 
 	onMount(async () => {
-		await getMangaLists();
+		if ($dailyStore.data.length === 0) {
+			await getMangaLists();
+		}
 		try {
 			observer.observe(endObserver);
 		} catch (e) {
@@ -82,13 +84,7 @@
 	onDestroy(() => {
 		try {
 			observer.unobserve(endObserver);
-		} catch (e) {
-		} finally {
-			dailyStore.set({
-				data: [],
-				page: 0
-			});
-		}
+		} catch (e) {}
 	});
 
 	afterNavigate(({ from }) => {

@@ -1,4 +1,4 @@
 export type DailyListsEphemeralType = {
-  page: number | null;
+  page: number;
   data: Array<any>;
 }

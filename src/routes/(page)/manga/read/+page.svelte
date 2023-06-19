@@ -3,6 +3,7 @@
 	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
+	import { onMount } from 'svelte';
 
 	import { find } from 'lodash';
 
@@ -12,7 +13,6 @@
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import toast from 'svelte-french-toast';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
-	import { onMount } from 'svelte';
 
 	let navigationShow: boolean;
 	$: navigationShow = true;
