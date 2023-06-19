@@ -66,9 +66,7 @@ def main():
             height=850,
             min_size=(1280, 850),
         )
-        webview.start(
-            user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
-        )
+        webview.start(user_agent="pywebview-client/1.0 pywebview-ui/3.0.0", debug=True)
 
 
 if __name__ == "__main__":
