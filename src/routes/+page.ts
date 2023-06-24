@@ -14,11 +14,10 @@ export const load: PageLoad = async ({ fetch }) => {
 
   if (daily.status === 200) {
     const dailyContent = await daily.json()
-    mainStore.set({ daily: dailyContent.daily_data.data, bookmark: [] })
-    // mainStore.set({ daily: [], bookmark: [] })
+    mainStore.set({ daily: dailyContent.daily_manga.data, bookmark: { bookmark_list: dailyContent.bookmark.bookmark_manga, more: dailyContent.bookmark.more } })
 
   } else {
-    mainStore.set({ daily: [], bookmark: [] })
+    mainStore.set({ daily: [], bookmark: { bookmark_list: [], more: false } })
   }
 
 }

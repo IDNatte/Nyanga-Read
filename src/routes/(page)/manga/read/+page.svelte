@@ -5,13 +5,13 @@
 	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 
+	import toast from 'svelte-french-toast';
 	import { find } from 'lodash';
 
 	import imageviewerStore from '$lib/store/imageviewer/imageviewer.store';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
-	import toast from 'svelte-french-toast';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
 
 	let navigationShow: boolean;

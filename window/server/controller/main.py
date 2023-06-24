@@ -5,8 +5,9 @@ from flask import Blueprint
 from webview import token as w_token
 from flask_cors import CORS
 
+from server.storage.model.settings import Setting
 from server.middleware import verify_ua
-from utils import get_resources
+from utils.resources import get_resources
 
 
 main_handler = Blueprint(
@@ -30,7 +31,8 @@ def add_header(response):
 @main_handler.route("/")
 @verify_ua
 def index():
-    return render_template("index.html", token=w_token)
+    language = Setting.query.filter_by(setting_type="language").one_or_none()
+    return render_template("index.html", token=w_token, lang=language.value)
 
 
 @main_handler.route("/", defaults={"path": ""})

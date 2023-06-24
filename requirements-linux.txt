@@ -5,3 +5,5 @@ flask-cors
 pycairo
 PyGObject
 requests
+flask-sqlalchemy
+SQLAlchemy-serializer

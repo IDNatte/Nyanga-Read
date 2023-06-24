@@ -3,6 +3,8 @@
 	import { invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 
+	import { Toaster } from 'svelte-french-toast';
+
 	import refresh from '$lib/actions/page/refresh';
 	import csrfStore from '$lib/store/csrf/csrf.store';
 	import loaderStore from '$lib/store/loader/loader.store';
@@ -30,6 +32,7 @@
 		}
 	}}
 >
-	<!-- <NavbarComponent /> -->
 	<slot />
 </main>
+
+<Toaster />

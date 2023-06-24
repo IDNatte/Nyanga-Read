@@ -4,7 +4,6 @@
 
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
-	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
 	import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
 
@@ -74,11 +73,6 @@
 					<li>
 						<a href={prevPage}>
 							<ReturnIcon />
-						</a>
-					</li>
-					<li>
-						<a href="/">
-							<BookmarkIcon />
 						</a>
 					</li>
 				</ul>

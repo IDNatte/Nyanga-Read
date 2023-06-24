@@ -67,7 +67,7 @@
 	</div>
 
 	<!-- Bookmarked -->
-	{#if $mainStore.bookmark.length !== 0}
+	{#if $mainStore.bookmark.bookmark_list.length !== 0}
 		<div class="bookmarked-content pt-18">
 			<div class="w-full px-6 py-5 flex items-center">
 				<div class="relative p-2 rounded-full bg-pink-100">
@@ -79,7 +79,7 @@
 				>
 			</div>
 			<div class="grid grid-cols-3 w-full">
-				{#each $mainStore.bookmark as { id, attributes, relationships }}
+				{#each $mainStore.bookmark.bookmark_list as { id, attributes, relationships }}
 					<CardComponent link="/manga/detail?manga={id}">
 						<div slot="card-image" class="w-full h-full">
 							{#each relationships as cover}
@@ -108,16 +108,20 @@
 					</CardComponent>
 				{/each}
 			</div>
-			<div class="see-more w-full flex justify-center py-3">
-				<a class="capitalize text-pink-400/60 text-xl underline underline-offset-2" href="/"
-					>see more</a
-				>
-			</div>
+
+			{#if $mainStore.bookmark.more}
+				<div class="see-more w-full flex justify-center py-3">
+					<a
+						class="capitalize text-pink-400/60 text-xl underline underline-offset-2"
+						href="/manga/bookmark">see more</a
+					>
+				</div>
+			{/if}
 		</div>
 	{/if}
 </div>
 
-{#if $mainStore.daily.length === 0 && $mainStore.bookmark.length === 0}
+{#if $mainStore.daily.length === 0 && $mainStore.bookmark.bookmark_list.length === 0}
 	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 		<span class="text-5xl pb-5">🙀</span>
 		<span class="uppercase">something went wrong..!!</span>

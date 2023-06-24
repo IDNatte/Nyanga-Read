@@ -29,7 +29,8 @@
 			const mangaDetail = await manga.json();
 			return {
 				detail: mangaDetail.detail_data.data,
-				mangaLists: mangaDetail.manga_data
+				mangaLists: mangaDetail.manga_data,
+				last_read: mangaDetail.last_read
 			};
 		} else {
 			throw new Error('Something went wrong');
@@ -74,6 +75,21 @@
 					{/if}
 				{/each}
 			</div>
+
+			{#if data.last_read}
+				<!-- content here -->
+				<div
+					class="continue-reading bg-pink-300 flex absolute px-3 py-2 text-white right-3 bottom-7 text-center rounded-full"
+				>
+					<a
+						class="text-sm"
+						href="/manga/read?chapter={data.last_read.chapter}&chapter_number={data.last_read
+							.chapter_number}"
+					>
+						continue read chapter {data.last_read.chapter_number}
+					</a>
+				</div>
+			{/if}
 		</div>
 		<div class="detail-content divide-y-2">
 			<div class="meta-wrapper p-5">

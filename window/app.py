@@ -1,14 +1,23 @@
 from server.server import create_app
-import webview
+
+from utils.storage_initializer import db_settings_initializer
 
 import threading
+import webview
+import utils
 import sys
 import os
 
 
 def server_instance():
     try:
+        # starting ipc server
         create_app().logger.info("starting server")
+
+        # initialize database if not already created
+        db_settings_initializer()
+
+        # starting ipc
         create_app().run(host="localhost", port=5000)
 
     except Exception as error:

@@ -145,4 +145,4 @@
 	</div>
 {/if}
 
-<FloatNavigationComponent showBack={false} homeUrl="/" />
+<FloatNavigationComponent showBookmark={false} showBack={false} homeUrl="/" />
