@@ -43,6 +43,7 @@ build-ubuntu:
 
   script:
     - yarn install
+    - yarn plugin import interactive-tools
     - |
       yarn run svelte:build
 
