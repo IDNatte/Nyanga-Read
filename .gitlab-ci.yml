@@ -1,32 +1,32 @@
 stages:
   - build
-  # - deploy
+  - deploy
 
-# build-window:
-#   image: mcr.microsoft.com/windows/servercore:ltsc2019
-#   tags:
-#     - windows
-#   stage: build
-#   before_script:
-#     - choco install nodejs --version 18.16.0 --x64 -y
-#     - choco install dotnet -y
-#     - choco install python -y
-#     - refreshenv
+build-window:
+  image: mcr.microsoft.com/windows/servercore:ltsc2019
+  tags:
+    - windows
+  stage: build
+  before_script:
+    - choco install nodejs --version 18.16.0 --x64 -y
+    - choco install dotnet -y
+    - choco install python -y
+    - refreshenv
 
-#   script:
-#     - npm install
-#     - |
-#       npm run svelte:build
-#     - c:\python311\python.exe -m venv .venv --upgrade-deps
-#     - .\.venv\Scripts\Activate.ps1
-#     - pip install -r requirements-win.txt
-#     - mkdir log
-#     - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
-#     - pyinstaller --noconfirm --distpath nyanga-window Nyanga-Read-windows.spec
+  script:
+    - npm install
+    - |
+      npm run svelte:build
+    - c:\python311\python.exe -m venv .venv --upgrade-deps
+    - .\.venv\Scripts\Activate.ps1
+    - pip install -r requirements-win.txt
+    - mkdir log
+    - New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
+    - pyinstaller --noconfirm --distpath nyanga-window Nyanga-Read-windows.spec
 
-#   artifacts:
-#     paths:
-#       - nyanga-window/
+  artifacts:
+    paths:
+      - nyanga-window/
 
 build-ubuntu:
   image: ubuntu:22.04
@@ -40,7 +40,6 @@ build-ubuntu:
     - nvm install 18.16.0
     - corepack enable
     - corepack prepare yarn@stable --activate
-    - yarn plugin import interactive-tools
 
   script:
     - yarn install
@@ -57,13 +56,13 @@ build-ubuntu:
   artifacts:
     paths:
       - nyanga-ubuntu/
-# pages:
-#   stage: deploy
-#   script:
-#     - mkdir public/
-#     - cp -R nyanga-ubuntu/ public/
-#     - cp -R nyanga-window/ public/
+pages:
+  stage: deploy
+  script:
+    - mkdir public/
+    - cp -R nyanga-ubuntu/ public/
+    - cp -R nyanga-window/ public/
 
-#   artifacts:
-#     paths:
-#       - public/
+  artifacts:
+    paths:
+      - public/
