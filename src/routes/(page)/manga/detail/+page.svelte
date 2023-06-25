@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { afterNavigate, invalidateAll } from '$app/navigation';
-	import { fade } from 'svelte/transition';
+	import { afterNavigate } from '$app/navigation';
+	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 
 	import toast from 'svelte-french-toast';
-	import { marked } from 'marked';
+	import markdown from '$lib/utils/markdown';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
@@ -16,13 +16,6 @@
 	let unbookmarked: boolean;
 	$: unbookmarked;
 	$: bookmarked;
-
-	const markedOpt = {
-		smartLists: true,
-		smartypants: true,
-		gfm: true,
-		breaks: false
-	};
 
 	async function getDetail() {
 		const mangaId = $page.url.searchParams.get('manga');
@@ -162,12 +155,16 @@
 			{/each}
 
 			{#if bookmarked}
-				<div
-					class="manga-title bg-pink-300 flex items-center absolute px-3 py-2 text-white text-sm left-3 top-7 text-center rounded-full"
-				>
-					<BookmarkIcon className="fill-white" />
-					<span>Bookmarked</span>
-				</div>
+				{#key bookmarked}
+					<div
+						in:fly={{ y: -200, duration: 200 }}
+						out:fade={{ duration: 150 }}
+						class="manga-title bg-pink-300 flex items-center absolute px-3 py-2 text-white text-sm left-3 top-7 text-center rounded-full"
+					>
+						<BookmarkIcon className="fill-white" />
+						<span>Bookmarked</span>
+					</div>
+				{/key}
 			{/if}
 
 			<div
@@ -178,7 +175,6 @@
 				>
 				{#each data.detail.attributes.altTitles as altTitle}
 					{#if altTitle.en || altTitle.ja}
-						<!-- content here -->
 						<span class="block">{altTitle.en || altTitle.ja}</span>
 					{/if}
 				{/each}
@@ -222,7 +218,7 @@
 			<div class="description-wrapper p-5">
 				{#if data.detail.attributes.description.en}
 					<div class="detail w-full prose items-center max-w-full">
-						{@html marked(data.detail.attributes.description.en, markedOpt)}
+						{@html markdown(data.detail.attributes.description.en)}
 					</div>
 				{:else}
 					<div class="detail w-full text-center">

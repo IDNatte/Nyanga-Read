@@ -10,6 +10,7 @@ a = Analysis(
     binaries=[],
     datas=[
         ("layout", "layout"),
+        ("docs/app", "docs/app"),
         ("log", "log")
     ],
     hiddenimports=[],

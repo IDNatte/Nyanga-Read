@@ -4,12 +4,15 @@
 	import dropdownStore from '$lib/store/dropdown/dropdown.store';
 
 	import DropdownComponent from '$lib/components/dropdown/DropdownComponent.svelte';
-	import VerticalIcon from '$lib/components/icons/VerticalIcon.svelte';
-	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
+
 	import MagniglassIcon from '$lib/components/icons/MagniglassIcon.svelte';
-	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
 	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
+	import VerticalIcon from '$lib/components/icons/VerticalIcon.svelte';
+	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
+	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
+	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
+	import modalStore from '$lib/store/modal/modal.store';
 
 	function dropdownClick() {
 		if ($dropdownStore) {
@@ -17,6 +20,10 @@
 		} else {
 			$dropdownStore = true;
 		}
+	}
+
+	function openModal(modal: string) {
+		modalStore.set({ modal: modal, open: true });
 	}
 </script>
 
@@ -49,6 +56,19 @@
 					</li>
 					<li>
 						<a
+							href="#!"
+							on:click|preventDefault={() => {
+								dropdownStore.set(false);
+								openModal('modal-settings');
+							}}
+						>
+							<SettingsIcon width="w-5" height="w-5" />
+							<span>Settings</span>
+						</a>
+					</li>
+
+					<li>
+						<a
 							href="/#!"
 							on:click|preventDefault={async () => {
 								dropdownStore.set(false);
@@ -61,20 +81,10 @@
 					</li>
 					<li>
 						<a
-							href="/testing"
-							on:click={() => {
+							href="#!"
+							on:click|preventDefault={() => {
 								dropdownStore.set(false);
-							}}
-						>
-							<TransalateIcon width="w-5" height="w-5" />
-							<span>Select language</span>
-						</a>
-					</li>
-					<li>
-						<a
-							href="/testing"
-							on:click={() => {
-								dropdownStore.set(false);
+								openModal('modal-about');
 							}}
 						>
 							<InfoIcon width="w-5" height="w-5" />

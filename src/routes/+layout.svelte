@@ -1,20 +1,22 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	// import { onMount } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 
 	import { Toaster } from 'svelte-french-toast';
 
+	// import csrfStore from '$lib/store/csrf/csrf.store';
 	import refresh from '$lib/actions/page/refresh';
-	import csrfStore from '$lib/store/csrf/csrf.store';
+
 	import loaderStore from '$lib/store/loader/loader.store';
 
+	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 	import PageLoader from '$lib/components/loader/PageLoader.svelte';
 
-	onMount(() => {
-		let pycsrf = document.querySelector('.pycsrf') as HTMLInputElement;
-		csrfStore.set(pycsrf.value);
-	});
+	// onMount(() => {
+	// 	let pycsrf = document.querySelector('.pycsrf') as HTMLInputElement;
+	// 	csrfStore.set(pycsrf.value);
+	// });
 </script>
 
 {#if $loaderStore === 'loading'}
@@ -35,4 +37,7 @@
 	<slot />
 </main>
 
-<Toaster />
+<div class="utils">
+	<!-- Toast -->
+	<Toaster />
+</div>

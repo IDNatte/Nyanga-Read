@@ -10,7 +10,8 @@ a = Analysis(
     binaries=[],
     datas=[
         ("layout", "layout"),
-        ("log", "log")
+        ("docs/app", "docs/app"),
+        ("log", "log"),
     ],
     hiddenimports=[],
     hookspath=[],

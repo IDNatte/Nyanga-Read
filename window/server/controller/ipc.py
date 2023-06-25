@@ -6,6 +6,9 @@ from flask import jsonify
 
 from flask_cors import CORS
 
+from utils.parallel_request import parallelize_req
+from utils.resources import get_resources
+
 from server.middleware import verify_csrf
 from server.middleware import verify_ua
 
@@ -15,6 +18,7 @@ from server.storage.model.bookmark import Bookmark
 from server.storage.model.settings import Setting
 from server.storage.model.read import Read
 
+import concurrent
 import requests
 
 ipc_handler = Blueprint("ipc_ep", __name__, url_prefix="/ipc")
@@ -43,20 +47,22 @@ def init():
             f"https://api.mangadex.org/manga?includes[]=cover_art&excludedTags[]=5920b825-4181-4a17-beeb-9918b0ff7a30&originalLanguage[]=ja&availableTranslatedLanguage[]={default_language.get('value')}&limit=3&offset=0&contentRating[]={default_content.get('value')}"
         )
 
+        bookmark_link = [
+            f"https://api.mangadex.org/manga/{bookmark.to_dict().get('manga')}?includes[]=cover_art&includes[]=artist&includes[]=manga"
+            for bookmark in bookmarks
+        ]
+
+        with concurrent.futures.ThreadPoolExecutor() as parallelizer:
+            fu = [parallelizer.submit(parallelize_req, link) for link in bookmark_link]
+            concurrent.futures.wait(fu)
+
         if daily.status_code == 200:
             return jsonify(
                 {
                     "daily_manga": daily.json(),
                     "bookmark": {
                         "more": True if Bookmark.query.count() > 3 else False,
-                        "bookmark_manga": [
-                            requests.get(
-                                f"https://api.mangadex.org/manga/{bookmark.to_dict().get('manga')}?includes[]=cover_art&includes[]=artist&includes[]=manga"
-                            )
-                            .json()
-                            .get("data")
-                            for bookmark in bookmarks
-                        ],
+                        "bookmark_manga": [data.result().get("data") for data in fu],
                     },
                 }
             )
@@ -285,7 +291,7 @@ def bookmark():
 
         if page:
             pass
-        bookmark_data = Bookmark.query.all()
+        bookmark_data = Bookmark.query.order_by(Bookmark.bookmarked_at.desc()).all()
 
         return jsonify(
             {
@@ -391,8 +397,22 @@ def settings():
     return redirect(url_for("main.index"))
 
 
-@ipc_handler.route("/testing")
-def testing():
-    print("coba")
+@ipc_handler.route("/app")
+@verify_csrf
+@verify_ua
+def app_info():
+    try:
+        with open(get_resources("docs/app/about.md"), "r") as about_app:
+            about = about_app.read()
 
-    return jsonify({"testing": True})
+        return jsonify({"app_info": {"app_about": about}})
+
+    except FileNotFoundError as _:
+        return jsonify({"status": "error", "location": "exception"})
+
+
+# @ipc_handler.route("/testing")
+# def testing():
+#     print("coba")
+
+#     return jsonify({"testing": True})
