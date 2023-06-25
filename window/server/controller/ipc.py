@@ -293,18 +293,16 @@ def bookmark():
             pass
         bookmark_data = Bookmark.query.order_by(Bookmark.bookmarked_at.desc()).all()
 
-        return jsonify(
-            {
-                "bookmark": [
-                    requests.get(
-                        f"https://api.mangadex.org/manga/{bookmark.to_dict().get('manga')}?includes[]=cover_art&includes[]=artist&includes[]=manga"
-                    )
-                    .json()
-                    .get("data")
-                    for bookmark in bookmark_data
-                ]
-            }
-        )
+        bookmark_link = [
+            f"https://api.mangadex.org/manga/{bookmark.to_dict().get('manga')}?includes[]=cover_art&includes[]=artist&includes[]=manga"
+            for bookmark in bookmark_data
+        ]
+
+        with concurrent.futures.ThreadPoolExecutor() as parallelizer:
+            fu = [parallelizer.submit(parallelize_req, link) for link in bookmark_link]
+            concurrent.futures.wait(fu)
+
+        return jsonify({"bookmark": [data.result().get("data") for data in fu]})
     if req.method == "POST":
         payload = req.get_json()
 
