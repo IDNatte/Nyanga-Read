@@ -21,7 +21,6 @@
 
 		if (bookmark.status === 200) {
 			const bookmarkData = await bookmark.json();
-			console.log(bookmarkData.bookmark);
 			return bookmarkData.bookmark;
 		} else {
 			throw new Error('something went error !');

@@ -122,6 +122,8 @@ def manga_lists():
 @verify_ua
 def get_manga_detail(manga):
     try:
+        bookmarked = Bookmark.query.filter_by(manga=manga).one_or_none()
+
         latest_readed = (
             Read.query.filter_by(manga=manga).order_by(Read.readed_at.desc()).first()
         )
@@ -145,6 +147,7 @@ def get_manga_detail(manga):
                 {
                     "last_read": latest_readed.to_dict() if latest_readed else None,
                     "detail_data": detail.json(),
+                    "bookmarked": True if bookmarked is not None else False,
                     "manga_data": [
                         {
                             "chapter_id": manga.get("volumes")
@@ -326,7 +329,36 @@ def bookmark():
             )
 
     if req.method == "DELETE":
-        return {"bookmarkDeleted": True}
+        payload = req.get_json()
+
+        if payload is not None or payload:
+            if payload.get("mangaId") != None:
+                bookmark_remove = Bookmark.query.filter_by(
+                    manga=payload.get("mangaId")
+                ).one_or_none()
+
+                constant.DB.session.delete(bookmark_remove)
+                constant.DB.session.commit()
+
+                return {"status": "unbookmarked", "message": "Bookmark removed !"}
+
+            else:
+                return jsonify(
+                    {
+                        "status": "error",
+                        "mangaIdError": True,
+                        "message": "Something wen't error",
+                    }
+                )
+
+        else:
+            return jsonify(
+                {
+                    "status": "error",
+                    "bodyError": True,
+                    "message": "Something wen't error",
+                }
+            )
 
     return redirect(url_for("main.index"))
 

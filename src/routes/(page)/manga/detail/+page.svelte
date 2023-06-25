@@ -1,11 +1,21 @@
 <script lang="ts">
+	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
 
+	import toast from 'svelte-french-toast';
 	import { marked } from 'marked';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
+	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
+	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
+
+	let previewPage: string = '/';
+	let bookmarked: boolean;
+	let unbookmarked: boolean;
+	$: unbookmarked;
+	$: bookmarked;
 
 	const markedOpt = {
 		smartLists: true,
@@ -27,15 +37,104 @@
 
 		if (manga.status === 200) {
 			const mangaDetail = await manga.json();
+			bookmarked = mangaDetail.bookmarked;
+			unbookmarked = mangaDetail.bookmarked ? false : true;
 			return {
 				detail: mangaDetail.detail_data.data,
 				mangaLists: mangaDetail.manga_data,
-				last_read: mangaDetail.last_read
+				last_read: mangaDetail.last_read,
+				bookmarked: mangaDetail.bookmarked
 			};
 		} else {
 			throw new Error('Something went wrong');
 		}
 	}
+
+	async function bookmark() {
+		const mangaId = $page.url.searchParams.get('manga');
+		const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
+
+		const bookmark = await fetch(`http://localhost:5000/ipc/bookmark`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0',
+				'PCSRFWV-Token': pcsrfToken.value as string
+			},
+			body: JSON.stringify({
+				mangaId: mangaId
+			})
+		});
+
+		if (bookmark.status === 200) {
+			const info = await bookmark.json();
+
+			if (info.status === 'error') {
+				toast.error(`${info.message} 😿`, {
+					position: 'top-right'
+				});
+			}
+
+			if (info.status === 'bookmarked') {
+				unbookmarked = false;
+				bookmarked = true;
+				toast.success(`${info.message} 😸`, {
+					position: 'top-right'
+				});
+			}
+		} else {
+			toast.error('Something went error 😿', {
+				position: 'top-right'
+			});
+		}
+	}
+
+	async function unbookmark() {
+		const mangaId = $page.url.searchParams.get('manga');
+		const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
+
+		const bookmark = await fetch(`http://localhost:5000/ipc/bookmark`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0',
+				'PCSRFWV-Token': pcsrfToken.value as string
+			},
+			body: JSON.stringify({
+				mangaId: mangaId
+			})
+		});
+
+		if (bookmark.status === 200) {
+			const info = await bookmark.json();
+
+			if (info.status === 'error') {
+				toast.error(`${info.message} 😿`, {
+					position: 'top-right'
+				});
+			}
+
+			if (info.status === 'unbookmarked') {
+				unbookmarked = true;
+				bookmarked = false;
+				toast.success(`${info.message} 😸`, {
+					position: 'top-right'
+				});
+			}
+		} else {
+			toast.error('Something went error 😿', {
+				position: 'top-right'
+			});
+		}
+	}
+
+	afterNavigate(({ from }) => {
+		if (from?.url.pathname === '/manga/read') {
+			previewPage = '/';
+		} else {
+			previewPage = from?.url.pathname || previewPage;
+		}
+	});
 </script>
 
 {#await getDetail()}
@@ -62,6 +161,15 @@
 				{/if}
 			{/each}
 
+			{#if bookmarked}
+				<div
+					class="manga-title bg-pink-300 flex items-center absolute px-3 py-2 text-white text-sm left-3 top-7 text-center rounded-full"
+				>
+					<BookmarkIcon className="fill-white" />
+					<span>Bookmarked</span>
+				</div>
+			{/if}
+
 			<div
 				class="manga-title bg-pink-400 inline-block absolute px-3 py-2 text-white left-3 bottom-7 text-center"
 			>
@@ -77,16 +185,15 @@
 			</div>
 
 			{#if data.last_read}
-				<!-- content here -->
 				<div
 					class="continue-reading bg-pink-300 flex absolute px-3 py-2 text-white right-3 bottom-7 text-center rounded-full"
 				>
 					<a
-						class="text-sm"
+						class="text-sm capitalize"
 						href="/manga/read?chapter={data.last_read.chapter}&chapter_number={data.last_read
 							.chapter_number}"
 					>
-						continue read chapter {data.last_read.chapter_number}
+						last readed chapter {data.last_read.chapter_number}
 					</a>
 				</div>
 			{/if}
@@ -138,6 +245,15 @@
 			</div>
 		</div>
 	</div>
+
+	<FloatNavigationComponent
+		homeUrl="/"
+		backUrl={previewPage}
+		showBookmark={bookmarked ? false : true}
+		showUnbookmark={unbookmarked ? false : true}
+		on:bookmarkClick={bookmark}
+		on:UnbookmarkClick={unbookmark}
+	/>
 {:catch error}
 	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 		<span class="text-5xl pb-5">🙀</span>

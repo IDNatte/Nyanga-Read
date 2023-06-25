@@ -4,7 +4,9 @@
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
 	import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
+	import UnbookmarkIcon from '$lib/components/icons/UnbookmarkIcon.svelte';
 
+	export let showUnbookmark: boolean = false;
 	export let showBookmark: boolean = true;
 	export let showBack: boolean = true;
 	export let backUrl: string = '/';
@@ -15,6 +17,10 @@
 	function BookmarkClick() {
 		dispatch('bookmarkClick');
 	}
+
+	function UnbookmarkClick() {
+		dispatch('UnbookmarkClick');
+	}
 </script>
 
 <div class="detail-navigation fixed bottom-8 right-6">
@@ -22,8 +28,16 @@
 		<ul class="detail-navigation-btn">
 			{#if showBookmark}
 				<li>
-					<a href={backUrl} on:click|preventDefault={BookmarkClick}>
+					<a href="#!" on:click|preventDefault={BookmarkClick}>
 						<BookmarkIcon />
+					</a>
+				</li>
+			{/if}
+
+			{#if showUnbookmark}
+				<li>
+					<a href="#!" on:click|preventDefault={UnbookmarkClick}>
+						<UnbookmarkIcon />
 					</a>
 				</li>
 			{/if}
