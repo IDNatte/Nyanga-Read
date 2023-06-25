@@ -42,8 +42,8 @@ build-ubuntu:
     - corepack prepare yarn@stable --activate
 
   script:
-    - yarn install
     - yarn plugin import interactive-tools
+    - yarn install
     - |
       yarn run svelte:build
 
