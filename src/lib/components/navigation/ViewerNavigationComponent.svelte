@@ -36,8 +36,8 @@
 
 <div class="h-screen fixed">
 	<div class="viewer-chaptercount fixed z-50 top-5 w-full flex item-center justify-center">
-		<div class="bg-pink-200 px-5 py-3 rounded-full shadow">
-			<span>Chapter {chapter} Page {currentPage} / {maxPage}</span>
+		<div class="bg-pink-200/60 px-5 py-2 rounded-full shadow">
+			<span class="text-sm">Chapter {chapter} Page {currentPage} / {maxPage}</span>
 		</div>
 	</div>
 	{#key showNavigation}

@@ -364,8 +364,8 @@ def bookmark():
 
 
 @ipc_handler.route("/settings", methods=["GET", "PATCH", "DELETE"])
-# @verify_csrf
-# @verify_ua
+@verify_csrf
+@verify_ua
 def settings():
     if req.method == "GET":
         settings = Setting.query.all()
