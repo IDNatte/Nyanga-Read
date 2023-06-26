@@ -1,11 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import markdown from '$lib/utils/markdown';
 	import { truncate } from 'lodash';
-
-	// import mainStore from '$lib/store/ephemeral/main/main.store';
-	// import appStore from '$lib/store/ephemeral/main/app.store';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import NavbarComponent from '$lib/components/navigation/NavbarComponent.svelte';
@@ -24,7 +20,7 @@
 	<div class="homepage pb-5 pt-[4.5em]">
 		<!-- daily list -->
 		<div class="daily-content">
-			{#if data.content.daily.length !== 0}
+			{#if data.daily.length !== 0}
 				<div class="w-full px-6 py-5 flex items-center">
 					<div class="relative p-2 rounded-full bg-pink-100">
 						<div class="animate-ping border-2 p-2 rounded-full border-white absolute" />
@@ -35,7 +31,7 @@
 					>
 				</div>
 				<div class="grid grid-cols-3 w-full">
-					{#each data.content.daily as { id, attributes, relationships }}
+					{#each data.daily as { id, attributes, relationships }}
 						<CardComponent link="/manga/detail?manga={id}">
 							<div slot="card-image" class="w-full h-full">
 								{#each relationships as cover}
@@ -76,7 +72,7 @@
 		</div>
 
 		<!-- Bookmarked -->
-		{#if data.content.bookmark.bookmark_list.length !== 0}
+		{#if data.bookmark.bookmark_list.length !== 0}
 			<div class="bookmarked-content pt-18">
 				<div class="w-full px-6 py-5 flex items-center">
 					<div class="relative p-2 rounded-full bg-pink-100">
@@ -88,7 +84,7 @@
 					>
 				</div>
 				<div class="grid grid-cols-3 w-full">
-					{#each data.content.bookmark.bookmark_list as { id, attributes, relationships }}
+					{#each data.bookmark.bookmark_list as { id, attributes, relationships }}
 						<CardComponent link="/manga/detail?manga={id}">
 							<div slot="card-image" class="w-full h-full">
 								{#each relationships as cover}
@@ -119,7 +115,7 @@
 					{/each}
 				</div>
 
-				{#if data.content.bookmark.more}
+				{#if data.bookmark.more}
 					<div class="see-more w-full flex justify-center py-3">
 						<a
 							class="capitalize text-pink-400/60 text-xl underline underline-offset-2"
@@ -131,29 +127,10 @@
 		{/if}
 	</div>
 
-	{#if data.content.daily.length === 0 && data.content.bookmark.bookmark_list.length === 0}
+	{#if data.daily.length === 0 && data.bookmark.bookmark_list.length === 0}
 		<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 			<span class="text-5xl pb-5">🙀</span>
 			<span class="uppercase">something went wrong..!!</span>
 		</div>
 	{/if}
-
-	<div class="utils">
-		<!-- Settings Modal -->
-		<ModalComponent modal="modal-settings" title="Settings">
-			<span>testing modal settings</span>
-		</ModalComponent>
-
-		<!-- About Modal -->
-		<ModalComponent modal="modal-about" title="About">
-			<div class="description-wrapper p-5">
-				<div class="detail w-full prose items-center max-w-full">
-					{#if data.appInfo.appInfo?.about}
-						<!-- content here -->
-						{@html markdown(data.appInfo.appInfo.about)}
-					{/if}
-				</div>
-			</div>
-		</ModalComponent>
-	</div>
 </div>
