@@ -6,7 +6,6 @@
 	import DropdownComponent from '$lib/components/dropdown/DropdownComponent.svelte';
 
 	import MagniglassIcon from '$lib/components/icons/MagniglassIcon.svelte';
-	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
 	import VerticalIcon from '$lib/components/icons/VerticalIcon.svelte';
 	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
 	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
@@ -14,11 +13,13 @@
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 	import modalStore from '$lib/store/modal/modal.store';
 
-	function dropdownClick() {
-		if ($dropdownStore) {
-			$dropdownStore = false;
+	function dropdownClick(dropdown: string) {
+		if ($dropdownStore.open) {
+			$dropdownStore.dropdown = null;
+			$dropdownStore.open = false;
 		} else {
-			$dropdownStore = true;
+			$dropdownStore.dropdown = dropdown;
+			$dropdownStore.open = true;
 		}
 	}
 
@@ -37,17 +38,17 @@
 		<div class="dropdown-wrapper relative">
 			<button
 				class="menu-dropdown px-5 py-2 rounded border border-transparent transition duration-150 ease-in-out hover:shadow hover:border-white/30"
-				on:click={dropdownClick}
+				on:click={() => dropdownClick('app-menu')}
 			>
 				<VerticalIcon />
 			</button>
-			<DropdownComponent top="top-12">
+			<DropdownComponent dropdown="app-menu" className="top-12 right-0">
 				<ul>
 					<li>
 						<a
 							href="/manga/search"
 							on:click={() => {
-								dropdownStore.set(false);
+								dropdownStore.set({ dropdown: null, open: false });
 							}}
 						>
 							<MagniglassIcon width="w-5" height="w-5" />
@@ -58,7 +59,7 @@
 						<a
 							href="#!"
 							on:click|preventDefault={() => {
-								dropdownStore.set(false);
+								dropdownStore.set({ dropdown: null, open: false });
 								openModal('modal-settings');
 							}}
 						>
@@ -71,7 +72,7 @@
 						<a
 							href="/#!"
 							on:click|preventDefault={async () => {
-								dropdownStore.set(false);
+								dropdownStore.set({ dropdown: null, open: false });
 								await invalidateAll();
 							}}
 						>
@@ -83,7 +84,7 @@
 						<a
 							href="#!"
 							on:click|preventDefault={() => {
-								dropdownStore.set(false);
+								dropdownStore.set({ dropdown: null, open: false });
 								openModal('modal-about');
 							}}
 						>

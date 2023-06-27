@@ -380,17 +380,21 @@ def settings():
         )
 
     if req.method == "PATCH":
-        update_settings = req.args.get("settings", None)
-        if update_settings:
-            settings_value = req.args.get("value", None)
-            if settings_value:
-                update = Setting.query.get(int(update_settings))
+        update_setting = req.get_json()
+        if update_setting:
+            settings_id = update_setting.get("setting", None)
+            settings_value = update_setting.get("value", None)
+
+            if settings_id and settings_value:
+                update = Setting.query.get(settings_id)
                 update.value = settings_value
                 constant.DB.session.commit()
-                return jsonify({"status": "changed"})
-            return jsonify({"status": "noChanges"})
+                return jsonify({"status": "changed", "message": "Settings changed"})
+            else:
+                return jsonify({"status": "unchanged", "message": "Settings unchanged"})
 
-        return jsonify({"emptySettings": True})
+        else:
+            return jsonify({"emptySettings": True})
 
     return redirect(url_for("main.index"))
 

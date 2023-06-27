@@ -255,6 +255,14 @@
 		<span class="text-5xl pb-5">🙀</span>
 		<span class="uppercase">something went wrong..!!</span>
 	</div>
+
+	<FloatNavigationComponent
+		homeUrl="/"
+		backUrl={previewPage}
+		showBack={false}
+		showBookmark={false}
+		showUnbookmark={false}
+	/>
 {/await}
 
 <style lang="postcss">

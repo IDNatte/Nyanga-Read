@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
+	import UnbookmarkIcon from '$lib/components/icons/UnbookmarkIcon.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import ReturnIcon from '$lib/components/icons/ReturnIcon.svelte';
 	import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
-	import UnbookmarkIcon from '$lib/components/icons/UnbookmarkIcon.svelte';
 
 	export let showUnbookmark: boolean = false;
 	export let showBookmark: boolean = true;

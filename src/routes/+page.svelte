@@ -5,7 +5,6 @@
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import NavbarComponent from '$lib/components/navigation/NavbarComponent.svelte';
-	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';

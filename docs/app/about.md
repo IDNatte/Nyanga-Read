@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="margin: 0px;" src="https://gitlab.com/IDNatte/Nyanga-Read/-/raw/experimental/assets/icon/image/logo.png" alt="Nyanga-Read">
+  <img style="margin: 0px; width: 150px;" src="https://gitlab.com/IDNatte/Nyanga-Read/-/raw/experimental/assets/icon/image/logo.png" alt="Nyanga-Read">
 </p>
 
 <h1 align="center">Nyanga Read</h1>

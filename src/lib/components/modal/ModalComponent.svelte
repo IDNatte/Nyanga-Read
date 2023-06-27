@@ -8,6 +8,8 @@
 
 	export let modal: string;
 	export let title: string;
+	export let height: string = 'h-2/3';
+	export let width: string = ' w-2/3 ';
 
 	function escapeClose(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
@@ -27,9 +29,9 @@
 {#if $modalStore.modal === modal && $modalStore.open}
 	<div transition:fade={{ duration: 300 }} class="{modal} block w-full h-screen z-50 fixed top-0">
 		<div class="flex items-center justify-center w-full h-screen bg-pink-200/60">
-			<div use:outsideClick class="modal-content bg-white rounded w-2/3 h-2/3 overflow-x-auto">
+			<div use:outsideClick class="modal-content bg-white rounded {width} {height} overflow-x-auto">
 				<div
-					class="modal-title px-4 py-5 fixed bg-white w-2/3 border-b flex items-center justify-between rounded-t"
+					class="modal-title px-4 py-5 fixed bg-white {width} border-b flex items-center justify-between rounded-t"
 				>
 					<span class="text-lg font-thin capitalize">{title}</span>
 					<a href="#!" on:click|preventDefault={close}><CloseIcon /></a>
