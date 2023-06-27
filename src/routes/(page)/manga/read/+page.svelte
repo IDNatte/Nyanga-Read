@@ -21,7 +21,9 @@
 	let previewPage: string = base;
 	let maxPage: number;
 
+	let currentPage: number;
 	let index: number;
+	$: currentPage = 0;
 	$: index = 0;
 
 	async function readManga() {
@@ -43,7 +45,6 @@
 			image = chapterData[0].url;
 			index = chapterData[0].index;
 			maxPage = chapterData.length - 1;
-
 			return chapterData;
 		} else {
 			throw new Error('something went wrong !');
@@ -110,6 +111,10 @@
 		});
 	}
 
+	function loadedImage() {
+		currentPage = index + 1;
+	}
+
 	function hoverHideNavigation() {
 		navigationShow = false;
 	}
@@ -146,7 +151,8 @@
 {:then}
 	<div class="w-full flex items-center justify-center" in:fade={{ delay: 151, duration: 200 }}>
 		<ImageLoaderComponent
-			on:imageloaderror={() => loadImageError()}
+			on:imageloaderror={loadImageError}
+			on:viewerimgloaded={loadedImage}
 			className="w-11/12 h-auto flex items-center justify-center"
 			src={image}
 			alt={`${index + 1}`}
@@ -161,7 +167,7 @@
 		chapter={Number($page.url.searchParams.get('chapter_number'))}
 		showArrowNavigation={navigationShow}
 		showNavigation={navigationShow}
-		currentPage={index + 1}
+		{currentPage}
 		prevPage={previewPage}
 		maxPage={maxPage + 1}
 		homePage="/"

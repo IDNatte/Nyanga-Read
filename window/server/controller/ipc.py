@@ -209,7 +209,11 @@ def read_chapter(chapter):
                 )
             ).get("id")
             chapter_detail_id = chapter_detail.get("id")
-            chapter_detail_number = chapter_detail.get("attributes").get("chapter")
+            chapter_detail_number = (
+                chapter_detail.get("attributes").get("chapter")
+                if chapter_detail.get("attributes").get("chapter")
+                else 0
+            )
 
             # save_read_history
             save_read_history = Read(
