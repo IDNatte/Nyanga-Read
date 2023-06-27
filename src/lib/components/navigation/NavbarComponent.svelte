@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 
+	import { _ } from 'svelte-i18n';
+
 	import dropdownStore from '$lib/store/dropdown/dropdown.store';
 
 	import DropdownComponent from '$lib/components/dropdown/DropdownComponent.svelte';
@@ -52,7 +54,7 @@
 							}}
 						>
 							<MagniglassIcon width="w-5" height="w-5" />
-							<span>Search</span>
+							<span>{$_('app.menu.search')}</span>
 						</a>
 					</li>
 					<li>
@@ -64,7 +66,7 @@
 							}}
 						>
 							<SettingsIcon width="w-5" height="w-5" />
-							<span>Settings</span>
+							<span>{$_('app.menu.settings')}</span>
 						</a>
 					</li>
 
@@ -77,7 +79,7 @@
 							}}
 						>
 							<RefreshIcon width="w-5" height="w-5" />
-							<span>Reload Page</span>
+							<span>{$_('app.menu.reload')}</span>
 						</a>
 					</li>
 					<li>
@@ -89,7 +91,7 @@
 							}}
 						>
 							<InfoIcon width="w-5" height="w-5" />
-							<span>About Application</span>
+							<span>{$_('app.menu.about')}</span>
 						</a>
 					</li>
 				</ul>

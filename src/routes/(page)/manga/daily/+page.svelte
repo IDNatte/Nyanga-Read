@@ -4,6 +4,7 @@
 	import { fade } from 'svelte/transition';
 
 	import { truncate } from 'lodash';
+	import { _ } from 'svelte-i18n';
 
 	import dailyStore from '$lib/store/ephemeral/dailylist/daily.store';
 
@@ -133,7 +134,7 @@
 			class="loader w-full h-10 bg-pink-700 text-white flex items-center justify-center"
 			bind:this={endObserver}
 		>
-			<span>loading content</span>
+			<span>{$_('page.dailyPage.loader')}</span>
 		</div>
 	{/if}
 </div>
@@ -141,7 +142,7 @@
 {#if error}
 	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 		<span class="text-5xl pb-5">🙀</span>
-		<span class="uppercase">something went wrong..!!</span>
+		<span class="uppercase">{$_('page.dailyPage.error.notif')}...!!</span>
 	</div>
 {/if}
 

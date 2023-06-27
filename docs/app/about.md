@@ -8,11 +8,11 @@ Version: 3.0.0-beta.1
 </p>
 
 <p style="margin: 0px;" align="center">
-UI Version: 3.0.0-beta.1
+UI Version: 3.0.0-beta.2
 </p>
 
 <p style="margin-top: 0px;" align="center">
-Back-End System: 3.0.0-beta.1
+Back-End System: 3.0.0-beta.2
 </p>
 ### 3rd party library & API
 
@@ -26,6 +26,7 @@ Back-End System: 3.0.0-beta.1
 - [showdown](https://showdownjs.com/)
 - [lodash debounce](https://lodash.com/docs/#debounce)
 - [lodash truncate](https://lodash.com/docs/#truncate)
+- [lodash find](https://lodash.com/docs/#find)
 - [svelte-i18n](https://github.com/kaisermann/svelte-i18n)
 
 #### **System**

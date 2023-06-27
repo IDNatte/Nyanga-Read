@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
+	import { _ } from 'svelte-i18n';
 	import { truncate } from 'lodash';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
@@ -25,9 +26,9 @@
 						<div class="animate-ping border-2 p-2 rounded-full border-white absolute" />
 						<BookIcon className="fill-pink-400 relative" />
 					</div>
-					<span class="text-xl capitalize text-pink-400 pl-3 underline underline-offset-2"
-						>Daily Manga</span
-					>
+					<span class="text-xl capitalize text-pink-400 pl-3 underline underline-offset-2">
+						{$_('page.mainPage.daily')}
+					</span>
 				</div>
 				<div class="grid grid-cols-3 w-full">
 					{#each data.daily as { id, attributes, relationships }}
@@ -64,8 +65,10 @@
 				<div class="see-more w-full flex justify-center py-3">
 					<a
 						class="capitalize text-pink-400/60 text-xl underline underline-offset-2"
-						href="/manga/daily">see more</a
+						href="/manga/daily"
 					>
+						{$_('page.mainPage.more')}
+					</a>
 				</div>
 			{/if}
 		</div>
@@ -78,9 +81,9 @@
 						<div class="animate-ping border-2 p-2 rounded-full border-white absolute" />
 						<BookmarkIcon className="fill-pink-400 relative stroke-pink-400" />
 					</div>
-					<span class="text-xl capitalize text-pink-400 pl-3 underline underline-offset-2"
-						>my bookmark</span
-					>
+					<span class="text-xl capitalize text-pink-400 pl-3 underline underline-offset-2">
+						{$_('page.mainPage.bookmark')}
+					</span>
 				</div>
 				<div class="grid grid-cols-3 w-full">
 					{#each data.bookmark.bookmark_list as { id, attributes, relationships }}
@@ -118,8 +121,10 @@
 					<div class="see-more w-full flex justify-center py-3">
 						<a
 							class="capitalize text-pink-400/60 text-xl underline underline-offset-2"
-							href="/manga/bookmark">see more</a
+							href="/manga/bookmark"
 						>
+							{$_('page.mainPage.more')}
+						</a>
 					</div>
 				{/if}
 			</div>
@@ -129,7 +134,7 @@
 	{#if data.daily.length === 0 && data.bookmark.bookmark_list.length === 0}
 		<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 			<span class="text-5xl pb-5">🙀</span>
-			<span class="uppercase">something went wrong..!!</span>
+			<span class="uppercase">{$_('page.mainPage.error.notif')}..!!</span>
 		</div>
 	{/if}
 </div>

@@ -3,10 +3,12 @@
 
 	import { invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
+	import { get } from 'svelte/store';
 
 	import { Toaster } from 'svelte-french-toast';
 	import toast from 'svelte-french-toast';
 	import { find } from 'lodash';
+	import { _ } from 'svelte-i18n';
 
 	import refresh from '$lib/actions/page/refresh';
 	import markdown from '$lib/utils/markdown';
@@ -16,28 +18,46 @@
 	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 	import PageLoader from '$lib/components/loader/PageLoader.svelte';
 	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
+	import BookIcon from '$lib/components/icons/BookIcon.svelte';
 
 	export let data: LayoutData;
-	console.log(data.setting);
+	const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
 
 	const language = [
-		{ setting_type: 'language', value: '', title: 'Select Language' },
-		{ setting_type: 'language', value: 'en', title: 'English' },
-		{ setting_type: 'language', value: 'id', title: 'Bahasa Indonesia' }
+		{ setting_type: 'language', value: 'en', title: get(_)('app.preferences.language.langEn') },
+		{ setting_type: 'language', value: 'id', title: get(_)('app.preferences.language.langId') }
 	];
 
 	const content = [
-		{ setting_type: 'content', value: '', title: 'Select Content' },
-		{ setting_type: 'content', value: 'safe', title: 'Safe' },
-		{ setting_type: 'content', value: 'suggestive', title: 'Suggestive' },
-		{ setting_type: 'content', value: 'erotica', title: 'Erotica (NSFW)' },
-		{ setting_type: 'content', value: 'pornographic', title: '18+ (NSFW)' }
+		{
+			setting_type: 'content',
+			value: 'safe',
+			title: get(_)('app.preferences.demographic.demographicSafe')
+		},
+		{
+			setting_type: 'content',
+			value: 'suggestive',
+			title: get(_)('app.preferences.demographic.demographicSuggestive')
+		},
+		{
+			setting_type: 'content',
+			value: 'erotica',
+			title: get(_)('app.preferences.demographic.demographicErotic')
+		},
+		{
+			setting_type: 'content',
+			value: 'pornographic',
+			title: get(_)('app.preferences.demographic.demographicNSFW')
+		}
 	];
 
-	let selectedContent: any;
-	let selectedLang: any;
+	let selectedContent: any = find(content, {
+		value: find(data.setting.preferences, { setting_type: 'content' }).value
+	});
 
-	const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
+	let selectedLang: any = find(language, {
+		value: find(data.setting.preferences, { setting_type: 'language' }).value
+	});
 
 	async function updateContent() {
 		let settingContext = find(data.setting.preferences, {
@@ -57,20 +77,20 @@
 		if (content.status === 200) {
 			const info = await content.json();
 			if (info.status === 'unchanged') {
-				toast.error(`${info.message} 😿`, {
+				toast.error(`${get(_)('app.saveSetting.error.notif')} 😿`, {
 					position: 'top-right'
 				});
 			}
 
 			if (info.status === 'changed') {
-				toast.success(`${info.message} 😸`, {
+				toast.success(`${get(_)('app.saveSetting.saved')} 😸`, {
 					position: 'top-right'
 				});
 
 				invalidateAll();
 			}
 		} else {
-			toast.error('Something went error 😿', {
+			toast.error(`${get(_)('app.saveSetting.error.notif')} 😿`, {
 				position: 'top-right'
 			});
 		}
@@ -95,17 +115,17 @@
 		if (content.status === 200) {
 			const info = await content.json();
 			if (info.status === 'unchanged') {
-				toast.error(`${info.message} 😿`, {
+				toast.error(`${get(_)('app.saveSetting.error.notif')} 😿`, {
 					position: 'top-right'
 				});
 			}
 
 			if (info.status === 'changed') {
-				window.location.reload();
+				window.location.replace('http://localhost:5000/');
 				invalidateAll();
 			}
 		} else {
-			toast.error('Something went error 😿', {
+			toast.error(`${get(_)('app.saveSetting.error.notif')} 😿`, {
 				position: 'top-right'
 			});
 		}
@@ -135,20 +155,23 @@
 	<Toaster />
 
 	<!-- Settings Modal -->
-	<ModalComponent modal="modal-settings" title="Settings" width="w-2/6" height="h-2/6">
+	<ModalComponent
+		modal="modal-settings"
+		title={$_('app.modal.settings')}
+		width="w-3/6"
+		height="h-2/6"
+	>
 		<div class="h-24 flex items-center">
 			<div class="grid gap-4 grid-cols-1 w-full">
 				<div class="w-full flex justify-between">
 					<div class="flex items-center">
-						<TransalateIcon />
-						<span class="px-2">Current Demographic</span>
-						<span class="capitalize font-bold">
-							{find(data.setting.preferences, { setting_type: 'content' }).value}
-						</span>
+						<BookIcon />
+						<span class="px-2 capitalize">{$_('app.preferences.demographic.demographicTitle')}</span
+						>
 					</div>
 					<select bind:value={selectedContent} on:change={updateContent}>
 						{#each content as content}
-							<option value={content}>
+							<option class="capitalize" value={content}>
 								{content.title}
 							</option>
 						{/each}
@@ -158,16 +181,11 @@
 				<div class="w-full flex justify-between">
 					<div class="flex items-center">
 						<TransalateIcon />
-						<span class="px-2">Current Language</span>
-						<span class="capitalize font-bold">
-							{find(data.setting.preferences, {
-								setting_type: 'language'
-							}).value}
-						</span>
+						<span class="px-2 capitalize">{$_('app.preferences.language.langTitle')}</span>
 					</div>
-					<select bind:value={selectedLang} on:change={updateLanguage}>
+					<select class="bg-pink-100" bind:value={selectedLang} on:change={updateLanguage}>
 						{#each language as language}
-							<option value={language}>
+							<option class="capitalize" value={language}>
 								{language.title}
 							</option>
 						{/each}
@@ -178,7 +196,7 @@
 	</ModalComponent>
 
 	<!-- About Modal -->
-	<ModalComponent modal="modal-about" title="About">
+	<ModalComponent modal="modal-about" title={$_('app.modal.about')}>
 		<div class="description-wrapper p-5">
 			<div class="detail w-full prose items-center max-w-full">
 				{#if data.app.appInfo}

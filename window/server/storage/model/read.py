@@ -14,5 +14,5 @@ class Read(DB.Model, SerializerMixin):
     )
     manga = DB.Column(DB.String(200), nullable=False)
     chapter = DB.Column(DB.String(200), nullable=False)
-    chapter_number = DB.Column(DB.Integer, nullable=False)
+    chapter_number = DB.Column(DB.String(50), nullable=False)
     readed_at = DB.Column(DB.DateTime, default=datetime.datetime.utcnow)

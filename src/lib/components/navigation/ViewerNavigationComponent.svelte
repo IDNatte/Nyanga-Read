@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
@@ -17,14 +17,6 @@
 
 	const dispatch = createEventDispatcher();
 
-	function mouseInbound() {
-		dispatch('hoverIn');
-	}
-
-	function mousOutBound() {
-		dispatch('hoverOut');
-	}
-
 	function nextArrow() {
 		dispatch('nextArrow');
 	}
@@ -37,35 +29,45 @@
 <div class="h-screen fixed">
 	<div class="viewer-chaptercount fixed z-50 top-5 w-full flex item-center justify-center">
 		<div class="bg-pink-200/60 px-5 py-2 rounded-full shadow">
-			<span class="text-sm">
-				{#if chapter}
+			{#if chapter}
+				<span class="text-sm">
 					Chapter {chapter}
-				{/if} Page {currentPage} / {maxPage}
+				</span>
+			{/if}
+			<span class="text-sm">
+				Page {currentPage} / {maxPage}
 			</span>
 		</div>
 	</div>
-	{#key showNavigation}
-		<div
-			on:mouseenter={mouseInbound}
-			on:mouseleave={mousOutBound}
-			class="flex w-full fixed top-2/4 justify-between px-5 {showArrowNavigation
-				? 'opacity-1'
-				: 'opacity-0'}"
-		>
-			<a href="#!" on:click|preventDefault={prevArrow} class="arrow-navigation">
+
+	{#if showArrowNavigation}
+		<div class="flex w-full fixed top-2/4 justify-between px-5">
+			<a
+				in:fly={{ delay: 200, duration: 500, x: -200 }}
+				out:fly={{ delay: 200, duration: 500, x: -200 }}
+				href="#!"
+				on:click|preventDefault={prevArrow}
+				class="arrow-navigation"
+			>
 				<ChevronLeftIcon className="stroke-white" />
 			</a>
-			<a href="#!" on:click|preventDefault={nextArrow} class="arrow-navigation">
+			<a
+				in:fly={{ delay: 200, duration: 500, x: 200 }}
+				out:fly={{ delay: 200, duration: 500, x: 200 }}
+				href="#!"
+				on:click|preventDefault={nextArrow}
+				class="arrow-navigation"
+			>
 				<ChevronRightIcon className="stroke-white" />
 			</a>
 		</div>
+	{/if}
+
+	{#if showNavigation}
 		<div
-			on:mouseenter={mouseInbound}
-			on:mouseleave={mousOutBound}
-			transition:fade={{ duration: 100 }}
-			class="viewer-chaptercount fixed z-50 bottom-10 w-full flex item-center justify-center {showNavigation
-				? 'opacity-1'
-				: 'opacity-0'}"
+			in:fly={{ delay: 200, duration: 300, y: 200 }}
+			out:fly={{ delay: 200, duration: 300, y: 200 }}
+			class="viewer-chaptercount fixed z-50 bottom-10 w-full flex item-center justify-center"
 		>
 			<div class="bg-pink-200 px-5 py-3 rounded-full shadow">
 				<ul class="viewer-navigation-button">
@@ -82,7 +84,7 @@
 				</ul>
 			</div>
 		</div>
-	{/key}
+	{/if}
 </div>
 
 <style lang="postcss">

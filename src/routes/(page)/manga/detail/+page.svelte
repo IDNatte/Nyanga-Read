@@ -3,13 +3,16 @@
 	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 
-	import toast from 'svelte-french-toast';
 	import markdown from '$lib/utils/markdown';
+	import toast from 'svelte-french-toast';
+	import { truncate } from 'lodash';
+	import { _ } from 'svelte-i18n';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
+	import { get } from 'svelte/store';
 
 	let previewPage: string = '/';
 	let bookmarked: boolean;
@@ -63,7 +66,7 @@
 			const info = await bookmark.json();
 
 			if (info.status === 'error') {
-				toast.error(`${info.message} 😿`, {
+				toast.error(`${get(_)('page.detailPage.error.toastBookmarkError')} 😿`, {
 					position: 'top-right'
 				});
 			}
@@ -71,12 +74,12 @@
 			if (info.status === 'bookmarked') {
 				unbookmarked = false;
 				bookmarked = true;
-				toast.success(`${info.message} 😸`, {
+				toast.success(`${get(_)('page.detailPage.notif.toastBookmarked')} 😸`, {
 					position: 'top-right'
 				});
 			}
 		} else {
-			toast.error('Something went error 😿', {
+			toast.error(`${get(_)('page.detailPage.error.toastBookmarkError')} 😿`, {
 				position: 'top-right'
 			});
 		}
@@ -102,7 +105,7 @@
 			const info = await bookmark.json();
 
 			if (info.status === 'error') {
-				toast.error(`${info.message} 😿`, {
+				toast.error(`${get(_)('page.detailPage.error.toastBookmarkError')} 😿`, {
 					position: 'top-right'
 				});
 			}
@@ -110,12 +113,12 @@
 			if (info.status === 'unbookmarked') {
 				unbookmarked = true;
 				bookmarked = false;
-				toast.success(`${info.message} 😸`, {
+				toast.success(`${get(_)('page.detailPage.notif.toastUnbookmarked')} 😸`, {
 					position: 'top-right'
 				});
 			}
 		} else {
-			toast.error('Something went error 😿', {
+			toast.error(`${get(_)('page.detailPage.error.toastBookmarkError')} 😿`, {
 				position: 'top-right'
 			});
 		}
@@ -155,27 +158,29 @@
 			{/each}
 
 			{#if bookmarked}
-				{#key bookmarked}
-					<div
-						in:fly={{ y: -200, duration: 200 }}
-						out:fade={{ duration: 150 }}
-						class="manga-title bg-pink-300 flex items-center absolute px-3 py-2 text-white text-sm left-3 top-7 text-center rounded-full"
-					>
-						<BookmarkIcon className="fill-white" />
-						<span>Bookmarked</span>
-					</div>
-				{/key}
+				<div
+					in:fly={{ y: -200, duration: 200 }}
+					out:fade={{ duration: 150 }}
+					class="manga-title bg-pink-300 flex items-center absolute px-3 py-2 text-white text-sm left-3 top-7 text-center rounded-full"
+				>
+					<BookmarkIcon className="fill-white" />
+					<span class="capitalize">{$_('page.detailPage.bookmarked')}</span>
+				</div>
 			{/if}
 
 			<div
 				class="manga-title bg-pink-400 inline-block absolute px-3 py-2 text-white left-3 bottom-7 text-center"
 			>
 				<span class="block"
-					>{data.detail.attributes.title.en || data.detail.attributes.title.ja}</span
+					>{truncate(data.detail.attributes.title.en, { length: 20 }) ||
+						truncate(data.detail.attributes.title.ja, { length: 20 })}</span
 				>
 				{#each data.detail.attributes.altTitles as altTitle}
 					{#if altTitle.en || altTitle.ja}
-						<span class="block">{altTitle.en || altTitle.ja}</span>
+						<span class="block"
+							>{truncate(altTitle.en, { length: 20 }) ||
+								truncate(altTitle.ja, { length: 20 })}</span
+						>
 					{/if}
 				{/each}
 			</div>
@@ -189,7 +194,8 @@
 						href="/manga/read?chapter={data.last_read.chapter}&chapter_number={data.last_read
 							.chapter_number}"
 					>
-						last readed chapter {data.last_read.chapter_number}
+						{$_('page.detailPage.lastReadInfo')}
+						{data.last_read.chapter_number}
 					</a>
 				</div>
 			{/if}
@@ -200,8 +206,8 @@
 					{#each data.detail.relationships as artist}
 						{#if artist.type === 'artist'}
 							<span
-								class="manga-title bg-pink-400 inline-block px-2 py-1 text-white text-center text-sm"
-								>By {artist.attributes.name}</span
+								class="manga-title bg-pink-400 inline-block px-2 py-1 text-white text-center text-sm capitalize"
+								>{$_('page.detailPage.author')} {artist.attributes.name}</span
 							>
 						{/if}
 					{/each}
@@ -222,7 +228,7 @@
 					</div>
 				{:else}
 					<div class="detail w-full text-center">
-						<span>No Description 😕</span>
+						<span class="capitalize">{$_('page.detailPage.noDesc')} 😕</span>
 					</div>
 				{/if}
 			</div>
@@ -253,13 +259,13 @@
 {:catch error}
 	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 		<span class="text-5xl pb-5">🙀</span>
-		<span class="uppercase">something went wrong..!!</span>
+		<span class="uppercase">{$_('page.detailPage.error.notif')}...!</span>
 	</div>
 
 	<FloatNavigationComponent
 		homeUrl="/"
 		backUrl={previewPage}
-		showBack={false}
+		showBack={true}
 		showBookmark={false}
 		showUnbookmark={false}
 	/>

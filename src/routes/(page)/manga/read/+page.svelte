@@ -2,27 +2,33 @@
 	import { afterNavigate } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
-	import { base } from '$app/paths';
+	import { get } from 'svelte/store';
 	import { onMount } from 'svelte';
 
 	import toast from 'svelte-french-toast';
 	import { find } from 'lodash';
+	import { _ } from 'svelte-i18n';
 
 	import imageviewerStore from '$lib/store/imageviewer/imageviewer.store';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
+	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 
+	let arrowNavigatonShow: boolean;
 	let navigationShow: boolean;
-	$: navigationShow = true;
+	$: arrowNavigatonShow;
+	$: navigationShow;
 
 	let image: string | null | undefined = null;
-	let previewPage: string = base;
+	let previewPage: string = '/';
 	let maxPage: number;
 
+	let imageLoaded: boolean;
 	let currentPage: number;
 	let index: number;
+	$: imageLoaded = false;
 	$: currentPage = 0;
 	$: index = 0;
 
@@ -106,26 +112,38 @@
 	}
 
 	function loadImageError() {
-		toast.error(`cannot load image for chapter`, {
+		toast.error(`${get(_)('page.readPage.error.toastNotif')}`, {
 			position: 'bottom-right'
 		});
 	}
 
 	function loadedImage() {
+		imageLoaded = true;
 		currentPage = index + 1;
 	}
 
-	function hoverHideNavigation() {
-		navigationShow = false;
-	}
+	function revealNavigation(event: MouseEvent) {
+		const xThresholdLeft = 50;
+		const xThresholdRight = window.innerWidth - xThresholdLeft;
+		const yThresholdBottom = window.innerHeight - 100;
 
-	function hoverShowNavigation() {
-		navigationShow = true;
+		if (event.clientX >= xThresholdRight || event.clientX <= xThresholdLeft) {
+			arrowNavigatonShow = true;
+		} else {
+			arrowNavigatonShow = false;
+		}
+
+		if (event.clientY >= yThresholdBottom) {
+			navigationShow = true;
+		} else {
+			navigationShow = false;
+		}
 	}
 
 	onMount(() => {
 		setTimeout(() => {
 			navigationShow = false;
+			arrowNavigatonShow = false;
 		}, 2500);
 	});
 
@@ -149,7 +167,24 @@
 		/>
 	</div>
 {:then}
-	<div class="w-full flex items-center justify-center" in:fade={{ delay: 151, duration: 200 }}>
+	{#if !imageLoaded}
+		<div class="fixed w-full" in:fade={{ duration: 200 }} out:fade={{ duration: 150 }}>
+			<CirclePageLoader
+				color="text-pink-700"
+				style={{
+					className: 'w-full h-screen flex items-center justify-center',
+					w: 'w-10',
+					h: 'h-10'
+				}}
+			/>
+		</div>
+	{/if}
+
+	<div
+		on:mousemove={revealNavigation}
+		class="w-full flex items-center justify-center"
+		in:fade={{ delay: 151, duration: 200 }}
+	>
 		<ImageLoaderComponent
 			on:imageloaderror={loadImageError}
 			on:viewerimgloaded={loadedImage}
@@ -160,12 +195,10 @@
 	</div>
 
 	<ViewerNavigationComponent
-		on:hoverIn={hoverShowNavigation}
-		on:hoverOut={hoverHideNavigation}
 		on:nextArrow={nextChapter}
 		on:prevArrow={prevChapter}
 		chapter={Number($page.url.searchParams.get('chapter_number'))}
-		showArrowNavigation={navigationShow}
+		showArrowNavigation={arrowNavigatonShow}
 		showNavigation={navigationShow}
 		{currentPage}
 		prevPage={previewPage}
@@ -175,6 +208,14 @@
 {:catch error}
 	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 		<span class="text-5xl pb-5">🙀</span>
-		<span class="uppercase">something went wrong..!!</span>
+		<span class="uppercase">{$_('page.readPage.error.notif')}...!!</span>
 	</div>
+
+	<FloatNavigationComponent
+		homeUrl="/"
+		backUrl={previewPage}
+		showBack={true}
+		showBookmark={false}
+		showUnbookmark={false}
+	/>
 {/await}

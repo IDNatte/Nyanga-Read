@@ -10,8 +10,8 @@
 	let loaded: boolean = false;
 	let thisImage: HTMLImageElement;
 
+	loaderStore.set('loading');
 	onMount(() => {
-		loaderStore.set('loading');
 		thisImage.onload = () => {
 			dispatch('viewerimgloaded', {
 				image: src

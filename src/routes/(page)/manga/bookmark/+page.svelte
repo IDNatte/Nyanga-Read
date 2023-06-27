@@ -2,6 +2,7 @@
 	import { fade } from 'svelte/transition';
 
 	import { truncate } from 'lodash';
+	import { _ } from 'svelte-i18n';
 
 	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
@@ -75,7 +76,7 @@
 {:catch error}
 	<div class="homepage pb-5 pt-[4.5em] flex flex-col w-full h-screen items-center justify-center">
 		<span class="text-5xl pb-5">🙀</span>
-		<span class="uppercase">something went wrong..!!</span>
+		<span class="uppercase">{$_('page.bookmarkPage.error.notif')}..!!</span>
 	</div>
 {/await}
 

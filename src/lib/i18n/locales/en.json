@@ -1,0 +1,86 @@
+{
+  "page": {
+    "mainPage": {
+      "daily": "daily manga",
+      "bookmark": "my bookmark",
+      "more": "see more",
+      "error": {
+        "notif": "something went wrong"
+      }
+    },
+    "dailyPage": {
+      "loader": "loading content",
+      "error": {
+        "notif": "something went wrong"
+      }
+    },
+    "bookmarkPage": {
+      "error": {
+        "notif": "something went wrong"
+      }
+    },
+    "searchPage": {
+      "searchPlaceholder": "tell me the title in your mind...",
+      "searchContainer": "what the title ?",
+      "nothingFound": "can't find anything about"
+    },
+    "readPage": {
+      "error": {
+        "notif": "something went wrong",
+        "toastNotif": "cannot load image"
+      }
+    },
+    "detailPage": {
+      "bookmarked": "bookmarked",
+      "lastReadInfo": "last readed chapter",
+      "author": "by",
+      "noDesc": "no description",
+      "notif": {
+        "toastBookmarked": "bookmark saved",
+        "toastUnbookmarked": "bookmark removed"
+      },
+      "error": {
+        "toastBookmarkError": "something went error",
+        "notif": "something went wrong"
+      }
+    },
+    "errorPage": {
+      "notification": "something went wrong",
+      "errMsg": "error message"
+    }
+  },
+  "app": {
+    "menu": {
+      "search": "search",
+      "settings": "settings",
+      "reload": "reload page",
+      "about": "about application"
+    },
+    "modal": {
+      "settings": "settings",
+      "about": "about"
+    },
+    "preferences": {
+      "language": {
+        "langTitle": "language",
+        "langNoSelect": "select language",
+        "langId": "bahasa indonesia",
+        "langEn": "english"
+      },
+      "demographic": {
+        "demographicTitle": "demoghraphic",
+        "demographicNoSelect": "select content",
+        "demographicSafe": "safe",
+        "demographicSuggestive": "suggestive",
+        "demographicErotic": "erotica",
+        "demographicNSFW": "18+ (NSFW)"
+      }
+    },
+    "saveSetting": {
+      "saved": "setting saved",
+      "error": {
+        "notif": "something went error"
+      }
+    }
+  }
+}

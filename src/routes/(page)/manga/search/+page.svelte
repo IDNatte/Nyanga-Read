@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
+
 	import { debounce, truncate } from 'lodash';
+	import { _ } from 'svelte-i18n';
 
 	import searchStore from '$lib/store/ephemeral/search/search.store';
 
@@ -88,14 +90,14 @@
 			on:input={searchData}
 			type="text"
 			class="border px-2 py-1 rounded w-full"
-			placeholder="Tell me the title in your mind..."
+			placeholder={$_('page.searchPage.searchPlaceholder')}
 			bind:value={$searchStore}
 		/>
 	</div>
 	<div class="search-result w-full pt-8">
 		{#if placeholder}
 			<div class="w-full text-center">
-				<span class="italic text-gray-400 text-xl">😸 What the title ?</span>
+				<span class="italic text-gray-400 text-xl">{$_('page.searchPage.searchContainer')} 😸</span>
 			</div>
 		{/if}
 		{#if data.length !== 0}
@@ -134,7 +136,7 @@
 		{#if searchValue && data.length === 0}
 			<div class="w-full text-center">
 				<span class="italic text-gray-400 text-xl"
-					>can't find anything about "{searchValue}" 😿</span
+					>{$_('page.searchPage.nothingFound')} "{searchValue}" 😿</span
 				>
 			</div>
 		{/if}

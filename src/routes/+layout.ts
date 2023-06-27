@@ -1,11 +1,22 @@
 import type { LayoutLoad } from './$types'
+import { browser } from '$app/environment'
+
+import { locale, waitLocale } from 'svelte-i18n'
 
 import '../app.css'
+import '$lib/i18n'
+
 export const ssr = false
 export const prerender = true
 
+
 export const load: LayoutLoad = async ({ fetch }) => {
   const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement
+
+  // set Locale  
+  if (browser) {
+    locale.set(document.documentElement.lang)
+  }
 
   const appInfo = async () => {
     const app = await fetch('http://localhost:5000/ipc/app', {
@@ -15,8 +26,6 @@ export const load: LayoutLoad = async ({ fetch }) => {
         'PCSRFWV-Token': pcsrfToken.value as string
       }
     })
-
-    // const 
 
     if (app.status === 200) {
       const appData = await app.json()
@@ -48,6 +57,8 @@ export const load: LayoutLoad = async ({ fetch }) => {
       return { preferences: null }
     }
   }
+
+  await waitLocale()
 
   return {
     app: appInfo(),
