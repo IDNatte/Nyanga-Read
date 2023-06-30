@@ -10,7 +10,7 @@
 
 ---
 
-<p align="center"><a href="https://idnatte.github.io/Nyanga-Read/nyanga-linux/Nyanga-Read">Download for linux</a></p>
+<p align="center"><a href="https://idnatte.github.io/Nyanga-Read/nyanga-ubuntu/Nyanga-Read">Download for ubuntu</a></p>
 
 <p align="center"><a href="https://idnatte.github.io/Nyanga-Read/nyanga-window/Nyanga-Read-window.exe">Download  for windows</a></p>
 
