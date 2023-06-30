@@ -9,6 +9,7 @@
 </p>
 
 ---
+:smile:
 
 <p align="center"><a href="https://idnatte.github.io/Nyanga-Read/nyanga-ubuntu/Nyanga-Read">Download for ubuntu</a></p>
 
