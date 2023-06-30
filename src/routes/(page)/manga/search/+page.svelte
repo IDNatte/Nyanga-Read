@@ -97,7 +97,8 @@
 	<div class="search-result w-full pt-8">
 		{#if placeholder}
 			<div class="w-full text-center">
-				<span class="italic text-gray-400 text-xl">{$_('page.searchPage.searchContainer')} 😸</span>
+				<span class="italic text-gray-400 text-xl">{$_('page.searchPage.searchContainer')} </span>
+				<span class="text-xl pl-1">😸</span>
 			</div>
 		{/if}
 		{#if data.length !== 0}
@@ -119,8 +120,13 @@
 							<div class="flex flex-col">
 								<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span>
 
+								<!-- UI bug if duplicate key occured -->
 								{#each attributes.altTitles as item}
-									<span class="font-jpfont">{truncate(item.ja, { length: 15 })}</span>
+									{#if item.ja}
+										<span class="font-jpfont">
+											{truncate(item.ja, { length: 15 })}
+										</span>
+									{/if}
 								{/each}
 							</div>
 							{#if attributes.lastChapter && attributes.lastVolume}
@@ -135,9 +141,10 @@
 		{/if}
 		{#if searchValue && data.length === 0}
 			<div class="w-full text-center">
-				<span class="italic text-gray-400 text-xl"
-					>{$_('page.searchPage.nothingFound')} "{searchValue}" 😿</span
-				>
+				<span class="italic text-gray-400 text-xl">
+					{$_('page.searchPage.nothingFound')} "{searchValue}"
+				</span>
+				<span class="text-xl pl-1">😿</span>
 			</div>
 		{/if}
 	</div>

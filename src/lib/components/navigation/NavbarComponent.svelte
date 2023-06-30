@@ -4,6 +4,7 @@
 	import { _ } from 'svelte-i18n';
 
 	import dropdownStore from '$lib/store/dropdown/dropdown.store';
+	import modalStore from '$lib/store/modal/modal.store';
 
 	import DropdownComponent from '$lib/components/dropdown/DropdownComponent.svelte';
 
@@ -13,7 +14,6 @@
 	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
 	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
-	import modalStore from '$lib/store/modal/modal.store';
 
 	function dropdownClick(dropdown: string) {
 		if ($dropdownStore.open) {

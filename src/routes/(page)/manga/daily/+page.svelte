@@ -71,10 +71,23 @@
 		}
 	}
 
+	function scrollEphemeral() {
+		$dailyStore.scroll = window.scrollY;
+	}
+
 	onMount(async () => {
 		if ($dailyStore.data.length === 0) {
 			await getMangaLists();
 		}
+
+		if ($dailyStore.scroll !== 0) {
+			let scrollPos: number = $dailyStore.scroll;
+
+			setTimeout(() => {
+				window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+			}, 1500);
+		}
+
 		try {
 			observer.observe(endObserver);
 		} catch (e) {
@@ -96,6 +109,8 @@
 		}
 	});
 </script>
+
+<svelte:window on:scroll={scrollEphemeral} />
 
 <div in:fade={{ delay: 151, duration: 200 }} class="list-daily-content h-auto">
 	{#if $dailyStore.data.length > 0 && !error}

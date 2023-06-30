@@ -59,6 +59,7 @@
 						<div class="flex flex-col">
 							<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span>
 
+							<!-- UI bug if duplicate key occured -->
 							{#each attributes.altTitles as item}
 								<span class="font-jpfont">{truncate(item.ja, { length: 15 })}</span>
 							{/each}

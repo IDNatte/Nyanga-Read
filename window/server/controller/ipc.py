@@ -134,7 +134,7 @@ def get_manga_detail(manga):
             Read.query.filter_by(manga=manga).order_by(Read.readed_at.desc()).first()
         )
 
-        default_language = (
+        language = (
             Setting.query.filter_by(setting_type="language").one_or_none().to_dict()
         )
 
@@ -143,34 +143,25 @@ def get_manga_detail(manga):
         )
 
         manga = requests.get(
-            f"https://api.mangadex.org/manga/{manga}/aggregate?translatedLanguage[]={default_language.get('value')}"
+            f"https://api.mangadex.org/manga/{manga}/feed?translatedLanguage[]={language.get('value')}&order[chapter]=desc"
         )
 
-        manga = manga.json()
+        if detail.status_code == 200 and manga.status_code == 200:
+            manga = manga.json()
 
-        if detail.status_code == 200:
             return jsonify(
                 {
                     "last_read": latest_readed.to_dict() if latest_readed else None,
-                    "detail_data": detail.json(),
+                    "detail_data": detail.json().get("data"),
                     "bookmarked": True if bookmarked is not None else False,
+                    "manga_data_debug": manga,
                     "manga_data": [
                         {
-                            "chapter_id": manga.get("volumes")
-                            .get(volume)
-                            .get("chapters")
-                            .get(chapter_number)
-                            .get("id"),
-                            "chapter": manga.get("volumes")
-                            .get(volume)
-                            .get("chapters")
-                            .get(chapter_number)
-                            .get("chapter"),
+                            "chapter_id": debug.get("id"),
+                            "chapter": debug.get("attributes").get("chapter"),
+                            "title": debug.get("attributes").get("title"),
                         }
-                        for volume in manga.get("volumes")
-                        for chapter_number in manga.get("volumes")
-                        .get(volume)
-                        .get("chapters")
+                        for debug in manga.get("data")
                     ],
                 }
             )
@@ -411,10 +402,3 @@ def app_info():
 
     except FileNotFoundError as _:
         return jsonify({"status": "error", "location": "exception"})
-
-
-# @ipc_handler.route("/testing")
-# def testing():
-#     print("coba")
-
-#     return jsonify({"testing": True})

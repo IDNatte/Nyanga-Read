@@ -7,23 +7,27 @@
 
 	import { Toaster } from 'svelte-french-toast';
 	import toast from 'svelte-french-toast';
-	import { find } from 'lodash';
 	import { _ } from 'svelte-i18n';
+	import { find } from 'lodash';
 
-	import refresh from '$lib/actions/page/refresh';
 	import markdown from '$lib/utils/markdown';
 
 	import loaderStore from '$lib/store/loader/loader.store';
 
 	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 	import PageLoader from '$lib/components/loader/PageLoader.svelte';
+
 	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
 	import BookIcon from '$lib/components/icons/BookIcon.svelte';
 
 	export let data: LayoutData;
 	const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
 
+	// add your language here under this command, if you wan't to change stuff, make sure you know what you're doing
 	const language = [
+		// <add your language here> below is example value
+		// { setting_type: 'language', value: 'en', title: get(_)('app.preferences.language.langEn') },
+
 		{ setting_type: 'language', value: 'en', title: get(_)('app.preferences.language.langEn') },
 		{ setting_type: 'language', value: 'id', title: get(_)('app.preferences.language.langId') }
 	];
@@ -63,7 +67,6 @@
 		let settingContext = find(data.setting.preferences, {
 			setting_type: selectedContent.setting_type
 		});
-		console.log(settingContext.id);
 		const content = await fetch('http://localhost:5000/ipc/settings', {
 			method: 'PATCH',
 			headers: {
@@ -101,7 +104,6 @@
 			setting_type: selectedLang.setting_type
 		});
 
-		console.log(settingContext.id);
 		const content = await fetch('http://localhost:5000/ipc/settings', {
 			method: 'PATCH',
 			headers: {
@@ -121,7 +123,7 @@
 			}
 
 			if (info.status === 'changed') {
-				window.location.replace('http://localhost:5000/');
+				window.location.replace('/');
 				invalidateAll();
 			}
 		} else {
@@ -138,15 +140,7 @@
 	</div>
 {/if}
 
-<main
-	use:refresh={{
-		code: 'KeyK',
-		control: true,
-		callback: async () => {
-			await invalidateAll();
-		}
-	}}
->
+<main>
 	<slot />
 </main>
 
@@ -169,7 +163,11 @@
 						<span class="px-2 capitalize">{$_('app.preferences.demographic.demographicTitle')}</span
 						>
 					</div>
-					<select bind:value={selectedContent} on:change={updateContent}>
+					<select
+						class="rounded px-2 capitalize"
+						bind:value={selectedContent}
+						on:change={updateContent}
+					>
 						{#each content as content}
 							<option class="capitalize" value={content}>
 								{content.title}
@@ -183,7 +181,11 @@
 						<TransalateIcon />
 						<span class="px-2 capitalize">{$_('app.preferences.language.langTitle')}</span>
 					</div>
-					<select class="bg-pink-100" bind:value={selectedLang} on:change={updateLanguage}>
+					<select
+						class="rounded px-2 capitalize"
+						bind:value={selectedLang}
+						on:change={updateLanguage}
+					>
 						{#each language as language}
 							<option class="capitalize" value={language}>
 								{language.title}

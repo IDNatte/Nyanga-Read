@@ -5,7 +5,7 @@
 
 	import markdown from '$lib/utils/markdown';
 	import toast from 'svelte-french-toast';
-	import { truncate } from 'lodash';
+	import { truncate, get as get_ } from 'lodash';
 	import { _ } from 'svelte-i18n';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
@@ -14,9 +14,11 @@
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import { get } from 'svelte/store';
 
+	const language: string = document.documentElement.lang;
+
 	let previewPage: string = '/';
-	let bookmarked: boolean;
 	let unbookmarked: boolean;
+	let bookmarked: boolean;
 	$: unbookmarked;
 	$: bookmarked;
 
@@ -33,10 +35,11 @@
 
 		if (manga.status === 200) {
 			const mangaDetail = await manga.json();
+
 			bookmarked = mangaDetail.bookmarked;
 			unbookmarked = mangaDetail.bookmarked ? false : true;
 			return {
-				detail: mangaDetail.detail_data.data,
+				detail: mangaDetail.detail_data,
 				mangaLists: mangaDetail.manga_data,
 				last_read: mangaDetail.last_read,
 				bookmarked: mangaDetail.bookmarked
@@ -171,16 +174,12 @@
 			<div
 				class="manga-title bg-pink-400 inline-block absolute px-3 py-2 text-white left-3 bottom-7 text-center"
 			>
-				<span class="block"
-					>{truncate(data.detail.attributes.title.en, { length: 20 }) ||
-						truncate(data.detail.attributes.title.ja, { length: 20 })}</span
-				>
+				<span class="block">
+					{data.detail.attributes.title.en || data.detail.attributes.title.ja}
+				</span>
 				{#each data.detail.attributes.altTitles as altTitle}
-					{#if altTitle.en || altTitle.ja}
-						<span class="block"
-							>{truncate(altTitle.en, { length: 20 }) ||
-								truncate(altTitle.ja, { length: 20 })}</span
-						>
+					{#if altTitle.ja}
+						<span class="block font-jpfont">{truncate(altTitle.ja, { length: 20 })}</span>
 					{/if}
 				{/each}
 			</div>
@@ -222,9 +221,12 @@
 				</div>
 			</div>
 			<div class="description-wrapper p-5">
-				{#if data.detail.attributes.description.en}
+				{#if data.detail.attributes.description}
 					<div class="detail w-full prose items-center max-w-full">
-						{@html markdown(data.detail.attributes.description.en)}
+						{@html markdown(
+							get_(data.detail.attributes.description, language) ||
+								get_(data.detail.attributes.description, 'en')
+						)}
 					</div>
 				{:else}
 					<div class="detail w-full text-center">
@@ -235,11 +237,14 @@
 			<div class="content-wrapper p-5">
 				<div class="chapter-list">
 					<ul class="chapter-list">
-						{#each data.mangaLists as { chapter, chapter_id }}
+						{#each data.mangaLists as { chapter, chapter_id, title }}
 							<li>
-								<a href="/manga/read?chapter={chapter_id}&chapter_number={chapter}"
-									>Chapter {chapter}</a
-								>
+								<a href="/manga/read?chapter={chapter_id}&chapter_number={chapter}">
+									Chapter {chapter}
+									{#if title}
+										<i>"{title}"</i>
+									{/if}
+								</a>
 							</li>
 						{/each}
 					</ul>

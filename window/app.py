@@ -4,7 +4,6 @@ from utils.storage_initializer import db_settings_initializer
 
 import threading
 import webview
-import utils
 import sys
 import os
 

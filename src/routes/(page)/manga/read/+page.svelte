@@ -6,15 +6,15 @@
 	import { onMount } from 'svelte';
 
 	import toast from 'svelte-french-toast';
-	import { find } from 'lodash';
 	import { _ } from 'svelte-i18n';
+	import { find } from 'lodash';
 
 	import imageviewerStore from '$lib/store/imageviewer/imageviewer.store';
 
-	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
-	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import ViewerNavigationComponent from '$lib/components/navigation/ViewerNavigationComponent.svelte';
 	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
+	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
+	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 
 	let arrowNavigatonShow: boolean;
 	let navigationShow: boolean;

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import { _ } from 'svelte-i18n';
 	import { truncate } from 'lodash';
+	import { _ } from 'svelte-i18n';
 
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import NavbarComponent from '$lib/components/navigation/NavbarComponent.svelte';
@@ -46,9 +46,11 @@
 
 							<div slot="card-title" class="w-full flex p-5 justify-between items-center">
 								<div class="flex flex-col">
-									<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span
-									>
+									<span>
+										{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}
+									</span>
 
+									<!-- UI bug if duplicate key occured -->
 									{#each attributes.altTitles as item}
 										<span class="font-jpfont">{truncate(item.ja, { length: 15 })}</span>
 									{/each}
@@ -100,9 +102,11 @@
 							</div>
 							<div slot="card-title" class="w-full flex p-5 justify-between items-center">
 								<div class="flex flex-col">
-									<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span
-									>
+									<span>
+										{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}
+									</span>
 
+									<!-- UI bug if duplicate key occured -->
 									{#each attributes.altTitles as item}
 										<span class="font-jpfont">{truncate(item.ja, { length: 15 })}</span>
 									{/each}
