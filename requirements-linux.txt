@@ -1,0 +1,9 @@
+pyinstaller
+flask
+pywebview
+flask-cors
+pycairo
+PyGObject
+requests
+flask-sqlalchemy
+SQLAlchemy-serializer

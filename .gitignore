@@ -1,16 +1,32 @@
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.DS_Store
 node_modules
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+.vercel
+.output
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
-# Swap the comments on the following lines if you don't wish to use zero-installs
-# Documentation here: https://yarnpkg.com/features/zero-installs
-.yarn/cache
-#.pnp.*
+
+# yarn
+.yarn
+
+
+# python
+__pycache__
+.build
+.venv
+.env
 dist
+build
+layout
+*.log
 
-# GH_Token
-gh_token.txt
+nyanga-linux
+nyanga-windows
+
+*test*

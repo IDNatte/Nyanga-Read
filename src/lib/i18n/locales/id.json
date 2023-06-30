@@ -1,0 +1,84 @@
+{
+  "page": {
+    "mainPage": {
+      "daily": "manga terbaru",
+      "bookmark": "manga ditandai",
+      "more": "lihat selanjutnya",
+      "error": {
+        "notif": "terjadi kesalahan"
+      }
+    },
+    "dailyPage": {
+      "loader": "memuat konten",
+      "error": {
+        "notif": "terjadi kesalahan"
+      }
+    },
+    "bookmarkPage": {
+      "error": {
+        "notif": "terjadi kesalahan"
+      }
+    },
+    "searchPage": {
+      "searchPlaceholder": "judul apa yang ingin kamu cari...",
+      "searchContainer": "apa judulnya ?",
+      "nothingFound": "tidak dapat menemukan judul"
+    },
+    "readPage": {
+      "error": {
+        "notif": "terjadi kesalahan",
+        "toastNotif": "tidak dapat memuat gambar"
+      }
+    },
+    "detailPage": {
+      "bookmarked": "ditandai",
+      "lastReadInfo": "chapter terakhir di baca",
+      "author": "oleh",
+      "noDesc": "tidak ada deskripsi",
+      "notif": {
+        "toastBookmarked": "telah ditandai",
+        "toastUnbookmarked": "dihapus dari ditandai"
+      },
+      "error": {
+        "toastBookmarkError": "terjadi kesalahan",
+        "notif": "terjadi kesalahan"
+      }
+    },
+    "errorPage": {
+      "notification": "terjadi kesalahan",
+      "errMsg": "pesan kesalahan"
+    }
+  },
+  "app": {
+    "menu": {
+      "search": "cari",
+      "settings": "pengaturan",
+      "reload": "muat ulang",
+      "about": "tentang aplikasi"
+    },
+    "modal": {
+      "settings": "pengaturan",
+      "about": "tentang"
+    },
+    "preferences": {
+      "language": {
+        "langTitle": "bahasa",
+        "langId": "bahasa indonesia",
+        "langEn": "bahasa inggris"
+      },
+      "demographic": {
+        "demographicTitle": "demografik",
+        "demographicSafe": "semua umur",
+        "demographicSuggestive": "sugestif (ecchi)",
+        "demographicErotic": "erotis (ecchi)",
+        "demographicNSFW": "18+ (NSFW)"
+      }
+    },
+    "saveSetting": {
+      "saved": "pengaturan tersimpan",
+      "error": {
+        "notif": "terjadi kesalahan"
+      }
+    }
+  }
+}
