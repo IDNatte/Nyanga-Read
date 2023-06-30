@@ -5,7 +5,7 @@
 # Nyanga Read 😸
 
 <p align="center">
-  <a href="https://gitlab.com/IDNatte/Nyanga-Read/-/pipelines"><img alt="pipeline status" src="https://gitlab.com/IDNatte/Nyanga-Read/badges/experimental/pipeline.svg?key_text=Build" /></a>
+  <a href="https://gitlab.com/IDNatte/Nyanga-Read/-/pipelines"><img alt="pipeline status" src="https://gitlab.com/IDNatte/Nyanga-Read/badges/main/pipeline.svg?key_text=Build" /></a>
 </p>
 
 ---
