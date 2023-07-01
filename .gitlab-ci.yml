@@ -71,7 +71,7 @@ signin:
     - gpg --import pubkey.gpg
 
   script:
-    - cd nyaga-ubuntu/
+    - cd nyanga-ubuntu/
     - gpg --output Nyanga-Read.gpg --detach-sign --armor Nyanga-Read
     - cd .. && cd nyanga-window/
     - gpg --output Nyanga-Read-window.gpg --detach-sign --armor Nyanga-Read-window.exe
