@@ -11,10 +11,8 @@
 ---
 
 <p align="center"><a href="https://idnatte.gitlab.io/Nyanga-Read/nyanga-ubuntu/Nyanga-Read">Download for ubuntu</a></p>
-<p align="center"><a href="https://idnatte.gitlab.io/Nyanga-Read/nyanga-ubuntu/Nyanga-Read.gpg">Verify linux executable</a></p>
-
 <p align="center"><a href="https://idnatte.gitlab.io/Nyanga-Read/nyanga-window/Nyanga-Read-window.exe">Download  for windows</a></p>
-<p align="center"><a href="https://idnatte.gitlab.io/Nyanga-Read/nyanga-window/Nyanga-Read-window.gpg">Verify windows executable</a></p>
+
 ---
 
 Manga Reader for desktop powered by sveltekit, mangadex, and pywebview.

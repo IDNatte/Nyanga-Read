@@ -1,7 +1,7 @@
 stages:
   - build
-  - sign
   - deploy
+  - release
 
 build:window:
   image: mcr.microsoft.com/windows/servercore:ltsc2019
@@ -58,28 +58,17 @@ build:ubuntu:
     paths:
       - nyanga-ubuntu/
 
-signin:
-  needs:
-    - build:ubuntu
-    - build:window
-  image: alpine:latest
-  stage: sign
-  before_script:
-    - apk update
-    - apk add gnupg wget
-    - wget https://gitlab.com/IDNatte.gpg -O pubkey.gpg
-    - gpg --import pubkey.gpg
-
+release:
+  stage: release
   script:
-    - cd nyanga-ubuntu/
-    - gpg --output Nyanga-Read.gpg --detach-sign --armor Nyanga-Read
-    - cd .. && cd nyanga-window/
-    - gpg --output Nyanga-Read-window.gpg --detach-sign --armor Nyanga-Read-window.exe
-
+    - git tag -a v.3.0.0 -m "Release v.3.0.0"
+    - git push origin v.3.0.0
   artifacts:
     paths:
       - nyanga-ubuntu/
       - nyanga-window/
+  only:
+    - tags
 
 pages:
   stage: deploy
