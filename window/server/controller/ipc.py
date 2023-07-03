@@ -154,7 +154,6 @@ def get_manga_detail(manga):
                     "last_read": latest_readed.to_dict() if latest_readed else None,
                     "detail_data": detail.json().get("data"),
                     "bookmarked": True if bookmarked is not None else False,
-                    "manga_data_debug": manga,
                     "manga_data": [
                         {
                             "chapter_id": debug.get("id"),
@@ -278,10 +277,6 @@ def search():
 @verify_ua
 def bookmark():
     if req.method == "GET":
-        page = req.args.get("page", None)
-
-        if page:
-            pass
         bookmark_data = Bookmark.query.order_by(Bookmark.bookmarked_at.desc()).all()
 
         bookmark_link = [
