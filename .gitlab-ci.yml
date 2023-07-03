@@ -67,8 +67,6 @@ release:
     paths:
       - nyanga-ubuntu/
       - nyanga-window/
-  only:
-    - tags
 
 pages:
   stage: deploy
