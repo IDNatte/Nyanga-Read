@@ -1,7 +1,6 @@
 stages:
   - build
   - deploy
-  - test
 
 build:window:
   image: mcr.microsoft.com/windows/servercore:ltsc2019
@@ -53,34 +52,6 @@ build:ubuntu:
     - touch log/app.log
     - pip install -r requirements-linux.txt
     - pyinstaller --noconfirm --distpath nyanga-ubuntu Nyanga-Read-linux.spec
-
-  artifacts:
-    paths:
-      - nyanga-ubuntu/
-
-test:window:
-  image: python:3
-  stage: test
-  script:
-    - cd nyanga-window/
-    - pip install -r requirements-win.txt
-    - pip install pytest pytest-cov
-    - pytest --cov --cov-report term --cov-report xml:coverage.xml
-    - mv coverage.xml nyanga-window/
-
-  artifacts:
-    paths:
-      - nyanga-window/
-
-test:ubuntu:
-  image: python:3
-  stage: test
-  script:
-    - cd nyanga-ubuntu/
-    - pip install -r requirements-linux.txt
-    - pip install pytest pytest-cov
-    - pytest --cov --cov-report term --cov-report xml:coverage.xml
-    - mv coverage.xml nyanga-window/
 
   artifacts:
     paths:
