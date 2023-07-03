@@ -1,7 +1,31 @@
 stages:
+  - test
   - build
   - deploy
-  - release
+
+test:javascript:
+  stage: test
+  script:
+    - npm install
+    - npx nyc --reporter cobertura mocha
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+
+test:python:
+  stage: test
+  image: python:3
+  script:
+    - pip install pytest pytest-cov
+    - pytest --cov --cov-report term --cov-report xml:coverage.xml
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
 
 build:window:
   image: mcr.microsoft.com/windows/servercore:ltsc2019
@@ -57,16 +81,6 @@ build:ubuntu:
   artifacts:
     paths:
       - nyanga-ubuntu/
-
-release:
-  stage: release
-  script:
-    - git tag -a v.3.0.0 -m "Release v.3.0.0"
-    - git push origin v.3.0.0
-  artifacts:
-    paths:
-      - nyanga-ubuntu/
-      - nyanga-window/
 
 pages:
   stage: deploy
