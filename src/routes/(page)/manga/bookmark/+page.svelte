@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-	import { truncate } from 'lodash';
+	import { truncate, get as get_ } from 'lodash';
 	import { _ } from 'svelte-i18n';
 
 	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
@@ -57,7 +57,11 @@
 					</div>
 					<div slot="card-title" class="w-full flex p-5 justify-between items-center">
 						<div class="flex flex-col">
-							<span>{truncate(attributes.title.en || attributes.title.ja, { length: 20 })}</span>
+							<span
+								>{truncate(attributes.title.en, { length: 20 }) ||
+									truncate(get_(attributes.title, 'ja-ro'), { length: 20 }) ||
+									truncate(attributes.title.ja, { length: 20 })}</span
+							>
 
 							<!-- UI bug if duplicate key occured -->
 							{#each attributes.altTitles as item}

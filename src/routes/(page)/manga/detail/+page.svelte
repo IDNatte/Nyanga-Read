@@ -175,7 +175,9 @@
 				class="manga-title bg-pink-400 inline-block absolute px-3 py-2 text-white left-3 bottom-7 text-center"
 			>
 				<span class="block">
-					{data.detail.attributes.title.en || data.detail.attributes.title.ja}
+					{data.detail.attributes.title.en ||
+						get_(data.detail.attributes.title, 'ja-ro') ||
+						data.detail.attributes.title.ja}
 				</span>
 				{#each data.detail.attributes.altTitles as altTitle}
 					{#if altTitle.ja}
