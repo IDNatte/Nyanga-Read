@@ -11,8 +11,6 @@ export const load: PageLoad = async ({ fetch }) => {
     }
   })
 
-  // const 
-
   if (content.status === 200) {
     const contentData = await content.json()
     return {

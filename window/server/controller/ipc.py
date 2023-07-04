@@ -128,6 +128,8 @@ def manga_lists():
 @verify_ua
 def get_manga_detail(manga):
     try:
+        page = req.args.get("page", None)
+
         bookmarked = Bookmark.query.filter_by(manga=manga).one_or_none()
 
         latest_readed = (
@@ -142,25 +144,34 @@ def get_manga_detail(manga):
             f"https://api.mangadex.org/manga/{manga}?includes[]=cover_art&includes[]=artist&includes[]=manga"
         )
 
-        manga = requests.get(
-            f"https://api.mangadex.org/manga/{manga}/feed?translatedLanguage[]={language.get('value')}&order[chapter]=desc"
-        )
+        if page:
+            limit = 100
+            offset = (int(page) - 1) * int(limit)
+            manga = requests.get(
+                f"https://api.mangadex.org/manga/{manga}/feed?translatedLanguage[]={language.get('value')}&order[chapter]=desc&limit={limit}&offset={offset}"
+            )
+
+        else:
+            manga = requests.get(
+                f"https://api.mangadex.org/manga/{manga}/feed?translatedLanguage[]={language.get('value')}&order[chapter]=desc"
+            )
 
         if detail.status_code == 200 and manga.status_code == 200:
             manga = manga.json()
 
             return jsonify(
                 {
+                    "paginated": True if len(manga.get("data")) >= 100 else False,
                     "last_read": latest_readed.to_dict() if latest_readed else None,
                     "detail_data": detail.json().get("data"),
                     "bookmarked": True if bookmarked is not None else False,
                     "manga_data": [
                         {
-                            "chapter_id": debug.get("id"),
-                            "chapter": debug.get("attributes").get("chapter"),
-                            "title": debug.get("attributes").get("title"),
+                            "chapter_id": chapter.get("id"),
+                            "chapter": chapter.get("attributes").get("chapter"),
+                            "title": chapter.get("attributes").get("title"),
                         }
-                        for debug in manga.get("data")
+                        for chapter in manga.get("data")
                     ],
                 }
             )
