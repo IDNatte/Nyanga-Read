@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="margin: 0px; width: 150px;" src="logo.png" alt="Nyanga-Read">
+  <img style="margin: 0px; width: 150px;" src="https://gitlab.com/IDNatte/Nyanga-Read/-/raw/main/docs/images/logo.png" alt="Nyanga-Read">
 </p>
 
 <h1 align="center">Nyanga Read</h1>
@@ -13,6 +13,12 @@ UI Version: 3.0.0
 
 <p style="margin-top: 0px;" align="center">
 Back-End System: 3.0.0
+</p>
+
+<p style="margin: 0px;" align="center">
+<a target="_blank" href="https://gitlab.com/IDNatte/Nyanga-Read/commits/main">
+  <img src="https://img.shields.io/gitlab/last-commit/IDNatte/Nyanga-Read?logo=gitlab&color=blue" alt="Latest Commit">
+</a>
 </p>
 
 ### list used 3rd party library and API Source by this nyanga-read
