@@ -35,6 +35,8 @@
       "lastReadInfo": "chapter terakhir di baca",
       "author": "oleh",
       "noDesc": "tidak ada deskripsi",
+      "noTl": "tidak ada transalasi dengan bahasa saat ini coba ganti ke bahasa lain",
+      "loader": "memuat kontent",
       "notif": {
         "toastBookmarked": "telah ditandai",
         "toastUnbookmarked": "dihapus dari ditandai"

@@ -16,6 +16,7 @@
 	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
+	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 
 	const language: string = document.documentElement.lang;
 
@@ -35,7 +36,6 @@
 		async (event: any) => {
 			if (event[0].intersectionRatio > 0.5) {
 				await getNextDetail(pageNumber);
-				// console.log('test');
 			}
 		},
 		{
@@ -63,8 +63,13 @@
 			const mangaDetail = await manga.json();
 			const prevMangaDetail = $detailStore.manga_data;
 
+			if (pageNumber <= mangaDetail.max_page) {
+				$detailStore.page = pageNumber + 1;
+			} else {
+				$detailStore.page = mangaDetail.max_page + 1;
+			}
+
 			$detailStore.manga_data = [...prevMangaDetail, ...mangaDetail.manga_data];
-			$detailStore.page = pageNumber + 1;
 			$detailStore.paginated = mangaDetail.paginated;
 		} else {
 			error = true;
@@ -88,14 +93,16 @@
 			bookmarked = mangaDetail.bookmarked;
 			unbookmarked = mangaDetail.bookmarked ? false : true;
 
-			detailStore.set({
-				bookmarked: mangaDetail.bookmarked,
-				detail_data: mangaDetail.detail_data,
-				last_read: mangaDetail.last_read,
-				manga_data: mangaDetail.manga_data,
-				page: 1,
-				paginated: mangaDetail.paginated
-			});
+			if (pageNumber <= mangaDetail.max_page) {
+				$detailStore.page = pageNumber + 1;
+			} else {
+				$detailStore.page = mangaDetail.max_page + 1;
+			}
+
+			$detailStore.bookmarked = mangaDetail.bookmarked;
+			$detailStore.manga_data = mangaDetail.manga_data;
+			$detailStore.paginated = mangaDetail.paginated;
+			$detailStore.detail_data = mangaDetail.detail_data;
 		} else {
 			detailStore.set({
 				bookmarked: false,
@@ -197,17 +204,17 @@
 	});
 
 	onDestroy(() => {
+		detailStore.set({
+			bookmarked: false,
+			detail_data: null,
+			last_read: null,
+			manga_data: [],
+			page: 1,
+			paginated: false
+		});
+
 		try {
 			observer.unobserve(endObserver);
-
-			detailStore.set({
-				bookmarked: false,
-				detail_data: null,
-				last_read: null,
-				manga_data: [],
-				page: 1,
-				paginated: false
-			});
 		} catch (e) {}
 	});
 
@@ -220,7 +227,7 @@
 	});
 </script>
 
-{#if $detailStore.detail_data && $detailStore.manga_data.length !== 0}
+{#if $detailStore.detail_data}
 	<div>
 		<div in:fade={{ delay: 151, duration: 200 }} class="manga-detail">
 			<div class="cover-img relative">
@@ -315,16 +322,20 @@
 				<div class="content-wrapper p-5">
 					<div class="chapter-list">
 						<ul class="chapter-list">
-							{#each $detailStore.manga_data as { chapter, chapter_id, title }}
-								<li>
-									<a href="/manga/read?chapter={chapter_id}&chapter_number={chapter}">
-										Chapter {chapter}
-										{#if title}
-											<i>"{title}"</i>
-										{/if}
-									</a>
-								</li>
-							{/each}
+							{#if $detailStore.manga_data.length !== 0}
+								{#each $detailStore.manga_data as { chapter, chapter_id, title }}
+									<li>
+										<a href="/manga/read?chapter={chapter_id}&chapter_number={chapter}">
+											Chapter {chapter}
+											{#if title}
+												<i>"{title}"</i>
+											{/if}
+										</a>
+									</li>
+								{/each}
+							{:else}
+								<span class="italic">{$_('page.detailPage.noTl')}</span>
+							{/if}
 						</ul>
 					</div>
 				</div>
@@ -346,7 +357,8 @@
 			class="loader w-full h-10 bg-pink-700 text-white flex items-center justify-center"
 			bind:this={endObserver}
 		>
-			<span>{$_('page.dailyPage.loader')}</span>
+			<CirclePageLoader color="stroke-white" />
+			<span class="pl-3 capitalize">{$_('page.detailPage.loader')}</span>
 		</div>
 	{/if}
 {/if}

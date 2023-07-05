@@ -35,6 +35,8 @@
       "lastReadInfo": "last readed chapter",
       "author": "by",
       "noDesc": "no description",
+      "noTl": "no transalation available for current language, try using another language",
+      "loader": "loading content",
       "notif": {
         "toastBookmarked": "bookmark saved",
         "toastUnbookmarked": "bookmark removed"

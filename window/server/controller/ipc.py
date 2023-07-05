@@ -161,6 +161,9 @@ def get_manga_detail(manga):
 
             return jsonify(
                 {
+                    "max_page": (manga.get("total") // 100)
+                    if manga.get("total") % 100 != 0
+                    else None,
                     "paginated": True if len(manga.get("data")) >= 100 else False,
                     "last_read": latest_readed.to_dict() if latest_readed else None,
                     "detail_data": detail.json().get("data"),

@@ -10,6 +10,7 @@
 
 	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
+	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import CardComponent from '$lib/components/card/CardComponent.svelte';
 
 	let page: number;
@@ -153,7 +154,8 @@
 			class="loader w-full h-10 bg-pink-700 text-white flex items-center justify-center"
 			bind:this={endObserver}
 		>
-			<span>{$_('page.dailyPage.loader')}</span>
+			<CirclePageLoader color="stroke-white" />
+			<span class="pl-3 capitalize">{$_('page.dailyPage.loader')}</span>
 		</div>
 	{/if}
 </div>
