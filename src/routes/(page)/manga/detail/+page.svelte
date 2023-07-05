@@ -103,6 +103,7 @@
 			$detailStore.manga_data = mangaDetail.manga_data;
 			$detailStore.paginated = mangaDetail.paginated;
 			$detailStore.detail_data = mangaDetail.detail_data;
+			$detailStore.last_read = mangaDetail.last_read;
 		} else {
 			detailStore.set({
 				bookmarked: false,
