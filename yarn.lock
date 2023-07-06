@@ -424,9 +424,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^1.20.5":
-  version: 1.20.5
-  resolution: "@sveltejs/kit@npm:1.20.5"
+"@sveltejs/kit@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@sveltejs/kit@npm:1.22.0"
   dependencies:
     "@sveltejs/vite-plugin-svelte": ^2.4.1
     "@types/cookie": ^0.5.1
@@ -445,7 +445,7 @@ __metadata:
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 77b84a21d9fcbbb9597beee19e3904adab0ddd0bcb137d6c49a45e9b409e3c96c9d78c021bb67cb724c91138f08fc4df1eb71f652fc2fb11feb10e7b177f6a24
+  checksum: a83456e21ad606dbe23a6deb9b138768f49039639928fbf69a18b424f0697b08b3719398fd98429778528984bc95315ad9eface2af14d4f8c25595f7607eb83d
   languageName: node
   linkType: hard
 
@@ -2512,7 +2512,7 @@ __metadata:
   dependencies:
     "@splidejs/svelte-splide": ^0.2.9
     "@sveltejs/adapter-static": ^2.0.2
-    "@sveltejs/kit": ^1.20.5
+    "@sveltejs/kit": ^1.22.0
     "@tailwindcss/typography": ^0.5.9
     "@types/cookie": ^0.5.1
     "@types/lodash": ^4.14.195
