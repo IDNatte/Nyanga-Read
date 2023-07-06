@@ -2523,7 +2523,7 @@ __metadata:
     showdown: ^2.1.0
     svelte: ^3.59.2
     svelte-check: ^3.4.4
-    svelte-french-toast: ^1.0.4
+    svelte-french-toast: ^1.1.0
     svelte-i18n: ^3.6.0
     tailwindcss: ^3.3.2
     tslib: ^2.6.0
@@ -3224,14 +3224,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-french-toast@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "svelte-french-toast@npm:1.0.4"
+"svelte-french-toast@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "svelte-french-toast@npm:1.1.0"
   dependencies:
-    svelte-writable-derived: ^3.0.1
+    svelte-writable-derived: ^3.1.0
   peerDependencies:
-    svelte: ^3.57.0
-  checksum: e916afaadb309e6f9f304473ce1e2441f1f209b3ee84a1c3014cfaa834ee6db25b23909dea1ffb07134e09809dd57e0260faad631a5350dff61f740d6d4e82d9
+    svelte: ^3.57.0 || ^4.0.0
+  checksum: 2057336e4d44f5c2e532f7833f7e94f2208d8006491ddc81113e4fe7a7238afe03aeef559edf7cfbb895b744d36ed5c2105fdb4b2f1e7ba625a7dfbdcd31199c
   languageName: node
   linkType: hard
 
@@ -3308,12 +3308,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-writable-derived@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "svelte-writable-derived@npm:3.0.1"
+"svelte-writable-derived@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "svelte-writable-derived@npm:3.1.0"
   peerDependencies:
-    svelte: ^3.2.1
-  checksum: 90b30b93e35af01a2264c27085d9cdb6efa2a69196a7fc7055f4104e55a3e8e425aad13976eb015f3b321363dce5c38251708a28e93a07a22fac874b47b3bf17
+    svelte: ^3.2.1 || ^4.0.0-next.1
+  checksum: b0c2189b4a5048f39256748bd363aa5e2f232ce81f846ad8e78fa5c1059d3736acc2db669dbea83bca3b5d2bcfcaa08f6e5dcd29214af1bccac040ce7d78c362
   languageName: node
   linkType: hard
 
