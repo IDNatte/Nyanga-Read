@@ -5,7 +5,6 @@ export default function markdown(content: string) {
     openLinksInNewWindow: true,
     emoji: true,
     ghMentions: true,
-    ghMentionsLink: "https://gitlab.com/{u}",
     ghCodeBlocks: true
   })
 

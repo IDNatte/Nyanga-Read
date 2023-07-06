@@ -3,23 +3,33 @@
 </p>
 
 <h1 align="center">Nyanga Read</h1>
-<p style="margin: 0px;" align="center">
-Version: 3.0.0
-</p>
 
 <p style="margin: 0px;" align="center">
-UI Version: 3.0.0
-</p>
-
-<p style="margin-top: 0px;" align="center">
-Back-End System: 3.0.0
-</p>
-
-<p style="margin: 0px;" align="center">
-<a target="_blank" href="https://gitlab.com/IDNatte/Nyanga-Read/commits/main">
-  <img src="https://img.shields.io/gitlab/last-commit/IDNatte/Nyanga-Read?logo=gitlab&color=blue" alt="Latest Commit">
+<a href="https://raw.githubusercontent.com/IDNatte/Nyanga-Read/main/LICENSE" target="_blank">
+<img alt="GitHub" src="https://img.shields.io/github/license/IDNatte/Nyanga-Read">
 </a>
 </p>
+
+<p style="margin-top: 0.5em; margin-bottom: 0px;" align="center">
+<a href="https://github.com/IDNatte/Nyanga-Read/commit/main" target="_blank">
+<img style="margin: 0px;" alt="GitHub last commit (branch)" src="https://img.shields.io/github/last-commit/IDNatte/Nyanga-Read/main?logo=GitHub">
+</a>
+</p>
+
+<p style="margin: 0px;" align="center">
+<img style="margin-top: 0.5em; margin-bottom: 0px;" alt="GitHub package.json version (branch)" src="https://img.shields.io/github/package-json/v/IDNatte/Nyanga-Read/main?logo=Yarn">
+</p>
+
+<p style="margin-top: 0.5em; margin-bottom: 0px;" align="center"><img style="margin: 0px;" alt="GitHub commits since latest release (by SemVer including pre-releases)" src="https://img.shields.io/github/commits-since/IDNatte/Nyanga-Read/latest/main">
+</p>
+
+<p style="margin-top: 1px; margin-bottom: 3px;" align="center">
+<a href="https://github.com/IDNatte/Nyanga-Read/releases" target="_blank">
+<img style="margin: 0.5em;" alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/IDNatte/Nyanga-Read?logo=GitHub&display_name=release">
+</a>
+</p>
+
+---
 
 ### list used 3rd party library and API Source by this nyanga-read
 
@@ -59,4 +69,4 @@ Back-End System: 3.0.0
 
 - [mangadex](https://api.mangadex.org/)
 
-Feel free to give any suggestion or request a feature or submit any bug @ [gitlab issue](https://gitlab.com/IDNatte/Nyanga-Read/-/issues)
+Feel free to give any suggestion or request a feature or submit any bug @ [github issue](https://github.com/IDNatte/Nyanga-Read/issues)
