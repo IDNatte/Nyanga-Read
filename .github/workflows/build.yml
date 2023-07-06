@@ -1,0 +1,112 @@
+# heavily configured for fit this project
+
+name: Build
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  createrelease:
+    name: Create Release
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Output Release URL File
+        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
+      - name: Save Release URL File for publish
+        uses: actions/upload-artifact@v1
+        with:
+          name: release_url
+          path: release_url.txt
+
+  build:
+    name: Build packages
+    needs: createrelease
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            TARGET: ubuntu
+            CMD_BUILD: |
+              yarn install
+              yarn run svelte:build
+              python3 -m venv .venv --upgrade-deps
+              source .venv/bin/activate
+              mkdir -p log
+              touch log/app.log
+              python -m pip install --upgrade pip
+              pip install -r requirements-linux.txt
+              pyinstaller --noconfirm --distpath nyanga Nyanga-Read-linux.spec
+            OUT_FILE_NAME: Nyanga-Read
+            ASSET_MIME: application/octet-stream
+          - os: windows-latest
+            TARGET: windows
+            CMD_BUILD: |
+              refreshenv
+              mkdir log
+              New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
+              npm install
+              npm run svelte:build
+              python -m venv .venv --upgrade-deps
+              .\.venv\Scripts\Activate.ps1
+              python -m pip install --upgrade pip
+              pip install -r requirements-win.txt
+              pyinstaller --noconfirm --distpath nyanga Nyanga-Read-windows.spec
+            OUT_FILE_NAME: Nyanga-Read-window.exe
+            ASSET_MIME: application/vnd.microsoft.portable-executable
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.11
+      - name: Install dependencies on Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm install 18.16.0
+          corepack enable
+          corepack prepare yarn@stable --activate
+      - name: Install dependencies on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install dotnet-sdk -y
+
+      - name: Build with pyinstaller for ${{matrix.TARGET}}
+        run: ${{matrix.CMD_BUILD}}
+      - name: Load Release URL File from release job
+        uses: actions/download-artifact@v1
+        with:
+          name: release_url
+      - name: Get Release File Name & Upload URL
+        id: get_release_info
+        shell: bash
+        run: |
+          value=`cat release_url/release_url.txt`
+          echo "UPLOAD_URL=$value" >> $GITHUB_ENV
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPLOAD_URL: ${{ steps.get_release_info.outputs.upload_url }}
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}
+          asset_path: ./nyanga/${{ matrix.OUT_FILE_NAME}}
+          asset_name: ${{ matrix.OUT_FILE_NAME}}
+          asset_content_type: ${{ matrix.ASSET_MIME}}
