@@ -119,6 +119,17 @@ jobs:
             "os": "$OS"
           }
           EOF
+          case "$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')" in
+            linux)
+              echo "OS=linux" >> $GITHUB_ENV
+              ;;
+            windows)
+              echo "OS=windows" >> $GITHUB_ENV
+              ;;
+            *)
+              echo "OS=unknown" >> $GITHUB_ENV
+              ;;
+          esac
           echo "{\"version\": \"$VERSION\"}" > release.$OS.json
       - name: Release meta
         uses: actions/upload-release-asset@v1
