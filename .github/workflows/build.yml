@@ -102,8 +102,8 @@ jobs:
         shell: bash
         run: |
           VERSION=$(jq -r '.version' package.json)
-          RELEASE=$(jq -r '.releaseRef' doc/app/version.json)
-          cat << EOF > doc/app/version.json 
+          RELEASE=$(jq -r '.releaseRef' docs/app/version.json)
+          cat << EOF > docs/app/version.json 
           {
             "currentVersion": "$VERSION",
             "releaseRef": "$RELEASE",
