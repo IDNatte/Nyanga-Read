@@ -99,9 +99,10 @@ jobs:
           value=`cat release_url/release_url.txt`
           echo ::set-output name=upload_url::$value
       - name: Version Update
+        shell: bash
         run: |
           VERSION=$(jq -r '.version' package.json)
-          echo "{\"version\": \"$VERSION\"}" > release.json
+          echo "{\"version\": \"$VERSION\"}" > release.${{matrix.TARGET}}.json
 
       - name: Upload release meta
         uses: actions/upload-release-asset@v1
