@@ -102,6 +102,17 @@ jobs:
         run: |
           VERSION=$(jq -r '.version' package.json)
           echo "{\"version\": \"$VERSION\"}" > release.json
+
+      - name: Upload release meta
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }}
+          asset_path: release.json
+          asset_name: release.json
+          asset_content_type: application/json
+
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -109,8 +120,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-          asset_path: |
-            release.json
-            ./nyanga/${{ matrix.OUT_FILE_NAME}}
+          asset_path: ./nyanga/${{ matrix.OUT_FILE_NAME}}
           asset_name: ${{ matrix.OUT_FILE_NAME}}
           asset_content_type: ${{ matrix.ASSET_MIME}}
