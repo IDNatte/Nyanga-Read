@@ -86,7 +86,6 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           choco install dotnet-sdk -y
-
       - name: Build with pyinstaller for ${{matrix.TARGET}}
         run: ${{matrix.CMD_BUILD}}
       - name: Load Release URL File from release job
@@ -99,6 +98,10 @@ jobs:
         run: |
           value=`cat release_url/release_url.txt`
           echo ::set-output name=upload_url::$value
+      - name: Version Update
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo "{\"version\": \"$VERSION\"}" > release.json
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -106,6 +109,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-          asset_path: ./nyanga/${{ matrix.OUT_FILE_NAME}}
+          asset_path: |
+            release.json
+            ./nyanga/${{ matrix.OUT_FILE_NAME}}
           asset_name: ${{ matrix.OUT_FILE_NAME}}
           asset_content_type: ${{ matrix.ASSET_MIME}}
