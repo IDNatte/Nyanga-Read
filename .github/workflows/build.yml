@@ -70,7 +70,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.11.14
+          python-version: 3.11.4
       - name: Install dependencies on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
