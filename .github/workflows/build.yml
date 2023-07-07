@@ -11,7 +11,7 @@ jobs:
     name: Create Release
     runs-on: [ubuntu-latest]
     steps:
-      - name: Create Release
+      - name: Initial step
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -21,9 +21,9 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Output Release URL File
+      - name: Output metafile
         run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
-      - name: Save Release URL File for publish
+      - name: Save metafile
         uses: actions/upload-artifact@v1
         with:
           name: release_url
@@ -71,7 +71,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11.4
-      - name: Install dependencies on Ubuntu
+      - name: Depenedencies install ${{matrix.TARGET}}
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
@@ -82,17 +82,15 @@ jobs:
           nvm install 18.16.0
           corepack enable
           corepack prepare yarn@stable --activate
-      - name: Install dependencies on Windows
+      - name: Depenedencies install ${{matrix.TARGET}}
         if: matrix.os == 'windows-latest'
         run: |
           choco install dotnet-sdk -y
-      - name: Build with pyinstaller for ${{matrix.TARGET}}
-        run: ${{matrix.CMD_BUILD}}
-      - name: Load Release URL File from release job
+      - name: Load release metafile
         uses: actions/download-artifact@v1
         with:
           name: release_url
-      - name: Get Release File Name & Upload URL
+      - name: Retrieving URL
         id: get_release_info
         shell: bash
         run: |
@@ -111,8 +109,7 @@ jobs:
           }
           EOF
           echo "{\"version\": \"$VERSION\"}" > release.${{matrix.TARGET}}.json
-
-      - name: Upload release meta
+      - name: Release meta
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -121,8 +118,9 @@ jobs:
           asset_path: release.${{matrix.TARGET}}.json
           asset_name: release.${{matrix.TARGET}}.json
           asset_content_type: application/json
-
-      - name: Upload Release Asset
+      - name: Build ${{matrix.TARGET}}
+        run: ${{matrix.CMD_BUILD}}
+      - name: Release assets
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
