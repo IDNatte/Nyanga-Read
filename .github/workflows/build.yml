@@ -110,8 +110,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-          asset_path: release.json
-          asset_name: release.json
+          asset_path: release.${{matrix.TARGET}}.json
+          asset_name: release.${{matrix.TARGET}}.json
           asset_content_type: application/json
 
       - name: Upload Release Asset
