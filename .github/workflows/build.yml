@@ -71,7 +71,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11.4
-      - name: Depenedencies install ${{matrix.TARGET}}
+      - name: Depenedencies install Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
@@ -82,7 +82,7 @@ jobs:
           nvm install 18.16.0
           corepack enable
           corepack prepare yarn@stable --activate
-      - name: Depenedencies install ${{matrix.TARGET}}
+      - name: Depenedencies install Window
         if: matrix.os == 'windows-latest'
         run: |
           choco install dotnet-sdk -y
@@ -101,14 +101,25 @@ jobs:
         run: |
           VERSION=$(jq -r '.version' package.json)
           RELEASE=$(jq -r '.releaseRef' docs/app/version.json)
+          case "$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')" in
+            linux)
+              OS="linux"
+              ;;
+            windows)
+              OS="windows"
+              ;;
+            *)
+              OS="unknown"
+              ;;
+          esac
           cat << EOF > docs/app/version.json 
           {
             "currentVersion": "$VERSION",
             "releaseRef": "$RELEASE",
-            "os": "${{matrix.TARGET}}"
+            "os": "$OS"
           }
           EOF
-          echo "{\"version\": \"$VERSION\"}" > release.${{matrix.TARGET}}.json
+          echo "{\"version\": \"$VERSION\"}" > release.$OS.json
       - name: Release meta
         uses: actions/upload-release-asset@v1
         env:

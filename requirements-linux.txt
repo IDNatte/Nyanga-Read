@@ -7,3 +7,4 @@ PyGObject
 requests
 flask-sqlalchemy
 SQLAlchemy-serializer
+packaging
