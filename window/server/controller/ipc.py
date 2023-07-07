@@ -8,6 +8,7 @@ from flask_cors import CORS
 
 from utils.parallel_request import parallelize_req
 from utils.resources import get_resources
+from utils.update_apps import Updater
 
 from server.middleware import verify_csrf
 from server.middleware import verify_ua
@@ -411,3 +412,13 @@ def app_info():
 
     except FileNotFoundError as _:
         return jsonify({"status": "error", "location": "exception"})
+
+
+@ipc_handler.route("/app/update")
+@verify_csrf
+@verify_ua
+def update_app():
+    test = Updater()
+    if test.check_update().get("update_available"):
+        test.download_update()
+    return jsonify({"test": True})
