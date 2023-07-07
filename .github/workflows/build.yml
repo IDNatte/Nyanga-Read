@@ -126,8 +126,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-          asset_path: release.$OS.json
-          asset_name: release.$OS.json
+          asset_path: release.${{env.OS}}.json
+          asset_name: release.${{env.OS}}.json
           asset_content_type: application/json
       - name: Build ${{matrix.TARGET}}
         run: ${{matrix.CMD_BUILD}}
