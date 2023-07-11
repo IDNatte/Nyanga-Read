@@ -43,25 +43,8 @@ class Updater:
             and not assets_meta.get("name").endswith(".json")
         ]
 
-        requests.get(f"{assets}")
+        print(assets_meta)
 
+        return {"assets_update_url": "test"}
 
-# def update_apps():
-#     with open(get_resources("docs/app/version.json")) as f:
-#         test = json.load(f)
-
-#     fetch_upload = requests.get(f"{test.get('releaseRef')}")
-#     assetst_url = fetch_upload.json()[0].get("assets_url")
-#     asset_list_meta = requests.get(f"{assetst_url}")
-#     asset_lists = [a.get("name") for a in asset_list_meta.json()]
-
-#     remote_version = ver_parse(
-#         re.sub(re.escape("v"), "", fetch_upload.json()[0].get("tag_name"))
-#     )
-#     local_version = ver_parse(re.sub(re.escape("v"), "", test.get("currentVersion")))
-
-#     print(
-#         f"local < remote {local_version < remote_version} local ver {local_version}, remote ver {remote_version}"
-#     )
-
-#     # print(test.get("releaseRef"))
+        # requests.get(f"{assets}")
