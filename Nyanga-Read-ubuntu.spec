@@ -32,7 +32,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='Nyanga-Read-linux',
+    name='Nyanga-Read-ubuntu',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

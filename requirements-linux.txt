@@ -6,5 +6,5 @@ pycairo
 PyGObject
 requests
 flask-sqlalchemy
-SQLAlchemy-serializer
+SQLAlchemy-serilealizer
 packaging

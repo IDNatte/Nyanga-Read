@@ -36,6 +36,20 @@ jobs:
     strategy:
       matrix:
         include:
+          - os: opensuse/tumbleweed
+            TARGET: opensuse
+            CMD_BUILD: |
+              yarn install
+              yarn run svelte:build
+              python3 -m venv .venv --upgrade-deps
+              source .venv/bin/activate
+              mkdir -p log
+              touch log/app.log
+              python -m pip install --upgrade pip
+              pip install -r requirements-linux.txt
+              pyinstaller --noconfirm --distpath nyanga Nyanga-Read-opensuse.spec
+            OUT_FILE_NAME: Nyanga-Read-opensuse
+            ASSET_MIME: application/octet-stream
           - os: ubuntu-latest
             TARGET: ubuntu
             CMD_BUILD: |
@@ -47,8 +61,8 @@ jobs:
               touch log/app.log
               python -m pip install --upgrade pip
               pip install -r requirements-linux.txt
-              pyinstaller --noconfirm --distpath nyanga Nyanga-Read-linux.spec
-            OUT_FILE_NAME: Nyanga-Read-linux
+              pyinstaller --noconfirm --distpath nyanga Nyanga-Read-ubuntu.spec
+            OUT_FILE_NAME: Nyanga-Read-ubuntu
             ASSET_MIME: application/octet-stream
           - os: windows-latest
             TARGET: windows
@@ -71,6 +85,18 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11.4
+      - name: Dependencies install opensuse
+        if: matrix.os == 'opensuse/tumbleweed'
+        run: |
+          sudo zypper install python3-gobject python3-gobject-Gdk typelib-1_0-Gtk-4_0 libgtk-4-1 glib-networking webkit2gtk3-devel webkit2gtk3-soup2-devel python3 gcc-c++ make python3-pip
+          curl -O https://nodejs.org/dist/v18.16.1/node-v18.16.1.tar.gz
+          tar xvf node-v18.16.1.tar.gz
+          cd node-v18.16.1
+          ./configure
+          make -j$(nproc)
+          sudo make install
+          sudo corepack enable
+          sudo corepack prepare yarn@stable --activate
       - name: Depenedencies install Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |

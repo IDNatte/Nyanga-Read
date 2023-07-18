@@ -20,7 +20,6 @@
 		"python:win:ui:dev": "UI_APP_DEV=\"True\" ./.venv/Scripts/python ./window/app.py"
 	},
 	"devDependencies": {
-		"@splidejs/svelte-splide": "^0.2.9",
 		"@sveltejs/adapter-static": "^2.0.2",
 		"@sveltejs/kit": "^1.22.3",
 		"@tailwindcss/typography": "^0.5.9",
