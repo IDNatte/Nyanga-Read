@@ -21,8 +21,10 @@ jobs:
           prerelease: false
       - name: Output metafile
         run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
-      - name: Save metafile
-        uses: actions/upload-artifact@v1
-        with:
-          name: release_url
-          path: release_url.txt
+      # - name: Save metafile
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: release_url
+      #     path: release_url.txt
+      - name: Set output for upload_url
+        run: echo "UPLOAD_URL=${{ steps.create_release.outputs.upload_url }}" >> $GITHUB_ENV
