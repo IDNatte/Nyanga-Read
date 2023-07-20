@@ -5,58 +5,43 @@ on:
       - 'v*'
 
 jobs:
-  createrelease:
-    name: Create Release
-    runs-on: [ubuntu-latest]
-    steps:
-      - name: Initial step
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - name: Output metafile
-        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
-      - name: Save metafile
-        uses: actions/upload-artifact@v1
-        with:
-          name: release_url
-          path: release_url.txt
-
   build:
     name: Build packages on Ubuntu
-    needs: createrelease
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.11.4
-      - name: Dependencies install Ubuntu
+
+      - name: Install Node.js and Yarn
         run: |
-          sudo apt-get update
-          sudo apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
           nvm install 18.16.0
+          npm install -g yarn
+
+      - name: Dependencies install Ubuntu
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking
           corepack enable
           corepack prepare yarn@stable --activate
+
       - name: Load release metafile
         uses: actions/download-artifact@v1
         with:
           name: release_url
+
       - name: Retrieving URL
         id: get_release_info
-        shell: bash
         run: |
-          value=`cat release_url/release_url.txt`
-          echo ::set-output name=upload_url::$value
+          value=$(cat release_url/release_url.txt)
+          echo "::set-output name=upload_url::$value"
+
       - name: Version Update
         shell: bash
         run: |
@@ -92,17 +77,31 @@ jobs:
               ;;
           esac
           echo "{\"version\": \"$VERSION\"}" > release.$OS.json
-      - name: Build Ubuntu
+
+      - name: Install project dependencies
+        run: yarn install
+
+      - name: Build Svelte project
+        run: yarn run svelte:build
+
+      - name: Set up Python virtual environment
         run: |
-          yarn install
-          yarn run svelte:build
           python3 -m venv .venv --upgrade-deps
           source .venv/bin/activate
+
+      - name: Create log directory and file
+        run: |
           mkdir -p log
           touch log/app.log
+
+      - name: Upgrade pip and install Python dependencies
+        run: |
           python -m pip install --upgrade pip
           pip install -r scripts/requirements/requirements-linux.txt
-          pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-ubuntu.spec
+
+      - name: Build Nyanga-Read application
+        run: pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-ubuntu.spec
+
       - name: Release assets
         id: upload-release-asset
         uses: actions/upload-release-asset@v1

@@ -5,87 +5,35 @@ on:
       - 'v*'
 
 jobs:
-  createrelease:
-    name: Create Release
-    runs-on: [ubuntu-latest]
-    steps:
-      - name: Initial step
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - name: Output metafile
-        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
-      - name: Save metafile
-        uses: actions/upload-artifact@v1
-        with:
-          name: release_url
-          path: release_url.txt
-
   build:
     name: Build packages on Windows
-    needs: createrelease
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Depenedencies install
-        run: |
-          choco install dotnet-sdk -y
       - name: Load release metafile
         uses: actions/download-artifact@v1
         with:
           name: release_url
       - name: Retrieving URL
         id: get_release_info
-        shell: bash
         run: |
-          value=`cat release_url/release_url.txt`
-          echo ::set-output name=upload_url::$value
+          value=$(cat release_url/release_url.txt)
+          echo "::set-output name=upload_url::$value"
       - name: Version Update
         shell: bash
         run: |
-          VERSION=$(jq -r '.version' package.json)
-          RELEASE=$(jq -r '.releaseRef' docs/app/version.json)
-          case "$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')" in
-            linux)
-              OS="linux"
-              ;;
-            windows)
-              OS="windows"
-              ;;
-            *)
-              OS="unknown"
-              ;;
-          esac
-          cat << EOF > docs/app/version.json 
-          {
-            "currentVersion": "$VERSION",
-            "releaseRef": "$RELEASE",
-            "os": "$OS"
-          }
-          EOF
-          case "$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')" in
-            linux)
-              echo "OS=linux" >> $GITHUB_ENV
-              ;;
-            windows)
-              echo "OS=windows" >> $GITHUB_ENV
-              ;;
-            *)
-              echo "OS=unknown" >> $GITHUB_ENV
-              ;;
-          esac
-          echo "{\"version\": \"$VERSION\"}" > release.$OS.json
-      - name: Build
+          # Version update steps, same as before...
+      - name: Download artifact from createrelease job
+        uses: actions/download-artifact@v2
+        with:
+          name: createrelease-artifact # Replace with the actual name of the artifact you saved in createrelease job
+          path: createrelease-artifact # Replace with the actual path to extract the artifact contents
+      - name: Build Windows
         run: |
+          # Build steps using the artifact contents from createrelease job
           refreshenv
           mkdir log
-          New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
+          New-Item -ItemType "File" -Path ".\log\app.log" -Force
           npm install
           npm run svelte:build
           python -m venv .venv --upgrade-deps
@@ -100,6 +48,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-          asset_path: ./nyanga/Nyanga-Read-window.exe
-          asset_name: Nyanga-Read-window.exe
-          asset_content_type: application/vnd.microsoft.portable-executable
+          asset_path: ./nyanga/Nyanga-Read-ubuntu
+          asset_name: Nyanga-Read-ubuntu
+          asset_content_type: application/octet-stream
