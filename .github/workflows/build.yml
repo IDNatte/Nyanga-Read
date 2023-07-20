@@ -34,7 +34,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: opensuse-latest
             TARGET: opensuse
             CMD_BUILD: |
               yarn install
@@ -85,7 +85,7 @@ jobs:
           python-version: 3.11.4
 
       - name: Depenedencies install opensuse
-        if: matrix.TARGET == 'opensuse'
+        if: matrix.os == 'opensuse-latest'
         run: |
           sudo zypper ref
           sudo zypper -n install curl glib-networking cairo-devel pkg-config python3-devel gcc gobject-introspection-devel webkit2gtk3-devel webkit2gtk3-soup2-devel
