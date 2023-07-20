@@ -4,6 +4,12 @@ on:
     tags:
       - 'v*'
 
+  workflow_dispatch: # Add the workflows_dispatch trigger
+    inputs:
+      release_version:
+        description: 'Release'
+        required: true
+
 jobs:
   createrelease:
     name: Create Release

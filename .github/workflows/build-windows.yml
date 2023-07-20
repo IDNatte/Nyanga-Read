@@ -14,10 +14,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Load release metafile
-        uses: actions/download-artifact@v1
-        with:
-          name: release_url
       - name: Set UPLOAD_URL environment variable
         run: echo "UPLOAD_URL=$(cat release_url/release_url.txt)" >> $GITHUB_ENV
       - name: Build Windows
