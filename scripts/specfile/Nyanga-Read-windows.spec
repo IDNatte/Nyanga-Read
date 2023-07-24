@@ -5,13 +5,13 @@ block_cipher = None
 
 
 a = Analysis(
-    ['window\\app.py'],
+    ['..\\..\\window\\app.py'],
     pathex=[],
     binaries=[],
     datas=[
-        ("layout", "layout"),
-        ("docs/app", "docs/app"),
-        ("log", "log")
+        ("../../layout", "layout"),
+        ("../../docs/app", "docs/app"),
+        ("../../log", "log")
     ],
     hiddenimports=[],
     hookspath=[],
