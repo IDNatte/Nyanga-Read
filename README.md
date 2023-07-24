@@ -10,23 +10,19 @@
 </a>
 </p>
 
-<p style="margin-top: 0.5em; margin-bottom: 0px;" align="center">
+<p style="margin-top: 0em; margin-bottom: 0px;" align="center">
 <a href="https://github.com/IDNatte/Nyanga-Read/commit/main" target="_blank">
 <img style="margin: 0px;" alt="GitHub last commit (branch)" src="https://img.shields.io/github/last-commit/IDNatte/Nyanga-Read/main?logo=GitHub">
 </a>
 </p>
 
-<p style="margin: 0px;" align="center">
-<img style="margin-top: 0.5em; margin-bottom: 0px;" alt="GitHub package.json version (branch)" src="https://img.shields.io/github/package-json/v/IDNatte/Nyanga-Read/main?logo=Yarn">
-</p>
-
-<p style="margin-top: 0.5em; margin-bottom: 0px;" align="center"><img style="margin: 0px;" alt="GitHub commits since latest release (by SemVer including pre-releases)" src="https://img.shields.io/github/commits-since/IDNatte/Nyanga-Read/latest/main">
-</p>
-
-<p style="margin-top: 1px; margin-bottom: 3px;" align="center">
+<p style="margin-top: 0px; margin-bottom: 3px;" align="center">
 <a href="https://github.com/IDNatte/Nyanga-Read/releases" target="_blank">
-<img style="margin: 0.5em;" alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/IDNatte/Nyanga-Read?logo=GitHub&display_name=release">
+<img style="margin: 0em;" alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/IDNatte/Nyanga-Read?logo=GitHub&display_name=release">
 </a>
+</p>
+
+<p style="margin-top: 0em; margin-bottom: 0px;" align="center"><img style="margin: 0px;" alt="GitHub commits since latest release (by SemVer including pre-releases)" src="https://img.shields.io/github/commits-since/IDNatte/Nyanga-Read/latest/main?logo=GitHub">
 </p>
 
 ---
