@@ -1,0 +1,70 @@
+name: Build Ubuntu
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  createrelease:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initial step
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Version Update
+        shell: bash
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          RELEASE=$(jq -r '.releaseRef' docs/app/version.json)
+          OS="ubuntu"
+          cat << EOF > docs/app/version.json
+          {
+            "currentVersion": "$VERSION",
+            "releaseRef": "$RELEASE",
+            "os": "$OS"
+          }
+          EOF
+          echo "{\"version\": \"$VERSION\"}" > release.$OS.json
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm install 18.16.1
+          corepack enable
+          corepack prepare yarn@stable --activate
+      - name: Build Ubuntu
+        run: |
+          yarn install
+          yarn run svelte:build
+          python3 -m venv .venv --upgrade-deps
+          source .venv/bin/activate
+          mkdir -p log
+          touch log/app.log
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements/requirements-linux.txt
+          pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-ubuntu.spec
+      - name: Save Release URL
+        env:
+          RELEASE_URL: ${{ steps.create_release.outputs.upload_url }}
+        run: echo "$RELEASE_URL" >> $GITHUB_ENV
+      - name: Release assets
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.RELEASE_URL }}
+          asset_path: ./nyanga/Nyanga-Read-ubuntu
+          asset_name: Nyanga-Read-ubuntu
+          asset_content_type: application/octet-stream
