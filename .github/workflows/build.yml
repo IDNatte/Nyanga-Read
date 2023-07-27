@@ -1,152 +1,108 @@
-# name: Build
-# on:
-#   push:
-#     tags:
-#       - 'v*'
+name: Build
+on:
+  push:
+    tags:
+      - 'v*'
 
-# jobs:
-#   createrelease:
-#     name: Create Release
-#     runs-on: [ubuntu-latest]
-#     steps:
-#       - name: Initial step
-#         id: create_release
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           tag_name: ${{ github.ref }}
-#           release_name: Release ${{ github.ref }}
-#           draft: false
-#           prerelease: false
-#       - name: Output metafile
-#         run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
-#       - name: Save metafile
-#         uses: actions/upload-artifact@v1
-#         with:
-#           name: release_url
-#           path: release_url.txt
+jobs:
+  createrelease:
+    name: Create Release
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Initial step
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Output metafile
+        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
+      - name: Save metafile
+        uses: actions/upload-artifact@v1
+        with:
+          name: release_url
+          path: release_url.txt
 
-#   build:
-#     name: Build packages
-#     needs: createrelease
-#     runs-on: ${{ matrix.os }}
-#     strategy:
-#       matrix:
-#         include:
-#           - os: ubuntu-latest
-#             TARGET: ubuntu
-#             CMD_BUILD: |
-#               yarn install
-#               yarn run svelte:build
-#               python3 -m venv .venv --upgrade-deps
-#               source .venv/bin/activate
-#               mkdir -p log
-#               touch log/app.log
-#               python -m pip install --upgrade pip
-#               pip install -r scripts/requirements/requirements-linux.txt
-#               pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-ubuntu.spec
-#             OUT_FILE_NAME: Nyanga-Read-ubuntu
-#             ASSET_MIME: application/octet-stream
-#           - os: windows-latest
-#             TARGET: windows
-#             CMD_BUILD: |
-#               refreshenv
-#               mkdir log
-#               New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
-#               npm install
-#               npm run svelte:build
-#               python -m venv .venv --upgrade-deps
-#               .\.venv\Scripts\Activate.ps1
-#               python -m pip install --upgrade pip
-#               pip install -r scripts/requirements/requirements-win.txt
-#               pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-windows.spec
-#             OUT_FILE_NAME: Nyanga-Read-windows.exe
-#             ASSET_MIME: application/vnd.microsoft.portable-executable
-#     steps:
-#       - uses: actions/checkout@v1
-#       - name: Set up Python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.11.4
-#       - name: Depenedencies install Ubuntu
-#         if: matrix.os == 'ubuntu-latest'
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking
-#           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-#           export NVM_DIR="$HOME/.nvm"
-#           source "$NVM_DIR/nvm.sh"
-#           nvm install 18.16.1
-#           corepack enable
-#           corepack prepare yarn@stable --activate
-#       - name: Depenedencies install Window
-#         if: matrix.os == 'windows-latest'
-#         run: |
-#           choco install dotnet-sdk -y
-#       - name: Load release metafile
-#         uses: actions/download-artifact@v1
-#         with:
-#           name: release_url
-#       - name: Retrieving URL
-#         id: get_release_info
-#         shell: bash
-#         run: |
-#           value=`cat release_url/release_url.txt`
-#           echo ::set-output name=upload_url::$value
-#       - name: Version Update
-#         shell: bash
-#         run: |
-#           VERSION=$(jq -r '.version' package.json)
-#           RELEASE=$(jq -r '.releaseRef' docs/app/version.json)
-#           case "$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')" in
-#             linux)
-#               OS="linux"
-#               ;;
-#             windows)
-#               OS="windows"
-#               ;;
-#             *)
-#               OS="unknown"
-#               ;;
-#           esac
-#           cat << EOF > docs/app/version.json
-#           {
-#             "currentVersion": "$VERSION",
-#             "releaseRef": "$RELEASE",
-#             "os": "$OS"
-#           }
-#           EOF
-#           case "$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')" in
-#             linux)
-#               echo "OS=linux" >> $GITHUB_ENV
-#               ;;
-#             windows)
-#               echo "OS=windows" >> $GITHUB_ENV
-#               ;;
-#             *)
-#               echo "OS=unknown" >> $GITHUB_ENV
-#               ;;
-#           esac
-#           echo "{\"version\": \"$VERSION\"}" > release.$OS.json
-#       - name: Release meta
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-#           asset_path: release.${{env.OS}}.json
-#           asset_name: release.${{env.OS}}.json
-#           asset_content_type: application/json
-#       - name: Build ${{matrix.TARGET}}
-#         run: ${{matrix.CMD_BUILD}}
-#       - name: Release assets
-#         id: upload-release-asset
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-#           asset_path: ./nyanga/${{ matrix.OUT_FILE_NAME}}
-#           asset_name: ${{ matrix.OUT_FILE_NAME}}
-#           asset_content_type: ${{ matrix.ASSET_MIME}}
+  build:
+    name: Build packages
+    needs: createrelease
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            TARGET: ubuntu
+            CMD_BUILD: |
+              yarn install
+              yarn run svelte:build
+              python3 -m venv .venv --upgrade-deps
+              source .venv/bin/activate
+              mkdir -p log
+              touch log/app.log
+              python -m pip install --upgrade pip
+              pip install -r scripts/requirements/requirements-linux.txt
+              pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-ubuntu.spec
+            OUT_FILE_NAME: Nyanga-Read-ubuntu
+            ASSET_MIME: application/octet-stream
+          - os: windows-latest
+            TARGET: windows
+            CMD_BUILD: |
+              refreshenv
+              mkdir log
+              New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
+              npm install
+              npm run svelte:build
+              python -m venv .venv --upgrade-deps
+              .\.venv\Scripts\Activate.ps1
+              python -m pip install --upgrade pip
+              pip install -r scripts/requirements/requirements-win.txt
+              pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-windows.spec
+            OUT_FILE_NAME: Nyanga-Read-windows.exe
+            ASSET_MIME: application/vnd.microsoft.portable-executable
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.4
+      - name: Depenedencies install Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm install 18.16.1
+          corepack enable
+          corepack prepare yarn@stable --activate
+      - name: Depenedencies install Window
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install dotnet-sdk -y
+      - name: Load release metafile
+        uses: actions/download-artifact@v1
+        with:
+          name: release_url
+      - name: Retrieving URL
+        id: get_release_info
+        shell: bash
+        run: |
+          value=`cat release_url/release_url.txt`
+          echo ::set-output name=upload_url::$value
+      - name: Build ${{matrix.TARGET}}
+        run: ${{matrix.CMD_BUILD}}
+      - name: Release assets
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }}
+          asset_path: ./nyanga/${{ matrix.OUT_FILE_NAME}}
+          asset_name: ${{ matrix.OUT_FILE_NAME}}
+          asset_content_type: ${{ matrix.ASSET_MIME}}

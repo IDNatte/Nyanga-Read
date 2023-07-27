@@ -12,11 +12,13 @@
 	import { _ } from 'svelte-i18n';
 
 	import detailStore from '$lib/store/ephemeral/detail/detail.store';
+	import modalStore from '$lib/store/modal/modal.store';
 
 	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
+	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 
 	const language: string = document.documentElement.lang;
 
@@ -196,6 +198,10 @@
 		}
 	}
 
+	function openImage(modal: string) {
+		modalStore.set({ modal: modal, open: true });
+	}
+
 	onMount(async () => {
 		try {
 			await getDetail();
@@ -234,13 +240,20 @@
 			<div class="cover-img relative">
 				{#each $detailStore.detail_data.relationships as { type, attributes }}
 					{#if type === 'cover_art'}
-						<ImageLoaderComponent
-							src="https://uploads.mangadex.org/covers/{$detailStore.detail_data
-								.id}/{attributes.fileName}"
-							alt={$detailStore.detail_data.attributes.title.en ||
-								$detailStore.detail_data.attributes.title.ja}
-							className="object-cover w-full h-96 blur-sm hover:filter-none duration-300"
-						/>
+						<a
+							on:click|preventDefault={() => {
+								openImage('image-viewer');
+							}}
+							href="#!"
+						>
+							<ImageLoaderComponent
+								src="https://uploads.mangadex.org/covers/{$detailStore.detail_data
+									.id}/{attributes.fileName}"
+								alt={$detailStore.detail_data.attributes.title.en ||
+									$detailStore.detail_data.attributes.title.ja}
+								className="object-cover w-full h-96 blur-sm hover:filter-none duration-300"
+							/>
+						</a>
 					{/if}
 				{/each}
 
@@ -362,6 +375,26 @@
 			<span class="pl-3 capitalize">{$_('page.detailPage.loader')}</span>
 		</div>
 	{/if}
+
+	<ModalComponent
+		modal="image-viewer"
+		height="h-auto"
+		width="w-[30rem]"
+		title={$detailStore.detail_data.attributes.title.en ||
+			$detailStore.detail_data.attributes.title.ja}
+	>
+		{#each $detailStore.detail_data.relationships as { type, attributes }}
+			{#if type === 'cover_art'}
+				<img
+					class="rounded w-[30rem] h-auto"
+					src="https://uploads.mangadex.org/covers/{$detailStore.detail_data
+						.id}/{attributes.fileName}"
+					alt={$detailStore.detail_data.attributes.title.en ||
+						$detailStore.detail_data.attributes.title.ja}
+				/>
+			{/if}
+		{/each}
+	</ModalComponent>
 {/if}
 
 {#if error}

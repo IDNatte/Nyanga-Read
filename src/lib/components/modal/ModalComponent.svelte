@@ -10,6 +10,7 @@
 	export let title: string;
 	export let height: string = 'h-2/3';
 	export let width: string = ' w-2/3 ';
+	export let className: string = '';
 
 	function escapeClose(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
@@ -27,7 +28,10 @@
 <svelte:window on:keydown={escapeClose} />
 
 {#if $modalStore.modal === modal && $modalStore.open}
-	<div transition:fade={{ duration: 300 }} class="{modal} block w-full h-screen z-50 fixed top-0">
+	<div
+		transition:fade={{ duration: 300 }}
+		class="{modal} {className} block w-full h-screen z-50 fixed top-0"
+	>
 		<div class="flex items-center justify-center w-full h-screen bg-pink-200/60">
 			<div use:outsideClick class="modal-content bg-white rounded {width} {height} overflow-x-auto">
 				<div
