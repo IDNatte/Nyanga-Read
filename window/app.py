@@ -1,8 +1,10 @@
+from sqlalchemy import desc
 from server.server import create_app
 
 from utils.storage_initializer import db_settings_initializer
 
 import threading
+import argparse
 import webview
 import sys
 import os
@@ -30,50 +32,77 @@ def server_main():
 
 
 def main():
-    ui_dev = os.environ.get("UI_APP_DEV", default=None)
+    parser = argparse.ArgumentParser(description="Nyanga Read 😸")
     app_dev = os.environ.get("APP_DEV", default=None)
 
-    if ui_dev:
-        server_main()
+    parser.add_argument(
+        "--extension",
+        action="store_true",
+        help="access nyanga read via extension",
+    )
 
-        webview.create_window(
-            "😸 Nyanga Read",
-            "http://localhost:5173",
-            width=1280,
-            height=850,
-            min_size=(1280, 850),
-        )
-        webview.start(
-            user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
-            debug=True,
-        )
+    parser.add_argument(
+        "--context",
+        choices=["get_csrf", "search_manga"],
+        help="give some context to nyanga what you want to do",
+    )
 
-    elif app_dev:
-        server_main()
+    client = parser.parse_args()
 
-        webview.create_window(
-            "😸 Nyanga Read",
-            "http://localhost:5000",
-            width=1280,
-            height=850,
-            min_size=(1280, 850),
-        )
-        webview.start(
-            user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
-            debug=True,
-        )
+    if not client.extension:
+        match app_dev:
+            case "dev":
+                server_main()
 
-    else:
-        server_main()
+                webview.create_window(
+                    "😸 Nyanga Read",
+                    "http://localhost:5173",
+                    width=1280,
+                    height=850,
+                    min_size=(1280, 850),
+                )
+                webview.start(
+                    user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
+                    debug=True,
+                )
 
-        webview.create_window(
-            "😸 Nyanga Read",
-            "http://localhost:5000",
-            width=1280,
-            height=850,
-            min_size=(1280, 850),
-        )
-        webview.start(user_agent="pywebview-client/1.0 pywebview-ui/3.0.0")
+            case "preview":
+                server_main()
+
+                webview.create_window(
+                    "😸 Nyanga Read",
+                    "http://localhost:5000",
+                    width=1280,
+                    height=850,
+                    min_size=(1280, 850),
+                )
+                webview.start(
+                    user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
+                    debug=True,
+                )
+
+            case _:
+                server_main()
+
+                webview.create_window(
+                    "😸 Nyanga Read",
+                    "http://localhost:5000",
+                    width=1280,
+                    height=850,
+                    min_size=(1280, 850),
+                )
+                webview.start(user_agent="pywebview-client/1.0 pywebview-ui/3.0.0")
+
+    if client.extension:
+        ext_context = client.context
+        match ext_context:
+            case "get_csrf":
+                print("get some csrf")
+            case "search_manga":
+                print("get some manga")
+
+            case _:
+                pass
 
 
 if __name__ == "__main__":

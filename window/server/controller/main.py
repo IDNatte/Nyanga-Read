@@ -5,8 +5,8 @@ from flask import Blueprint
 from webview import token as w_token
 from flask_cors import CORS
 
+from server.middleware.verificator.agent import verify_ua
 from server.storage.model.settings import Setting
-from server.middleware import verify_ua
 from utils.resources import get_resources
 
 

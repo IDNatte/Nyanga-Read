@@ -9,6 +9,7 @@ from .storage.model.bookmark import Bookmark
 from .storage.model.settings import Setting
 from .storage.model.read import Read
 
+from .controller import interface
 from .controller import error
 from .controller import main
 from .controller import ipc
@@ -37,8 +38,9 @@ def create_app():
     )
 
     # ipc blueprint
-    server.register_blueprint(main.main_handler)
+    server.register_blueprint(interface.interface_handler)
     server.register_blueprint(error.error_handler)
+    server.register_blueprint(main.main_handler)
     server.register_blueprint(ipc.ipc_handler)
 
     return server
