@@ -1,7 +1,7 @@
-from sqlalchemy import desc
 from server.server import create_app
 
 from utils.storage_initializer import db_settings_initializer
+from utils.extension import get_manga, get_csrf
 
 import threading
 import argparse
@@ -32,6 +32,10 @@ def server_main():
 
 
 def main():
+    # run server first
+    server_main()
+
+    # argument parser
     parser = argparse.ArgumentParser(description="Nyanga Read 😸")
     app_dev = os.environ.get("APP_DEV", default=None)
 
@@ -41,19 +45,27 @@ def main():
         help="access nyanga read via extension",
     )
 
+    # parser.add_argument(
+    #     "--get-csrf",
+    #     action="store_true",
+    #     help="get csrf token from system",
+    # )
+
+    # parser.add_argument(
+    #     "--csrf-token",
+    #     help="if csrf already obtained, you can set it before using --context",
+    # )
+
     parser.add_argument(
         "--context",
-        choices=["get_csrf", "search_manga"],
+        choices=["my_manga", "search_manga"],
         help="give some context to nyanga what you want to do",
     )
 
     client = parser.parse_args()
-
     if not client.extension:
         match app_dev:
             case "dev":
-                server_main()
-
                 webview.create_window(
                     "😸 Nyanga Read",
                     "http://localhost:5173",
@@ -67,8 +79,6 @@ def main():
                 )
 
             case "preview":
-                server_main()
-
                 webview.create_window(
                     "😸 Nyanga Read",
                     "http://localhost:5000",
@@ -82,8 +92,6 @@ def main():
                 )
 
             case _:
-                server_main()
-
                 webview.create_window(
                     "😸 Nyanga Read",
                     "http://localhost:5000",
@@ -95,9 +103,14 @@ def main():
 
     if client.extension:
         ext_context = client.context
+        # if ext_get_csrf:
+        #     print(get_csrf())
+
+        # if ext_context == 'get_csrf':
+
         match ext_context:
-            case "get_csrf":
-                print("get some csrf")
+            case "my_manga":
+                print(get_csrf())
             case "search_manga":
                 print("get some manga")
 

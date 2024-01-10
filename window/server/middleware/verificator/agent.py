@@ -21,7 +21,7 @@ def verify_ua(function):
 
             else:
                 raise UAError("UANotAccepted", "User Agent not accepted", 401)
-        except:
+        except Exception as _:
             raise UAError("UANotAccepted", "User Agent not accepted", 401)
 
     return verify_user_agent
