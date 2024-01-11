@@ -9,8 +9,8 @@ from flask_cors import CORS
 from utils.parallel_request import parallelize_req
 from utils.resources import get_resources
 
-from server.middleware import verify_csrf
-from server.middleware import verify_ua
+from server.middleware.verificator.csrf import verify_csrf
+from server.middleware.verificator.agent import verify_ua
 
 from server.helper.constant import constant
 

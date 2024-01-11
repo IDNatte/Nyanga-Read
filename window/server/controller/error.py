@@ -3,8 +3,8 @@ from flask import jsonify
 
 from flask_cors import CORS
 
-from server.error import CSRFError
-from server.error import UAError
+from server.error.error import CSRFError
+from server.error.error import UAError
 
 error_handler = Blueprint("error", __name__)
 

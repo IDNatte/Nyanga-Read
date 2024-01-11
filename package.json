@@ -1,6 +1,6 @@
 {
 	"name": "nyanga-read",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"author": {
 		"email": "idnatte@gmail.com",
 		"name": "IDNatte",
@@ -14,10 +14,9 @@
 		"svelte:check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"svelte:lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"svelte:format": "prettier --plugin-search-dir . --write .",
-		"python:linux:start": "APP_DEV=\"True\" ./.venv/bin/python ./window/app.py",
-		"python:linux:ui:dev": "UI_APP_DEV=\"True\" ./.venv/bin/python ./window/app.py",
-		"python:win:start": "APP_DEV=\"True\" ./.venv/Scripts/python ./window/app.py",
-		"python:win:ui:dev": "UI_APP_DEV=\"True\" ./.venv/Scripts/python ./window/app.py"
+		"python:linux:start": "./.venv/bin/python ./window/app.py",
+		"python:linux:extension:search": "./.venv/bin/python ./window/app.py --extension --context search_manga --manga-name \"kanaan-sama akumade choroi\"",
+		"python:linux:extension:bookmark": "./.venv/bin/python ./window/app.py --extension --context my_manga"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^2.0.2",
