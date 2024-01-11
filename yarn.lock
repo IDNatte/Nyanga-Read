@@ -723,6 +723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@typescript-eslint/parser@npm:^6.2.0":
   version: 6.18.1
   resolution: "@typescript-eslint/parser@npm:6.18.1"
@@ -732,12 +733,27 @@ __metadata:
     "@typescript-eslint/typescript-estree": "npm:6.18.1"
     "@typescript-eslint/visitor-keys": "npm:6.18.1"
     debug: "npm:^4.3.4"
+=======
+"@typescript-eslint/parser@npm:^6.8.0":
+  version: 6.8.0
+  resolution: "@typescript-eslint/parser@npm:6.8.0"
+  dependencies:
+    "@typescript-eslint/scope-manager": 6.8.0
+    "@typescript-eslint/types": 6.8.0
+    "@typescript-eslint/typescript-estree": 6.8.0
+    "@typescript-eslint/visitor-keys": 6.8.0
+    debug: ^4.3.4
+>>>>>>> c9db071f9145c9006931b52475feb9810e5f360e
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
+<<<<<<< HEAD
   checksum: b853d39dcf886668f9aa9ea12094e722d35be20855dc7f01c80ee847bf4f7e27aa74693c3a33d4d813705214bda28be1d6c7ca29e590233f894f556203171d29
+=======
+  checksum: 10d7a3ae383fee5a5cba9541c72e23d6ab01cca6b414a62b44dacb5ebc15c80b80aa6c105b6469d3795f2f8514ae2499c069cd2d9dcac61f3db9ef6c7a75e080
+>>>>>>> c9db071f9145c9006931b52475feb9810e5f360e
   languageName: node
   linkType: hard
 
@@ -751,9 +767,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@typescript-eslint/type-utils@npm:6.18.1":
   version: 6.18.1
   resolution: "@typescript-eslint/type-utils@npm:6.18.1"
+=======
+"@typescript-eslint/scope-manager@npm:6.8.0":
+  version: 6.8.0
+  resolution: "@typescript-eslint/scope-manager@npm:6.8.0"
+  dependencies:
+    "@typescript-eslint/types": 6.8.0
+    "@typescript-eslint/visitor-keys": 6.8.0
+  checksum: b6cf2803531d1c14b56c30fd3cd807b80e17fe48d0da8e5aa9ae50915407ed732c7e2a7ac8030b7cf8ed07b8e481a1138d76bf05b727837a0e016280c2f6873b
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/type-utils@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@typescript-eslint/type-utils@npm:6.2.0"
+>>>>>>> c9db071f9145c9006931b52475feb9810e5f360e
   dependencies:
     "@typescript-eslint/typescript-estree": "npm:6.18.1"
     "@typescript-eslint/utils": "npm:6.18.1"
@@ -775,9 +807,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@typescript-eslint/typescript-estree@npm:6.18.1":
   version: 6.18.1
   resolution: "@typescript-eslint/typescript-estree@npm:6.18.1"
+=======
+"@typescript-eslint/types@npm:6.8.0":
+  version: 6.8.0
+  resolution: "@typescript-eslint/types@npm:6.8.0"
+  checksum: 1fcd85f6d575116d51c6ee757ed37610ae5e7e4296a29f93c9c6949f6cd16d24550eb7fc5bae7a43119cc08e13836f69a7ae7c54ebba6c95aef96b34d3bfb7f7
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/typescript-estree@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@typescript-eslint/typescript-estree@npm:6.2.0"
+>>>>>>> c9db071f9145c9006931b52475feb9810e5f360e
   dependencies:
     "@typescript-eslint/types": "npm:6.18.1"
     "@typescript-eslint/visitor-keys": "npm:6.18.1"
@@ -794,9 +839,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@typescript-eslint/utils@npm:6.18.1":
   version: 6.18.1
   resolution: "@typescript-eslint/utils@npm:6.18.1"
+=======
+"@typescript-eslint/typescript-estree@npm:6.8.0":
+  version: 6.8.0
+  resolution: "@typescript-eslint/typescript-estree@npm:6.8.0"
+  dependencies:
+    "@typescript-eslint/types": 6.8.0
+    "@typescript-eslint/visitor-keys": 6.8.0
+    debug: ^4.3.4
+    globby: ^11.1.0
+    is-glob: ^4.0.3
+    semver: ^7.5.4
+    ts-api-utils: ^1.0.1
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 388db7f33ef1bc0e7b960c0bce9c744c2e32c66c7ab8dfae73d8533958202ad6f31663b0010f79c45b5ff93159c67f45b00693d73b9da2472b17156dfd26b4a8
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/utils@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@typescript-eslint/utils@npm:6.2.0"
+>>>>>>> c9db071f9145c9006931b52475feb9810e5f360e
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.4.0"
     "@types/json-schema": "npm:^7.0.12"
@@ -821,6 +890,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@ungap/structured-clone@npm:^1.2.0":
   version: 1.2.0
   resolution: "@ungap/structured-clone@npm:1.2.0"
@@ -832,6 +902,22 @@ __metadata:
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
   checksum: ca0a54e35bea4ece0ecb68a47b312e1a9a6f772408d5bcb9051230aaa94b0460671c5b5c9cb3240eb5b7bc94c52476550eb221f65a0bbd0145bdc9f3113a6707
+=======
+"@typescript-eslint/visitor-keys@npm:6.8.0":
+  version: 6.8.0
+  resolution: "@typescript-eslint/visitor-keys@npm:6.8.0"
+  dependencies:
+    "@typescript-eslint/types": 6.8.0
+    eslint-visitor-keys: ^3.4.1
+  checksum: 710d9067b85d7715a400ae625c083c41733abb891d7b35108de083913980f9642e79d27689599fa39915f0fecae16dbfc30367007fccc838ccd917943660de22
+  languageName: node
+  linkType: hard
+
+"abbrev@npm:^1.0.0":
+  version: 1.1.1
+  resolution: "abbrev@npm:1.1.1"
+  checksum: 2d882941183c66aa665118bafdab82b7a177e9add5eb2776c33e960a4f3c89cff88a1b38aba13a456de01d0dd9d66a8bea7c903268b21ea91dd1097e1e2e8243
+>>>>>>> c9db071f9145c9006931b52475feb9810e5f360e
   languageName: node
   linkType: hard
 
@@ -2660,31 +2746,31 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nyanga-read@workspace:."
   dependencies:
-    "@sveltejs/adapter-static": "npm:^2.0.2"
-    "@sveltejs/kit": "npm:^1.22.3"
-    "@tailwindcss/typography": "npm:^0.5.9"
-    "@types/cookie": "npm:^0.5.1"
-    "@types/lodash": "npm:^4.14.196"
-    "@types/showdown": "npm:^2.0.1"
-    "@typescript-eslint/eslint-plugin": "npm:^6.2.0"
-    "@typescript-eslint/parser": "npm:^6.2.0"
-    autoprefixer: "npm:^10.4.14"
-    eslint: "npm:^8.45.0"
-    eslint-config-prettier: "npm:^8.8.0"
-    eslint-plugin-svelte3: "npm:^4.0.0"
-    lodash: "npm:^4.17.21"
-    postcss: "npm:^8.4.27"
-    prettier: "npm:^2.8.8"
-    prettier-plugin-svelte: "npm:^2.10.1"
-    showdown: "npm:^2.1.0"
-    svelte: "npm:^3.59.2"
-    svelte-check: "npm:^3.4.6"
-    svelte-french-toast: "npm:^1.2.0"
-    svelte-i18n: "npm:^3.7.0"
-    tailwindcss: "npm:^3.3.3"
-    tslib: "npm:^2.6.1"
-    typescript: "npm:^5.1.6"
-    vite: "npm:^4.4.7"
+    "@sveltejs/adapter-static": ^2.0.2
+    "@sveltejs/kit": ^1.22.3
+    "@tailwindcss/typography": ^0.5.9
+    "@types/cookie": ^0.5.1
+    "@types/lodash": ^4.14.196
+    "@types/showdown": ^2.0.1
+    "@typescript-eslint/eslint-plugin": ^6.2.0
+    "@typescript-eslint/parser": ^6.8.0
+    autoprefixer: ^10.4.14
+    eslint: ^8.45.0
+    eslint-config-prettier: ^8.8.0
+    eslint-plugin-svelte3: ^4.0.0
+    lodash: ^4.17.21
+    postcss: ^8.4.27
+    prettier: ^2.8.8
+    prettier-plugin-svelte: ^2.10.1
+    showdown: ^2.1.0
+    svelte: ^3.59.2
+    svelte-check: ^3.4.6
+    svelte-french-toast: ^1.2.0
+    svelte-i18n: ^3.7.0
+    tailwindcss: ^3.3.3
+    tslib: ^2.6.1
+    typescript: ^5.1.6
+    vite: ^4.4.7
   languageName: unknown
   linkType: soft
 
