@@ -1,7 +1,8 @@
 from server.server import create_app
 
 from utils.storage_initializer import db_settings_initializer
-from utils.extension import get_manga, get_csrf
+from utils.extension import search_manga
+from utils.extension import get_manga
 
 import threading
 import argparse
@@ -45,22 +46,13 @@ def main():
         help="access nyanga read via extension",
     )
 
-    # parser.add_argument(
-    #     "--get-csrf",
-    #     action="store_true",
-    #     help="get csrf token from system",
-    # )
-
-    # parser.add_argument(
-    #     "--csrf-token",
-    #     help="if csrf already obtained, you can set it before using --context",
-    # )
-
     parser.add_argument(
         "--context",
         choices=["my_manga", "search_manga"],
         help="give some context to nyanga what you want to do",
     )
+
+    parser.add_argument("--manga-name", help="what the manga title you want to search")
 
     client = parser.parse_args()
     if not client.extension:
@@ -103,17 +95,12 @@ def main():
 
     if client.extension:
         ext_context = client.context
-        # if ext_get_csrf:
-        #     print(get_csrf())
-
-        # if ext_context == 'get_csrf':
-
         match ext_context:
             case "my_manga":
-                print(get_csrf())
+                print(get_manga())
             case "search_manga":
-                print("get some manga")
-
+                manga_name = client.manga_name
+                print(search_manga(manga_name))
             case _:
                 pass
 
