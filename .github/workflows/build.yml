@@ -37,8 +37,8 @@ jobs:
           - os: ubuntu-latest
             TARGET: ubuntu
             CMD_BUILD: |
-              npm install
-              npm run svelte:build
+              yarn install
+              yarn run svelte:build
               python3 -m venv .venv --upgrade-deps
               source .venv/bin/activate
               mkdir -p log
@@ -78,6 +78,8 @@ jobs:
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
           nvm install 18.19.0
+          corepack enable
+          corepack prepare yarn@stable --activate
       - name: Depenedencies install Window
         if: matrix.os == 'windows-latest'
         run: |

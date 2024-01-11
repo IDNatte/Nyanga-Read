@@ -670,7 +670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.196":
+"@types/lodash@npm:^4.14.195":
   version: 4.14.202
   resolution: "@types/lodash@npm:4.14.202"
   checksum: 1bb9760a5b1dda120132c4b987330d67979c95dbc22612678682cd61b00302e190f4207228f3728580059cdab5582362262e3819aea59960c1017bd2b9fb26f6
@@ -698,7 +698,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^6.2.0":
+"@typescript-eslint/eslint-plugin@npm:^6.1.0":
   version: 6.18.1
   resolution: "@typescript-eslint/eslint-plugin@npm:6.18.1"
   dependencies:
@@ -723,7 +723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^6.8.0":
+"@typescript-eslint/parser@npm:^6.1.0":
   version: 6.18.1
   resolution: "@typescript-eslint/parser@npm:6.18.1"
   dependencies:
@@ -2664,10 +2664,10 @@ __metadata:
     "@sveltejs/kit": "npm:^1.22.3"
     "@tailwindcss/typography": "npm:^0.5.9"
     "@types/cookie": "npm:^0.5.1"
-    "@types/lodash": "npm:^4.14.196"
+    "@types/lodash": "npm:^4.14.195"
     "@types/showdown": "npm:^2.0.1"
-    "@typescript-eslint/eslint-plugin": "npm:^6.2.0"
-    "@typescript-eslint/parser": "npm:^6.8.0"
+    "@typescript-eslint/eslint-plugin": "npm:^6.1.0"
+    "@typescript-eslint/parser": "npm:^6.1.0"
     autoprefixer: "npm:^10.4.14"
     eslint: "npm:^8.45.0"
     eslint-config-prettier: "npm:^8.8.0"
@@ -2682,9 +2682,9 @@ __metadata:
     svelte-french-toast: "npm:^1.2.0"
     svelte-i18n: "npm:^4.0.0"
     tailwindcss: "npm:^3.3.3"
-    tslib: "npm:^2.6.1"
+    tslib: "npm:^2.6.0"
     typescript: "npm:^5.1.6"
-    vite: "npm:^4.4.7"
+    vite: "npm:^4.4.6"
   languageName: unknown
   linkType: soft
 
@@ -3583,7 +3583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.0, tslib@npm:^2.6.1":
+"tslib@npm:^2.4.0, tslib@npm:^2.6.0":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: bd26c22d36736513980091a1e356378e8b662ded04204453d353a7f34a4c21ed0afc59b5f90719d4ba756e581a162ecbf93118dc9c6be5acf70aa309188166ca
@@ -3697,7 +3697,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.4.7":
+"vite@npm:^4.4.6":
   version: 4.5.1
   resolution: "vite@npm:4.5.1"
   dependencies:
