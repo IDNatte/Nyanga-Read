@@ -19,7 +19,7 @@
 		"python:linux:extension:bookmark": "./.venv/bin/python ./window/app.py --extension --context my_manga"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-static": "^2.0.2",
+		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^1.22.3",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/cookie": "^0.5.1",
