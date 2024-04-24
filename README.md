@@ -73,6 +73,7 @@ Manga Reader for desktop powered by sveltekit, mangadex, and pywebview.
 
 ## Help me transalating application
 
+test
 currently this application available only in 2 language, _english_ and _Bahasa Indonesia_, if you feel you can help me transalating this application by transalating you can follow step below
 
 - Before you transalating application please check available manga transalated language from [mangadex source](https://api.mangadex.org/docs/static-data/)
