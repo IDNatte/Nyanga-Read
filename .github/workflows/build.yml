@@ -48,21 +48,21 @@ jobs:
               pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-linux.spec
             OUT_FILE_NAME: Nyanga-Read-linux
             ASSET_MIME: application/octet-stream
-          - os: windows-latest
-            TARGET: windows
-            CMD_BUILD: |
-              refreshenv
-              mkdir log
-              New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
-              npm install
-              npm run svelte:build
-              python -m venv .venv --upgrade-deps
-              .\.venv\Scripts\Activate.ps1
-              python -m pip install --upgrade pip
-              pip install -r scripts/requirements/requirements-win.txt
-              pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-windows.spec
-            OUT_FILE_NAME: Nyanga-Read-windows.exe
-            ASSET_MIME: application/vnd.microsoft.portable-executable
+          # - os: windows-latest
+          #   TARGET: windows
+          #   CMD_BUILD: |
+          #     refreshenv
+          #     mkdir log
+          #     New-Item -ItemTyp "File" -Path ".\log\app.log" -Force
+          #     npm install
+          #     npm run svelte:build
+          #     python -m venv .venv --upgrade-deps
+          #     .\.venv\Scripts\Activate.ps1
+          #     python -m pip install --upgrade pip
+          #     pip install -r scripts/requirements/requirements-win.txt
+          #     pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-windows.spec
+          #   OUT_FILE_NAME: Nyanga-Read-windows.exe
+          #   ASSET_MIME: application/vnd.microsoft.portable-executable
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python
@@ -80,10 +80,10 @@ jobs:
           nvm install 18.19.0
           corepack enable
           corepack prepare yarn@stable --activate
-      - name: Depenedencies install Window
-        if: matrix.os == 'windows-latest'
-        run: |
-          choco install dotnet-sdk -y
+      # - name: Depenedencies install Window
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     choco install dotnet-sdk -y
       - name: Load release metafile
         uses: actions/download-artifact@v1
         with:
