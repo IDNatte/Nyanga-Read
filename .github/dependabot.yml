@@ -11,6 +11,6 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "pip"
-    directory: "/" # Location of package manifests
+    directory: "/scripts/requirements" # Location of package manifests
     schedule:
       interval: "weekly"
