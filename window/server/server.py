@@ -1,21 +1,15 @@
-from utils.resources import get_resources
-from flask import current_app
-from flask import Flask
-
-from .helper.constant import constant
-from .config import config
-
-from .storage.model.bookmark import Bookmark
-from .storage.model.settings import Setting
-from .storage.model.read import Read
-
-from .controller import interface
-from .controller import error
-from .controller import main
-from .controller import ipc
-
-import mimetypes
 import logging
+import mimetypes
+
+from flask import Flask, current_app
+from utils.resources import get_resources
+
+from .config import config
+from .controller import error, interface, ipc, main
+from .helper.constant import constant
+from .storage.model.bookmark import Bookmark
+from .storage.model.read import Read
+from .storage.model.settings import Setting
 
 
 def create_app():
