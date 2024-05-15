@@ -1,15 +1,12 @@
+import concurrent
+
+import requests
+from flask import Blueprint, jsonify
 from flask import request as req
-from flask import Blueprint
-from flask import jsonify
-
 from flask_cors import CORS
-
 from server.middleware.verificator.agent import verify_ua
 from server.storage.model.bookmark import Bookmark
 from utils.parallel_request import parallelize_req
-
-import concurrent
-import requests
 
 interface_handler = Blueprint("interface", __name__, url_prefix="/extension")
 
@@ -55,3 +52,10 @@ def my_manga():
         concurrent.futures.wait(fu)
 
     return jsonify([data.result().get("data") for data in fu])
+
+
+# ToDo make opener for manga from ulauncher in here (how ?)
+# @interface_handler.route('/openmanga/<mangaid>')
+# @verify_ua
+# def openmanga(mangaid):
+#     pass

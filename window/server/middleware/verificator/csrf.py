@@ -1,9 +1,9 @@
-from webview import token as wv_token
 from functools import wraps
-from flask import request
 
-from server.helper.constant.constant import APP_DEV
+from flask import request
 from server.error.error import CSRFError
+from server.helper.constant.constant import APP_ENV
+from webview import token as wv_token
 
 
 def verify_csrf(function):
@@ -17,6 +17,9 @@ def verify_csrf(function):
             token_header = request.headers["PCSRFWV-Token"]
 
             if token_header == wv_token:
+                return function(*args, **kwargs)
+
+            elif APP_ENV == "dev":
                 return function(*args, **kwargs)
 
             elif token_header != wv_token:

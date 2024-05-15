@@ -2,23 +2,22 @@
 	import type { LayoutData } from './$types';
 
 	import { invalidateAll } from '$app/navigation';
-	import { fade } from 'svelte/transition';
 	import { get } from 'svelte/store';
+	import { fade } from 'svelte/transition';
 
-	import { Toaster } from 'svelte-french-toast';
-	import toast from 'svelte-french-toast';
-	import { _ } from 'svelte-i18n';
 	import { find } from 'lodash';
+	import toast, { Toaster } from 'svelte-french-toast';
+	import { _ } from 'svelte-i18n';
 
 	import markdown from '$lib/utils/markdown';
 
 	import loaderStore from '$lib/store/loader/loader.store';
 
-	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 	import PageLoader from '$lib/components/loader/PageLoader.svelte';
+	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
 
-	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
 	import BookIcon from '$lib/components/icons/BookIcon.svelte';
+	import TransalateIcon from '$lib/components/icons/TransalateIcon.svelte';
 
 	export let data: LayoutData;
 	const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;

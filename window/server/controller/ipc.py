@@ -1,25 +1,18 @@
+import concurrent
+
+import requests
+from flask import Blueprint, jsonify, redirect
 from flask import request as req
-from flask import Blueprint
-from flask import redirect
 from flask import url_for
-from flask import jsonify
-
 from flask_cors import CORS
-
+from server.helper.constant import constant
+from server.middleware.verificator.agent import verify_ua
+from server.middleware.verificator.csrf import verify_csrf
+from server.storage.model.bookmark import Bookmark
+from server.storage.model.read import Read
+from server.storage.model.settings import Setting
 from utils.parallel_request import parallelize_req
 from utils.resources import get_resources
-
-from server.middleware.verificator.csrf import verify_csrf
-from server.middleware.verificator.agent import verify_ua
-
-from server.helper.constant import constant
-
-from server.storage.model.bookmark import Bookmark
-from server.storage.model.settings import Setting
-from server.storage.model.read import Read
-
-import concurrent
-import requests
 
 ipc_handler = Blueprint("ipc_ep", __name__, url_prefix="/ipc")
 
@@ -161,9 +154,11 @@ def get_manga_detail(manga):
 
             return jsonify(
                 {
-                    "max_page": (manga.get("total") // 100)
-                    if manga.get("total") % 100 != 0
-                    else None,
+                    "max_page": (
+                        (manga.get("total") // 100)
+                        if manga.get("total") % 100 != 0
+                        else None
+                    ),
                     "paginated": True if len(manga.get("data")) >= 100 else False,
                     "last_read": latest_readed.to_dict() if latest_readed else None,
                     "detail_data": detail.json().get("data"),
