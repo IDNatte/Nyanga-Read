@@ -18,13 +18,13 @@ CORS(interface_handler)
 @interface_handler.route("/status")
 @verify_ua
 def extension_access():
-    # print(f"{}")
-
-    # if APP_EXT == "extension":
-    #     return jsonify({"is_extension": True})
-
     return jsonify(
-        {"open_manga": True, "manga_id": NyangaTemporaryAttr.get_openmanga_id()}
+        {
+            "open_by_extension": (
+                True if NyangaTemporaryAttr.get_openmanga_id() else False
+            ),
+            "manga_id": NyangaTemporaryAttr.get_openmanga_id(),
+        }
     )
 
 

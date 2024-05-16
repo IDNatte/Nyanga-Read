@@ -7,7 +7,7 @@ import '$lib/i18n';
 import '../app.css';
 
 export const ssr = false;
-// export const prerender = true
+// export const prerender = true;
 
 export const load: LayoutLoad = async ({ fetch }) => {
 	const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
@@ -56,31 +56,11 @@ export const load: LayoutLoad = async ({ fetch }) => {
 		}
 	};
 
-	const is_extension = async () => {
-		const settings = await fetch('http://localhost:5000/extension/status', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0'
-			}
-		});
-
-		if (settings.status === 200) {
-			const extInfo = await settings.json();
-			// return { preferences: settingsData.settings };
-			console.log(extInfo);
-			return { hello: 'world' };
-		} else {
-			// return { preferences: null };
-			return { hello: 'world' };
-		}
-	};
-
 	await waitLocale();
 
 	return {
 		app: await appInfo(),
-		setting: await setting(),
-		extension: await is_extension()
+		setting: await setting()
+		// extension: await is_extension()
 	};
 };

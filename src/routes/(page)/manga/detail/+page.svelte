@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { afterNavigate } from '$app/navigation';
 	import { onDestroy, onMount } from 'svelte';
 
-	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
+	import { fade, fly } from 'svelte/transition';
 
-	import { truncate, get as get_ } from 'lodash';
 	import markdown from '$lib/utils/markdown';
+	import { get as get_, truncate } from 'lodash';
 	import toast from 'svelte-french-toast';
 	import { _ } from 'svelte-i18n';
 
 	import detailStore from '$lib/store/ephemeral/detail/detail.store';
 	import modalStore from '$lib/store/modal/modal.store';
 
-	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
-	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
+	import { afterNavigate } from '$app/navigation';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
+	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
 	import ModalComponent from '$lib/components/modal/ModalComponent.svelte';
+	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 
 	const language: string = document.documentElement.lang;
 
@@ -232,6 +232,7 @@
 			previewPage = from?.url.pathname || previewPage;
 		}
 	});
+
 </script>
 
 {#if $detailStore.detail_data}
