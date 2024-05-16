@@ -4,19 +4,35 @@ import requests
 from flask import Blueprint, jsonify
 from flask import request as req
 from flask_cors import CORS
+from server.helper.constant.constant import APP_EXT
 from server.middleware.verificator.agent import verify_ua
 from server.storage.model.bookmark import Bookmark
 from utils.parallel_request import parallelize_req
+from utils.temp_attribute import NyangaTemporaryAttr
 
 interface_handler = Blueprint("interface", __name__, url_prefix="/extension")
 
 CORS(interface_handler)
 
 
+@interface_handler.route("/status")
+@verify_ua
+def extension_access():
+    # print(f"{}")
+
+    # if APP_EXT == "extension":
+    #     return jsonify({"is_extension": True})
+
+    return jsonify(
+        {"open_manga": True, "manga_id": NyangaTemporaryAttr.get_openmanga_id()}
+    )
+
+
 @interface_handler.route("/search_manga")
 @verify_ua
 def search_manga():
     manga_title = req.args.get("title", None)
+    print(f"{NyangaTemporaryAttr.get_openmanga_id()}")
 
     try:
         fetcher = requests.get(
@@ -54,8 +70,8 @@ def my_manga():
     return jsonify([data.result().get("data") for data in fu])
 
 
-# ToDo make opener for manga from ulauncher in here (how ?)
-# @interface_handler.route('/openmanga/<mangaid>')
-# @verify_ua
-# def openmanga(mangaid):
-#     pass
+# @TODO make opener for manga from ulauncher in here (how ?)
+@interface_handler.route("/openmanga/<mangaid>")
+@verify_ua
+def openmanga(mangaid):
+    return jsonify({"hello": "world"})

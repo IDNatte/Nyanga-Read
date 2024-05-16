@@ -7,15 +7,19 @@ import threading
 
 import webview
 from server.server import create_app
+from utils.arg_parser import NyangaArgParser
 from utils.extension import get_manga, search_manga
 from utils.resources import get_resources
 from utils.storage_initializer import db_settings_initializer
+from utils.temp_attribute import NyangaTemporaryAttr
 
 
 class Nyanga:
     def __init__(self):
         self.app_env = os.environ.get("APP_ENV", default=None)
         self.server = self.__run_server()
+        self.parser = NyangaArgParser(description="Nyanga Read 😸")
+        self.__open_extension = None
 
         # logger
         self.logger = logging.getLogger(__name__)
@@ -29,13 +33,13 @@ class Nyanga:
         )
 
         self.logger.addHandler(self.app_logger)
-
         self.logger.info("starting application")
 
     def __server_instance(self):
         try:
             # starting ipc server
             create_app().logger.info("starting server")
+            # self.logger.info("starting server")
 
             # initialize database if not already created
             db_settings_initializer()
@@ -44,7 +48,7 @@ class Nyanga:
             create_app().run(host="localhost", port=5000)
 
         except Exception as error:
-            self.logger.warning("stopping application !")
+            create_app().logger.info("stopping server")
             sys.exit(1)
 
     def __run_server(self):
@@ -52,74 +56,84 @@ class Nyanga:
         server_thread.start()
 
     def __parser(self):
-        parser = argparse.ArgumentParser(description="Nyanga Read 😸")
 
-        parser.add_argument(
+        self.parser.add_argument(
             "--extension",
             action="store_true",
             help="access nyanga read via extension",
         )
 
-        parser.add_argument(
+        self.parser.add_argument(
             "--context",
-            choices=["my_manga", "search_manga"],
+            choices=["my_manga", "search_manga", "open_manga"],
             help="give some context to nyanga what you want to do",
         )
 
-        parser.add_argument(
-            "--manga-name", help="what the manga title you want to search"
+        self.parser.add_argument(
+            "--manga-name",
+            help="what the manga title you want to search (coupled with --context search_manga command)",
         )
 
-        return {"client": parser.parse_args()}
+        self.parser.add_argument(
+            "--manga-id",
+            help="what manga id that want to be opened (coupled with --context open_manga command)",
+        )
+
+        return {"client": self.parser.parse_args()}
 
     def __extension(self, context):
         match context.context:
             case "my_manga":
                 sys.stdout.write(f"\n{json.dumps(get_manga())}\n\n")
             case "search_manga":
+                if context.manga_name is None:
+                    self.parser.error(
+                        "search_manga is not provided with --manga-name <manga name>"
+                    )
+
                 sys.stdout.write(
                     f"\n{json.dumps(search_manga(context.manga_name))}\n\n"
                 )
+
+            case "open_manga":
+                if context.manga_id is None:
+                    self.parser.error(
+                        "open_manga is not provided with --manga-id <manga ID>"
+                    )
+
+                NyangaTemporaryAttr.set_openmanga_id(context.manga_id)
+                self.__open_extension = True
+
             case _:
-                pass
+                self.parser.error("no --context profided")
+
+    def __webview(self, url="http://localhost:5000", debug=False):
+        webview.create_window(
+            "😸 Nyanga Read",
+            url,
+            width=1280,
+            height=850,
+            min_size=(1280, 850),
+        )
+        webview.start(
+            user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
+            debug=debug,
+        )
 
     def __application(self):
-        match self.app_env:
-            case "dev":
-                webview.create_window(
-                    "😸 Nyanga Read",
-                    "http://localhost:5173",
-                    width=1280,
-                    height=850,
-                    min_size=(1280, 850),
-                )
-                webview.start(
-                    user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
-                    debug=True,
-                )
 
-            case "preview":
-                webview.create_window(
-                    "😸 Nyanga Read",
-                    "http://localhost:5000",
-                    width=1280,
-                    height=850,
-                    min_size=(1280, 850),
-                )
-                webview.start(
-                    user_agent="pywebview-client/1.0 pywebview-ui/3.0.0",
-                    debug=True,
-                )
+        match self.app_env, self.__open_extension:
+            case "dev", False:
+                self.__webview(url="http://localhost:5173", debug=True)
 
-            case _:
-                webview.create_window(
-                    "😸 Nyanga Read",
-                    "http://localhost:5000",
-                    width=1280,
-                    height=850,
-                    min_size=(1280, 850),
-                )
-                webview.start(user_agent="pywebview-client/1.0 pywebview-ui/3.0.0")
+            case "preview", False:
+                self.__webview(url="http://localhost:5000", debug=True)
+
+            case _, False:
+                self.__webview(url="http://localhost:5000", debug=False)
+
+            case _, True:
+                self.__webview(url="http://localhost:5173", debug=True)
 
     def run(self):
         client = self.__parser().get("client")
@@ -129,6 +143,7 @@ class Nyanga:
 
         if client.extension:
             self.__extension(client)
+            self.__application()
 
 
 if __name__ == "__main__":

@@ -1,68 +1,86 @@
-import type { LayoutLoad } from './$types'
-import { browser } from '$app/environment'
+import { browser } from '$app/environment';
+import type { LayoutLoad } from './$types';
 
-import { locale, waitLocale } from 'svelte-i18n'
+import { locale, waitLocale } from 'svelte-i18n';
 
-import '../app.css'
-import '$lib/i18n'
+import '$lib/i18n';
+import '../app.css';
 
-export const ssr = false
+export const ssr = false;
 // export const prerender = true
 
-
 export const load: LayoutLoad = async ({ fetch }) => {
-  const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement
+	const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
 
-  // set Locale  
-  if (browser) {
-    locale.set(document.documentElement.lang)
-  }
+	// set Locale
+	if (browser) {
+		locale.set(document.documentElement.lang);
+	}
 
-  const appInfo = async () => {
-    const app = await fetch('http://localhost:5000/ipc/app', {
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0',
-        'PCSRFWV-Token': pcsrfToken.value as string
-      }
-    })
+	const appInfo = async () => {
+		const app = await fetch('http://localhost:5000/ipc/app', {
+			headers: {
+				'Content-Type': 'application/json',
+				'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0',
+				'PCSRFWV-Token': pcsrfToken.value as string
+			}
+		});
 
-    if (app.status === 200) {
-      const appData = await app.json()
-      return {
-        appInfo: { about: appData.app_info.app_about }
-      }
-    } else {
-      return {
-        appInfo: null
-      }
-    }
-  }
+		if (app.status === 200) {
+			const appData = await app.json();
+			return {
+				appInfo: { about: appData.app_info.app_about }
+			};
+		} else {
+			return {
+				appInfo: null
+			};
+		}
+	};
 
-  const setting = async () => {
-    const settings = await fetch('http://localhost:5000/ipc/settings', {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0',
-        'PCSRFWV-Token': pcsrfToken.value as string
-      }
-    })
+	const setting = async () => {
+		const settings = await fetch('http://localhost:5000/ipc/settings', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0',
+				'PCSRFWV-Token': pcsrfToken.value as string
+			}
+		});
 
-    if (settings.status === 200) {
-      const settingsData = await settings.json()
-      return { preferences: settingsData.settings }
+		if (settings.status === 200) {
+			const settingsData = await settings.json();
+			return { preferences: settingsData.settings };
+		} else {
+			return { preferences: null };
+		}
+	};
 
-    } else {
-      return { preferences: null }
-    }
-  }
+	const is_extension = async () => {
+		const settings = await fetch('http://localhost:5000/extension/status', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'User-Agent': 'pywebview-client/1.0 pywebview-ui/3.0.0'
+			}
+		});
 
-  await waitLocale()
+		if (settings.status === 200) {
+			const extInfo = await settings.json();
+			// return { preferences: settingsData.settings };
+			console.log(extInfo);
+			return { hello: 'world' };
+		} else {
+			// return { preferences: null };
+			return { hello: 'world' };
+		}
+	};
 
-  return {
-    app: appInfo(),
-    setting: setting()
-  }
+	await waitLocale();
 
-}
+	return {
+		app: await appInfo(),
+		setting: await setting(),
+		extension: await is_extension()
+	};
+};
