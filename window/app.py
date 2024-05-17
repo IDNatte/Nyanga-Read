@@ -121,28 +121,25 @@ class Nyanga:
         )
 
     def __application(self):
-
-        match self.app_env, self.__open_extension:
-            case "dev", _:
+        match self.app_env:
+            case "dev":
                 self.__webview(url="http://localhost:5173", debug=True)
 
-            case "preview", _:
+            case "preview":
                 self.__webview(url="http://localhost:5000", debug=True)
 
-            case _, _:
-                self.__webview(url="http://localhost:5000", debug=False)
-
-            case _, True:
+            case _:
                 self.__webview(url="http://localhost:5173", debug=True)
 
     def run(self):
         client = self.__parser().get("client")
 
-        if not client.extension:
-            self.__application()
-
         if client.extension:
             self.__extension(client)
+            if self.__open_extension:
+                self.__application()
+
+        if not client.extension:
             self.__application()
 
 

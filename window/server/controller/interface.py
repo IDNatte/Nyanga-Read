@@ -45,7 +45,6 @@ def extension_access():
 @verify_ua
 def search_manga():
     manga_title = req.args.get("title", None)
-    print(f"{NyangaTemporaryAttr.get_openmanga_id()}")
 
     try:
         fetcher = requests.get(
@@ -81,10 +80,3 @@ def my_manga():
         concurrent.futures.wait(fu)
 
     return jsonify([data.result().get("data") for data in fu])
-
-
-# @TODO make opener for manga from ulauncher in here (how ?)
-@interface_handler.route("/openmanga/<mangaid>")
-@verify_ua
-def openmanga(mangaid):
-    return jsonify({"hello": "world"})
