@@ -4,7 +4,6 @@ import requests
 from flask import Blueprint, jsonify
 from flask import request as req
 from flask_cors import CORS
-from server.helper.constant.constant import APP_EXT
 from server.middleware.verificator.agent import verify_ua
 from server.storage.model.bookmark import Bookmark
 from utils.parallel_request import parallelize_req
@@ -15,15 +14,29 @@ interface_handler = Blueprint("interface", __name__, url_prefix="/extension")
 CORS(interface_handler)
 
 
+INIT_REQUEST = True
+
+
 @interface_handler.route("/status")
 @verify_ua
 def extension_access():
+    global INIT_REQUEST
+
+    if INIT_REQUEST:
+        INIT_REQUEST = False
+        return jsonify(
+            {
+                "open_by_extension": (
+                    True if NyangaTemporaryAttr.get_openmanga_id() else False
+                ),
+                "manga_id": NyangaTemporaryAttr.get_openmanga_id(),
+            }
+        )
+
     return jsonify(
         {
-            "open_by_extension": (
-                True if NyangaTemporaryAttr.get_openmanga_id() else False
-            ),
-            "manga_id": NyangaTemporaryAttr.get_openmanga_id(),
+            "open_by_extension": False,
+            "manga_id": None,
         }
     )
 

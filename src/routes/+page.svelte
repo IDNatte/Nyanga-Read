@@ -11,12 +11,15 @@
 	import { goto } from '$app/navigation';
 	import BookIcon from '$lib/components/icons/BookIcon.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
 
-	if (data.meta.application.open_by_extension) {
-		goto(`/manga/detail?manga=${data.meta.application.manga_id}`, {replaceState: true})
-	}
+	onMount(() => {
+		if (data.meta.application.open_by_extension) {
+			goto(`/manga/detail?manga=${data.meta.application.manga_id}`, {replaceState: false})
+		}
+	})
 </script>
 
 <div class="main-content">

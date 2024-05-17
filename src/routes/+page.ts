@@ -44,6 +44,8 @@ export const load: PageLoad = async ({ fetch }) => {
 		if (settings.status === 200) {
 			const extInfo = await settings.json();
 
+			console.log(extInfo);
+
 			return extInfo;
 		}
 	};
