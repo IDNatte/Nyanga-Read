@@ -129,7 +129,7 @@ class Nyanga:
                 self.__webview(url="http://localhost:5000", debug=True)
 
             case _, _:
-                self.__webview(url="http://localhost:5173", debug=True)
+                self.__webview(url="http://localhost:5000", debug=False)
 
     def run(self):
         client = self.__parser().get("client")
