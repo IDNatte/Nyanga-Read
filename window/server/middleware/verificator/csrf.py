@@ -16,10 +16,7 @@ def verify_csrf(function):
         try:
             token_header = request.headers["PCSRFWV-Token"]
 
-            if token_header == wv_token:
-                return function(*args, **kwargs)
-
-            elif APP_ENV == "dev":
+            if token_header == wv_token or APP_ENV == "dev":
                 return function(*args, **kwargs)
 
             elif token_header != wv_token:
