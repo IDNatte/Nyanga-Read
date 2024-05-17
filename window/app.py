@@ -121,14 +121,14 @@ class Nyanga:
         )
 
     def __application(self):
-        match self.app_env:
-            case "dev":
+        match self.app_env, self.__open_extension:
+            case "dev", _:
                 self.__webview(url="http://localhost:5173", debug=True)
 
-            case "preview":
+            case "preview", _:
                 self.__webview(url="http://localhost:5000", debug=True)
 
-            case _:
+            case _, _:
                 self.__webview(url="http://localhost:5173", debug=True)
 
     def run(self):
