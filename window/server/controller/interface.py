@@ -27,17 +27,20 @@ def extension_access():
         return jsonify(
             {
                 "open_by_extension": (
-                    True if NyangaTemporaryAttr.get_openmanga_id() else False
+                    True
+                    if NyangaTemporaryAttr.get_openmanga_id()
+                    or NyangaTemporaryAttr.get_openbookmark()
+                    else False
                 ),
                 "manga_id": NyangaTemporaryAttr.get_openmanga_id(),
+                "goto_bookmark": (
+                    True if NyangaTemporaryAttr.get_openbookmark() else False
+                ),
             }
         )
 
     return jsonify(
-        {
-            "open_by_extension": False,
-            "manga_id": None,
-        }
+        {"open_by_extension": False, "manga_id": None, "goto_bookmark": None}
     )
 
 
@@ -65,18 +68,18 @@ def search_manga():
         return jsonify({"status": "error", "location": "exception"})
 
 
-@interface_handler.route("/my_manga")
-@verify_ua
-def my_manga():
-    my_manga_lists = Bookmark.query.order_by(Bookmark.bookmarked_at.desc()).all()
+# @interface_handler.route("/my_manga")
+# @verify_ua
+# def my_manga():
+#     my_manga_lists = Bookmark.query.order_by(Bookmark.bookmarked_at.desc()).all()
 
-    bookmark_link = [
-        f"https://api.mangadex.org/manga/{bookmark.to_dict().get('manga')}?includes[]=cover_art&includes[]=artist&includes[]=manga"
-        for bookmark in my_manga_lists
-    ]
+#     bookmark_link = [
+#         f"https://api.mangadex.org/manga/{bookmark.to_dict().get('manga')}?includes[]=cover_art&includes[]=artist&includes[]=manga"
+#         for bookmark in my_manga_lists
+#     ]
 
-    with concurrent.futures.ThreadPoolExecutor() as parallelizer:
-        fu = [parallelizer.submit(parallelize_req, link) for link in bookmark_link]
-        concurrent.futures.wait(fu)
+#     with concurrent.futures.ThreadPoolExecutor() as parallelizer:
+#         fu = [parallelizer.submit(parallelize_req, link) for link in bookmark_link]
+#         concurrent.futures.wait(fu)
 
-    return jsonify([data.result().get("data") for data in fu])
+#     return jsonify([data.result().get("data") for data in fu])

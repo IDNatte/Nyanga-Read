@@ -17,7 +17,11 @@
 
 	onMount(() => {
 		if (data.meta.application.open_by_extension) {
-			goto(`/manga/detail?manga=${data.meta.application.manga_id}`, {replaceState: false})
+			goto(`/manga/detail?manga=${data.meta.application.manga_id}`)
+		}
+
+		if (data.meta.application.goto_bookmark) {
+			goto('/manga/bookmark')
 		}
 	})
 </script>

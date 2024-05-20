@@ -8,7 +8,7 @@ import threading
 import webview
 from server.server import create_app
 from utils.arg_parser import NyangaArgParser
-from utils.extension import get_manga, search_manga
+from utils.extension import search_manga
 from utils.resources import get_resources
 from utils.storage_initializer import db_settings_initializer
 from utils.temp_attribute import NyangaTemporaryAttr
@@ -84,7 +84,9 @@ class Nyanga:
     def __extension(self, context):
         match context.context:
             case "my_manga":
-                sys.stdout.write(f"\n{json.dumps(get_manga())}\n\n")
+                # sys.stdout.write(f"\n{json.dumps(get_manga())}\n\n")
+                NyangaTemporaryAttr.set_openbookmark(True)
+                self.__open_extension = True
             case "search_manga":
                 if context.manga_name is None:
                     self.parser.error(

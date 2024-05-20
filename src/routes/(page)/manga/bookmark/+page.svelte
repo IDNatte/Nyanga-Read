@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-	import { truncate, get as get_ } from 'lodash';
+	import { get as get_, truncate } from 'lodash';
 	import { _ } from 'svelte-i18n';
 
-	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
+	import CardComponent from '$lib/components/card/CardComponent.svelte';
 	import ImageLoaderComponent from '$lib/components/image/ImageLoaderComponent.svelte';
 	import CirclePageLoader from '$lib/components/loader/CirclePageLoader.svelte';
-	import CardComponent from '$lib/components/card/CardComponent.svelte';
+	import FloatNavigationComponent from '$lib/components/navigation/FloatNavigationComponent.svelte';
 
 	async function getBookmark() {
 		const pcsrfToken = document.querySelector('.pycsrf') as HTMLInputElement;
