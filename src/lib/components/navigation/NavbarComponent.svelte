@@ -8,12 +8,12 @@
 
 	import DropdownComponent from '$lib/components/dropdown/DropdownComponent.svelte';
 
-	import MagniglassIcon from '$lib/components/icons/MagniglassIcon.svelte';
-	import VerticalIcon from '$lib/components/icons/VerticalIcon.svelte';
-	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
-	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
-	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
+	import MagniglassIcon from '$lib/components/icons/MagniglassIcon.svelte';
+	import NavbarIcon from '$lib/components/icons/NavbarIcon.svelte';
+	import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
+	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
+	import VerticalIcon from '$lib/components/icons/VerticalIcon.svelte';
 
 	function dropdownClick(dropdown: string) {
 		if ($dropdownStore.open) {
@@ -91,7 +91,7 @@
 							}}
 						>
 							<InfoIcon width="w-5" height="w-5" />
-							<span>{$_('app.menu.about')}</span>
+							<span>{$_('app.menu.about')} ✨</span>
 						</a>
 					</li>
 				</ul>

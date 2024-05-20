@@ -46,7 +46,7 @@ jobs:
               python -m pip install --upgrade pip
               pip install -r scripts/requirements/requirements-linux.txt
               pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-linux.spec
-            OUT_FILE_NAME: Nyanga-Read-linux
+            OUT_FILE_NAME: Nyanga-Read-bin
             ASSET_MIME: application/octet-stream
           # - os: windows-latest
           #   TARGET: windows

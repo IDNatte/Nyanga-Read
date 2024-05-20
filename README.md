@@ -131,3 +131,9 @@ this application not including _manhua_ or _manhwa_ by default because i just wa
 ## Bugfix & Feature request
 
 if you found some bug or you feel this apps will need some crucial feature you can submit new issue.
+
+---
+
+### Ulauncher extension for nyanga-read ✨.
+
+extend your [ulauncher](https://ulauncher.io/) with [ulauncher-nyanga](https://github.com/IDNatte/ulauncher-nyanga) to use it, go to [ulauncher-nyanga](https://github.com/IDNatte/ulauncher-nyanga) github repo.

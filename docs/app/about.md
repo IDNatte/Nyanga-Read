@@ -70,3 +70,9 @@
 - [mangadex](https://api.mangadex.org/)
 
 Feel free to give any suggestion or request a feature or submit any bug @ [github issue](https://github.com/IDNatte/Nyanga-Read/issues)
+
+---
+
+### Ulauncher extension for nyanga-read ✨.
+
+extend your [ulauncher](https://ulauncher.io/) with [ulauncher-nyanga](https://github.com/IDNatte/ulauncher-nyanga) to use it, go to [ulauncher-nyanga](https://github.com/IDNatte/ulauncher-nyanga) github repo.
