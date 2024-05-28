@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { onMount, createEventDispatcher } from 'svelte';
 	import loaderStore from '$lib/store/loader/loader.store';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	export let alt: string | null | undefined;
 	export let src: string | null | undefined;
@@ -9,6 +9,7 @@
 	const dispatch: any = createEventDispatcher();
 	let loaded: boolean = false;
 	let thisImage: HTMLImageElement;
+	let error: boolean = false
 
 	loaderStore.set('loading');
 	onMount(() => {
@@ -24,9 +25,15 @@
 		thisImage.onerror = () => {
 			dispatch('imageloaderror');
 			loaded = false;
+			error = true
 		};
 	});
 </script>
+
+{#if !loaded}
+	<div class="animate-pulse bg-slate-200 w-full min-h-[580px] rounded">
+	</div>
+{/if}
 
 <img {src} {alt} class:loaded class={className} bind:this={thisImage} loading="lazy" />
 
