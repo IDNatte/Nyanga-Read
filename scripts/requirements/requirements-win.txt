@@ -1,7 +1,0 @@
-pyinstaller
-flask
-pywebview
-flask-cors
-requests
-flask-sqlalchemy
-SQLAlchemy-serializer
