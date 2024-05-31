@@ -17,7 +17,7 @@
 </p>
 
 <p style="margin: 0px;" align="center">
-<img style="margin-top: 0.5em; margin-bottom: 0px;" alt="GitHub package.json version (branch)" src="https://img.shields.io/github/package-json/v/IDNatte/Nyanga-Read/main?logo=Yarn">
+<img style="margin-top: 0.5em; margin-bottom: 0px;" alt="GitHub package.json version (branch)" src="https://img.shields.io/github/package-json/v/IDNatte/Nyanga-Read/main/nyanga?logo=Yarn">
 </p>
 
 <p style="margin-top: 0.5em; margin-bottom: 0px;" align="center"><img style="margin: 0px;" alt="GitHub commits since latest release (by SemVer including pre-releases)" src="https://img.shields.io/github/commits-since/IDNatte/Nyanga-Read/latest/main">
