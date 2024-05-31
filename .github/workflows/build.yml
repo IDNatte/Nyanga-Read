@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   createrelease:
@@ -36,16 +36,22 @@ jobs:
         include:
           - os: ubuntu-latest
             TARGET: ubuntu
+            # CMD_BUILD: |
+            #   yarn install
+            #   yarn run svelte:build
+            #   python3 -m venv .venv --upgrade-deps
+            #   source .venv/bin/activate
+            #   mkdir -p log
+            #   touch log/app.log
+            #   python -m pip install --upgrade pip
+            #   pip install -r scripts/requirements/requirements-linux.txt
+            #   pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-linux.spec
             CMD_BUILD: |
-              yarn install
-              yarn run svelte:build
-              python3 -m venv .venv --upgrade-deps
-              source .venv/bin/activate
+              poetry install --with dev
+              poetry run build_ui
               mkdir -p log
               touch log/app.log
-              python -m pip install --upgrade pip
-              pip install -r scripts/requirements/requirements-linux.txt
-              pyinstaller --noconfirm --distpath nyanga scripts/specfile/Nyanga-Read-linux.spec
+              poetry run build_linux
             OUT_FILE_NAME: Nyanga-Read-bin
             ASSET_MIME: application/octet-stream
           # - os: windows-latest
@@ -75,6 +81,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          curl -sSL https://install.python-poetry.org | python3 -
+          export PATH="$PATH:$HOME/.local/bin"
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
           nvm install 18.19.0
