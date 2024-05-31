@@ -49,8 +49,8 @@ jobs:
             CMD_BUILD: |
               poetry install --with dev
               poetry run build_ui
-              mkdir -p log
-              touch log/app.log
+              mkdir -p nyanga/log
+              touch nyanga/log/app.log
               poetry run build_linux
             OUT_FILE_NAME: Nyanga-Read-bin
             ASSET_MIME: application/octet-stream
