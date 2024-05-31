@@ -8,9 +8,9 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/nyanga" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "monthly"
 
   - package-ecosystem: "pip"
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "monthly"
