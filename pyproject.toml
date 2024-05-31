@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nyanga"
-version = "3.0.9"
+version = "3.0.8"
 description = "Manga Reader for desktop powered by sveltekit, mangadex, and pywebview."
 authors = ["IDNatte <idnatte@gmail.com>"]
 readme = "README.md"
