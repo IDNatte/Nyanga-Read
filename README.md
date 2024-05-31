@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/images/logo.png" />
+  <img src="./nyanga/docs/images/logo.png" />
 </p>
 
 # Nyanga Read 😸
