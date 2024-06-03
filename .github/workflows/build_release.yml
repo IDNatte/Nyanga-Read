@@ -9,7 +9,7 @@ jobs:
   build_ubuntu:
     runs-on: ubuntu-latest
     container:
-      image: debian:bullseye
+      image: debian:stable
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -48,7 +48,8 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          dnf install -y gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 glib-networking python3 python3-pip gcc
+          dnf install -y gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 glib-networking python3.11 python3.11-devel python3-pip gcc
+          alternatives --set python3 /usr/bin/python3.11
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
           curl -sSL https://install.python-poetry.org | python3 -
           export PATH="$PATH:$HOME/.local/bin"
