@@ -33,7 +33,7 @@ def build_ui():
 def build_debian():
     PyInstaller.__main__.run(
         [
-            f"{Path(__file__).parent.absolute()}/buildtools/specfile/Nyanga-Read-linux.spec",
+            f"{Path(__file__).parent.absolute()}/buildtools/specfile/Nyanga-Read-debian.spec",
             "--distpath",
             "nyanga-debian",
         ]
@@ -43,7 +43,7 @@ def build_debian():
 def build_fedora():
     PyInstaller.__main__.run(
         [
-            f"{Path(__file__).parent.absolute()}/buildtools/specfile/Nyanga-Read-linux.spec",
+            f"{Path(__file__).parent.absolute()}/buildtools/specfile/Nyanga-Read-fedora.spec",
             "--distpath",
             "nyanga-fedora",
         ]

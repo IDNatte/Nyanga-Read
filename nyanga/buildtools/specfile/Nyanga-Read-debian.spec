@@ -5,13 +5,13 @@ block_cipher = None
 
 
 a = Analysis(
-    ['..\\..\\main.py'],
+    ['../../main.py'],
     pathex=[],
     binaries=[],
     datas=[
         ("../../layout", "layout"),
         ("../../docs/app", "docs/app"),
-        ("../../log", "log")
+        ("../../log", "log"),
     ],
     hiddenimports=[],
     hookspath=[],
@@ -32,7 +32,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='Nyanga-Read-window',
+    name='Nyanga-Read-debian',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -45,5 +45,4 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['..\\..\\assets\\icon\\image\\logo-ico.ico'],
 )

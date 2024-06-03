@@ -39,7 +39,7 @@ jobs:
       - name: Debian artifact
         uses: actions/upload-artifact@v3
         with:
-          name: nyanga-debian
+          name: Nyanga-Read-debian
           path: nyanga-debian/
 
   build_fedora:
@@ -71,8 +71,8 @@ jobs:
       - name: Fedora artifact
         uses: actions/upload-artifact@v3
         with:
-          name: nyanga-fedora
-          path: nyanga-fedora/
+          name: Nyanga-Read-fedora
+          path: nyanga-fedora/Nyanga-Read-fedora
 
   # build_windows:
   #   runs-on: windows-latest
@@ -105,13 +105,13 @@ jobs:
       - name: Download Ubuntu artifact
         uses: actions/download-artifact@v3
         with:
-          name: nyanga-debian
+          name: Nyanga-Read-debian
           path: nyanga-debian/
 
       - name: Download Fedora artifact
         uses: actions/download-artifact@v3
         with:
-          name: nyanga-fedora
+          name: Nyanga-Read-fedora
           path: nyanga-fedora/
 
       # - name: Download Debian artifact
@@ -143,8 +143,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: nyanga-debian/Nyanga-Read
-          asset_name: Nyanga-Read
+          asset_path: nyanga-debian/Nyanga-Read-debian
+          asset_name: Nyanga-Read-debian
           asset_content_type: application/octet-stream
 
       - name: Fedora Release
@@ -153,8 +153,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: nyanga-fedora/Nyanga-Read
-          asset_name: Nyanga-Read
+          asset_path: nyanga-fedora/Nyanga-Read-fedora
+          asset_name: Nyanga-Read-fedora
           asset_content_type: application/octet-stream
 
       # - name: Release Assets
