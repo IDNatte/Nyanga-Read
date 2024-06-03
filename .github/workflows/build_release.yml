@@ -126,7 +126,7 @@ jobs:
       #     name: pyinstaller-dist-windows
       #     path: dist/windows/
 
-      - name: Intialize Release
+      - name: Initialize release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -137,19 +137,21 @@ jobs:
           draft: true
           prerelease: true
 
-      - name: Release Assets
+      - name: Debian Release
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: |
-            nyanga-debian/Nyanga-Read
-            nyanga-fedora/Nyanga-Read
-          asset_name: |
-            Nyanga-Read
-            Nyanga-Read
-          asset_content_type: |
-            application/octet-stream
-            application/octet-stream
+          asset_path: nyanga-debian/Nyanga-Read
+          asset_name: Nyanga-Read
+          asset_content_type: application/octet-stream
+
+      - name: Fedora Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: nyanga-fedora/Nyanga-Read
+          asset_name: Nyanga-Read
+          asset_content_type: application/octet-stream
 
       # - name: Release Assets
       #   uses: actions/upload-release-asset@v1
