@@ -1,0 +1,163 @@
+name: Build and Release Nyanga Read
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build_ubuntu:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bullseye
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build debian/ubuntu
+        run: |
+          apt-get update
+          apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking python3 python3-pip build-essential
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          curl -sSL https://install.python-poetry.org | python3 -
+          export PATH="$PATH:$HOME/.local/bin"
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm install 18.19.0
+          corepack enable
+          corepack prepare yarn@stable --activate
+          poetry install --with dev
+          poetry run build_ui
+          mkdir -p nyanga/log
+          touch nyanga/log/app.log
+          poetry run build_debian
+
+      - name: Debian artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nyanga-debian
+          path: nyanga-debian/
+
+  build_fedora:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:34
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies and build
+        run: |
+          dnf install -y gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 glib-networking python3 python3-pip gcc
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          curl -sSL https://install.python-poetry.org | python3 -
+          export PATH="$PATH:$HOME/.local/bin"
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm install 18.19.0
+          corepack enable
+          corepack prepare yarn@stable --activate
+          poetry run build_ui
+          mkdir -p nyanga/log
+          touch nyanga/log/app.log
+          poetry run build_fedora
+
+      - name: Fedora artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nyanga-fedora
+          path: nyanga-fedora/
+
+  # build_windows:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+
+  #     - name: Install Python and pip
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: "3.x"
+
+  #     - name: Install dependencies and build
+  #       run: |
+  #         pip install pyinstaller
+  #         pip install -r requirements.txt
+  #         pyinstaller --onefile your_script.py
+
+  #     - name: Upload Windows artifact
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: pyinstaller-dist-windows
+  #         path: dist/
+
+  release:
+    # needs: [build_ubuntu, build_fedora, build_windows]
+    needs: [build_ubuntu, build_fedora]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Ubuntu artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nyanga-debian
+          path: nyanga-debian/
+
+      - name: Download Fedora artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nyanga-fedora
+          path: nyanga-fedora/
+
+      # - name: Download Debian artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: pyinstaller-dist-debian
+      #     path: dist/debian/
+
+      # - name: Download Windows artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: pyinstaller-dist-windows
+      #     path: dist/windows/
+
+      - name: Intialize Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: true
+
+      - name: Release Assets
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: |
+            nyanga-debian/Nyanga-Read
+            nyanga-fedora/Nyanga-Read
+          asset_name: |
+            Nyanga-Read
+            Nyanga-Read
+          asset_content_type: |
+            application/octet-stream
+            application/octet-stream
+
+      # - name: Release Assets
+      #   uses: actions/upload-release-asset@v1
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: |
+      #       dist/ubuntu/your_script
+      #       dist/fedora/your_script
+      #       dist/debian/your_script
+      #     asset_name: |
+      #       your_script_ubuntu
+      #       your_script_fedora
+      #       your_script_debian
+      #     asset_content_type: |
+      #       application/octet-stream
+      #       application/octet-stream
+      #       application/octet-stream
