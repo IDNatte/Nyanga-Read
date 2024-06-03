@@ -22,14 +22,15 @@ jobs:
           curl -sSL https://install.python-poetry.org | python3 -
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
+          . "$NVM_DIR/nvm.sh"
           nvm install 18.19.0
           corepack enable
           corepack prepare yarn@stable --activate
-          $HOME/.local/bin/poetry install --with dev
-          $HOME/.local/bin/poetry run build_ui
+          poetry install --with dev
+          poetry run build_ui
           mkdir -p nyanga/log
           touch nyanga/log/app.log
-          $HOME/.local/bin/poetry run build_debian
+          poetry run build_debian
 
       - name: Debian artifact
         uses: actions/upload-artifact@v3
@@ -50,16 +51,18 @@ jobs:
           dnf install -y gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 glib-networking python3.11 python3.11-devel python3-pip gcc
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
           curl -sSL https://install.python-poetry.org | python3 -
+          export PATH="$HOME/.local/bin:$PATH"
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
+          . "$NVM_DIR/nvm.sh"
           nvm install 18.19.0
           corepack enable
           corepack prepare yarn@stable --activate
-          $HOME/.local/bin/poetry install --with dev
-          $HOME/.local/bin/poetry run build_ui
+          poetry install --with dev
+          poetry run build_ui
           mkdir -p nyanga/log
           touch nyanga/log/app.log
-          $HOME/.local/bin/poetry run build_fedora
+          poetry run build_fedora
 
       - name: Fedora artifact
         uses: actions/upload-artifact@v3
