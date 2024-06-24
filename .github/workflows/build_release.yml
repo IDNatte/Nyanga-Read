@@ -42,37 +42,37 @@ jobs:
           name: Nyanga-Read-debian
           path: nyanga-debian/
 
-  build_fedora:
-    runs-on: ubuntu-latest
-    container:
-      image: fedora:latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  # build_fedora:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: fedora:latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Install dependencies and build
-        run: |
-          dnf install -y gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 glib-networking python3.11 python3.11-devel python3-pip gcc
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-          curl -sSL https://install.python-poetry.org | python3 -
-          export PATH="$HOME/.local/bin:$PATH"
-          export NVM_DIR="$HOME/.nvm"
-          source "$NVM_DIR/nvm.sh"
-          . "$NVM_DIR/nvm.sh"
-          nvm install 18.19.0
-          corepack enable
-          corepack prepare yarn@stable --activate
-          poetry install --with dev
-          poetry run build_ui
-          mkdir -p nyanga/log
-          touch nyanga/log/app.log
-          poetry run build_fedora
+  #     - name: Install dependencies and build
+  #       run: |
+  #         dnf install -y gcc gobject-introspection-devel cairo-gobject-devel pkg-config python3-devel gtk4 glib-networking python3.11 python3.11-devel python3-pip gcc
+  #         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+  #         curl -sSL https://install.python-poetry.org | python3 -
+  #         export PATH="$HOME/.local/bin:$PATH"
+  #         export NVM_DIR="$HOME/.nvm"
+  #         source "$NVM_DIR/nvm.sh"
+  #         . "$NVM_DIR/nvm.sh"
+  #         nvm install 18.19.0
+  #         corepack enable
+  #         corepack prepare yarn@stable --activate
+  #         poetry install --with dev
+  #         poetry run build_ui
+  #         mkdir -p nyanga/log
+  #         touch nyanga/log/app.log
+  #         poetry run build_fedora
 
-      - name: Fedora artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: Nyanga-Read-fedora
-          path: nyanga-fedora/Nyanga-Read-fedora
+  #     - name: Fedora artifact
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Nyanga-Read-fedora
+  #         path: nyanga-fedora/Nyanga-Read-fedora
 
   # build_windows:
   #   runs-on: windows-latest
@@ -108,11 +108,11 @@ jobs:
           name: Nyanga-Read-debian
           path: nyanga-debian/
 
-      - name: Download Fedora artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: Nyanga-Read-fedora
-          path: nyanga-fedora/
+      # - name: Download Fedora artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: Nyanga-Read-fedora
+      #     path: nyanga-fedora/
 
       # - name: Download Debian artifact
       #   uses: actions/download-artifact@v3
@@ -147,15 +147,15 @@ jobs:
           asset_name: Nyanga-Read-debian
           asset_content_type: application/octet-stream
 
-      - name: Fedora Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: nyanga-fedora/Nyanga-Read-fedora
-          asset_name: Nyanga-Read-fedora
-          asset_content_type: application/octet-stream
+      # - name: Fedora Release
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PAT }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: nyanga-fedora/Nyanga-Read-fedora
+      #     asset_name: Nyanga-Read-fedora
+      #     asset_content_type: application/octet-stream
 
       # - name: Release Assets
       #   uses: actions/upload-release-asset@v1
