@@ -99,7 +99,7 @@ jobs:
 
   release:
     # needs: [build_ubuntu, build_fedora, build_windows]
-    needs: [build_debian, build_fedora]
+    needs: [build_debian]
     runs-on: ubuntu-latest
     steps:
       - name: Download Ubuntu artifact
