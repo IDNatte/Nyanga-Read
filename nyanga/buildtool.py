@@ -40,6 +40,16 @@ def build_debian():
     )
 
 
+def build_linux():
+    PyInstaller.__main__.run(
+        [
+            f"{Path(__file__).parent.absolute()}/buildtools/specfile/Nyanga-Read-linux.spec",
+            "--distpath",
+            "nyanga-linux",
+        ]
+    )
+
+
 def build_fedora():
     PyInstaller.__main__.run(
         [

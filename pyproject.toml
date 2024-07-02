@@ -29,7 +29,8 @@ ui_install = "nyanga.buildtool:install_ui_dep"
 build_ui = "nyanga.buildtool:build_ui"
 build_fedora = "nyanga.buildtool:build_fedora"
 build_debian = "nyanga.buildtool:build_debian"
-build_windows = "nyanga.buildtool:build_linux"
+build_linux = "nyanga.buildtool:build_linux"
+# build_windows = "nyanga.buildtool:build_linux"
 
 [build-system]
 requires = ["poetry-core"]
