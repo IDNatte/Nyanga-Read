@@ -24,7 +24,7 @@
 		"@types/cookie": "^0.6.0",
 		"@types/lodash": "^4.17.4",
 		"@types/showdown": "^2.0.6",
-		"@typescript-eslint/eslint-plugin": "^7.14.1",
+		"@typescript-eslint/eslint-plugin": "^7.15.0",
 		"@typescript-eslint/parser": "^7.11.0",
 		"autoprefixer": "^10.4.19",
 		"eslint": "^9.6.0",
