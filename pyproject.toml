@@ -16,7 +16,7 @@ pycairo = "^1.26.1"
 pygobject = "^3.48.2"
 requests = "^2.32.3"
 flask-sqlalchemy = "^3.1.1"
-sqlalchemy-serializer = "^1.4.12"
+sqlalchemy-serializer = "^1.4.21"
 
 
 [tool.poetry.group.dev.dependencies]
