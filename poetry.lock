@@ -988,18 +988,19 @@ sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
 name = "sqlalchemy-serializer"
-version = "1.4.21"
+version = "1.4.22"
 description = "Mixin for SQLAlchemy models serialization without pain"
 optional = false
 python-versions = "<4.0,>=3.10"
 files = [
-    {file = "sqlalchemy_serializer-1.4.21-py3-none-any.whl", hash = "sha256:960dc4d447bf0ee96a4f0210a607a800a10989e135a419021a6e45e76aa9f135"},
-    {file = "sqlalchemy_serializer-1.4.21.tar.gz", hash = "sha256:20c0cfc2dcb44cbec0e7088da6f93ac4f27fde42c1e8eed65451f0467182ee96"},
+    {file = "sqlalchemy_serializer-1.4.22-py3-none-any.whl", hash = "sha256:4f140b711976e0a31a8c52d633ea4ba2a624611cd6573cb72b4985316547797b"},
+    {file = "sqlalchemy_serializer-1.4.22.tar.gz", hash = "sha256:866fac5fb62cf92793470d8b93e4db47fbfffa76d7b4ef7d69906a9000c026cb"},
 ]
 
 [package.dependencies]
 psycopg2-binary = "2.9.9"
 pytz = ">=2024.1,<2025.0"
+setuptools = ">=70.1.1,<71.0.0"
 SQLAlchemy = "2.0.29"
 
 [[package]]
@@ -1050,4 +1051,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "90e58e3f392fe75e4d942742c5ca8f00d4c86a92bd239fb3e414c33e4eb8882e"
+content-hash = "b12d6f36365320cb839247ee594ed8402edb7276cc63684e4a549e033c174f02"
