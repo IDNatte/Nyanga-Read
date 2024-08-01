@@ -17,7 +17,7 @@ jobs:
       - name: Build debian/ubuntu
         run: |
           apt-get update
-          apt-get install -y curl libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking python3 python3-pip build-essential
+          apt-get install -y curl libgirepository1.0-dev gcc g++ libc6-amd64 libc6-dev libcairo2-dev pkg-config python3-dev gir1.2-gtk-4.0 nodejs python3-venv glib-networking python3 python3-pip build-essential
 
           curl -fsSL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh
           bash nodesource_setup.sh
