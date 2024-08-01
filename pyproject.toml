@@ -20,7 +20,7 @@ sqlalchemy-serializer = "^1.4.22"
 
 
 [tool.poetry.group.dev.dependencies]
-pyinstaller = "^6.8.0"
+pyinstaller = "^6.9.0"
 
 [tool.poetry.scripts]
 start_ui = "nyanga.buildtool:start_ui"
